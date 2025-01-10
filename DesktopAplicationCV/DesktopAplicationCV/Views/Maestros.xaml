@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Maestros"
+             xmlns:local="clr-namespace:DesktopAplicationCV.Views"
+             Title="Maestros">
+
+    <TabBar>
+        <Tab Title="Socio de Negocio">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:Socio_Negocio}" />
+        </Tab>
+        <Tab Title="Productos">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:Productos}" />
+        </Tab>
+        <Tab Title="Banco">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:Banco}" />
+        </Tab>
+        <Tab Title="Tipo">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:Tipo}" />
+        </Tab>
+        <Tab Title="Banco Detalle">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:Banco_Detalle}" />
+        </Tab>
+        <Tab Title="Cuentas">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:Cuentas}" />
+        </Tab>
+    </TabBar>
+
+</Shell>

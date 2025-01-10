@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Login">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="CV Project"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   FontSize="Large"
+                   FontAttributes="Italic"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"/>
+            <Label Text="Usuario"
+                   FontSize="Small"
+                   Grid.Row="2" 
+                   Grid.Column="1"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"/>
+            <Editor Margin="0,50,0,0"
+                    WidthRequest="200"
+                    HeightRequest="30"
+                    Grid.Row="2" 
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start"/>
+            <Label Text="Password"
+                   FontSize="Small"
+                   Grid.Row="3" 
+                   Grid.Column="1"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"/>
+            <Entry Margin="0,50,0,0"
+                    WidthRequest="200"
+                    HeightRequest="30"
+                    Grid.Row="3" 
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start"
+                    IsPassword="True"/>
+            <Button Text="Ingresar"
+                    Margin="0,25,0,0"
+                    WidthRequest="150"
+                    BackgroundColor="Green"
+                    BorderColor="White"
+                    FontAttributes="Bold"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start"
+                    TextColor="White"
+                    Clicked="Button_Clicked"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

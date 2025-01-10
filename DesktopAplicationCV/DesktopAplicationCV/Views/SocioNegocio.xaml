@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             xmlns:local="clr-namespace:DesktopAplicationCV.Models"
+             x:Class="DesktopAplicationCV.Views.SocioNegocio"
+             Title="SocioNegocio">
+
+    <ContentPage.BindingContext>
+        <local:OrderInfoRepository x:Name="ViewModel"/>
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!--BoxView Grid.Row="0"
+                 Grid.Column="0"
+                 Color="Blue"/>
+        <Label Grid.Row="0"
+               Grid.Column="0"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Text="Row=0 Column=0"/-->
+        
+        <Button Text="Agregar"
+                WidthRequest="150"
+                Grid.Column="0"
+                Grid.Row="0"
+                BackgroundColor="Green"
+                CornerRadius="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor="White"/>
+        
+        <!--BoxView Grid.Row="0"
+                 Grid.Column="1"
+                 Color="Red"/>
+        <Label Grid.Row="0"
+               Grid.Column="1"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Text="Row=0 Column=1"/-->
+        
+        <Label Text="#"
+               TextColor="White"
+               FontSize="Small"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="1"/>
+        
+        <!--BoxView Grid.Row="0"
+                 Grid.Column="2"
+                 Color="Green"/>
+        <Label Grid.Row="0"
+               Grid.Column="2"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Text="Row=0 Column=2"/-->
+        
+        <Label Text="Codigo"
+               TextColor="White"
+               FontSize="Small"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="2"
+               Padding="0,0,0,25"/>
+        
+        <Editor WidthRequest="100"
+                Grid.Row="0"
+                Grid.Column="2"
+                HeightRequest="10"
+                Margin="0,50,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        
+        <!--BoxView Grid.Row="0"
+                 Grid.Column="3"
+                 Color="Yellow"/>
+        <Label Grid.Row="0"
+               Grid.Column="3"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Text="Row=0 Column=3"/-->
+        
+        <Label Text="Nombre"
+               TextColor="White"
+               FontSize="Small"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="3"
+               Padding="0,0,0,25"/>
+        
+        <Editor WidthRequest="150"
+                Grid.Row="0"
+                Grid.Column="3"
+                HeightRequest="10"
+                Margin="0,50,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        
+        <!--BoxView Grid.Row="0"
+                 Grid.Column="4"
+                 Color="Cyan"/>
+        <Label Grid.Row="0"
+               Grid.Column="4"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Text="Row=0 Column=4"/-->
+        
+        <Label Text="Tipo"
+               TextColor="White"
+               FontSize="Small"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="4"
+               Padding="0,0,0,25"/>
+        
+        <Editor WidthRequest="150"
+                Grid.Row="0"
+                Grid.Column="4"
+                HeightRequest="10"
+                Margin="0,50,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        
+        <!--BoxView Grid.Row="0"
+                 Grid.Column="5"
+                 Color="Gray"/>
+        
+        <Label Grid.Row="0"
+               Grid.Column="5"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Text="Row=0 Column=5"/-->
+        
+        <Label Grid.Row="0"
+               Grid.Column="5"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               TextColor="White"
+               FontSize="Small"
+               Text="Saldo"
+               Padding="0,0,0,25"/>
+        
+        <Editor WidthRequest="150"
+                Grid.Row="0"
+                Grid.Column="5"
+                HeightRequest="10"
+                Margin="0,50,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        
+        <BoxView Grid.Row="1"
+                 Grid.ColumnSpan="6"
+                 Color="Azure"/>
+        <!--Label Grid.Row="1"
+               Grid.ColumnSpan="6"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Text="Row=1 ColumnSpan=6"
+               TextColor="Black"/-->
+
+        <syncfusion:SfDataGrid x:Name="dataGrid"
+                               BackgroundColor="LightGreen"
+                               ItemsSource="{Binding OrderInfoCollection}"
+                               Grid.Row="1"
+                               Grid.ColumnSpan="6"
+                               HorizontalOptions="Center"
+                               ColumnWidthMode="Fill"/>
+
+    </Grid>
+</ContentPage>

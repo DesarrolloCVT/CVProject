@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:DesktopAplicationCV.Views"
+            Title="MenuPrincipal"
+            x:Class="DesktopAplicationCV.Views.MenuPrincipal"
+            SelectedTabColor="White"
+            UnselectedTabColor="Gray"
+            NavigationPage.HasBackButton="True">
+
+    <TabbedPage.Children>
+        <local:Inicio Title="Inicio">
+        </local:Inicio>
+
+        <local:Operaciones_Bancarias Title="Operaciones Bancarias">
+        </local:Operaciones_Bancarias>
+
+        <local:Maestros Title="Maestros">
+        </local:Maestros>
+        
+        <local:Compra_Venta Title="Compra y Venta">
+        </local:Compra_Venta>
+    </TabbedPage.Children>
+</TabbedPage>
