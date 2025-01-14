@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Agregar_Socio_Negocio">
+    <ScrollView>
+        <Grid Padding="45,45,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            
+            <Label Text="Codigo"
+                   FontSize="Small"
+                   Grid.Row="0" Grid.Column="1"
+                   FontAttributes="Bold"/>
+            <Editor WidthRequest="300" 
+                    x:Name="edtCodigo"
+                    Keyboard="Numeric"
+                    Placeholder="Codigo"
+                    Grid.Row="0" Grid.Column="2"/>
+
+            
+            <Label Text="Nombre"
+                   x:Name="edtNombre"
+                   FontSize="Small"
+                   Grid.Row="1" Grid.Column="1"
+                   FontAttributes="Bold"/>
+            <Editor WidthRequest="300"
+                    Placeholder="Nombre"
+                    Grid.Row="1" Grid.Column="2"/>
+
+            
+            <Label Text="Tipo"
+                   FontSize="Small"
+                   Grid.Row="2" Grid.Column="1"
+                   FontAttributes="Bold"/>
+            <Picker x:Name="PkrTipo"
+                    Title="Seleccione Tipo de Socio"
+                    WidthRequest="300"
+                    Grid.Row="2" Grid.Column="2"/>
+
+            <Button Text="Insertar"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="5" Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Clicked="InsertarButton_Clicked"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

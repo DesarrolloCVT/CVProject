@@ -57,6 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
@@ -64,6 +65,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Agregar_Socio_Negocio.xaml.cs">
+	    <DependentUpon>Agregar_Socio_Negocio.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Socio_Negocio.xaml.cs">
 	    <DependentUpon>Socio_Negocio.xaml</DependentUpon>
 	  </Compile>
@@ -80,6 +84,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Cuentas.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Editar_Socio_Negocio.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Factura_Compra.xaml">
@@ -118,10 +125,10 @@
 	  <MauiXaml Update="Views\Productos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\SocioNegocio.xaml">
+	  <MauiXaml Update="Views\Socio_Negocio.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Socio_Negocio.xaml">
+	  <MauiXaml Update="Views\Agregar_Socio_Negocio.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Tipo.xaml">

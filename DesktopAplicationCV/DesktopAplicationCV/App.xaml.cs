@@ -9,7 +9,7 @@ namespace DesktopAplicationCV
             InitializeComponent();
 
             //MainPage = new AppShell();
-            MainPage = new NavigationPage(new SocioNegocio());
+            MainPage = new NavigationPage(new MenuPrincipal());
         }
     }
 }

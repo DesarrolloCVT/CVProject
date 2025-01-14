@@ -7,11 +7,10 @@
              NavigationPage.HasBackButton="True">
     <ScrollView>
         <StackLayout>
-            <Label Text="Arriba las manos SII" 
+            <Label Text="Seleccione el módulo con el que desea operar"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"
                    FontSize="Large"/>
-                <!--="Seleccione el módulo con el que desea operar"-->
         </StackLayout>
     </ScrollView>
 </ContentPage>
