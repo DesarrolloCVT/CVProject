@@ -42,6 +42,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 TextColor="White"
+                Command="{Binding AgregarCommand}"
                 Clicked="AgregarButton_Clicked"/>
 
         <Button Text="Eliminar"
@@ -53,7 +54,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 TextColor="White"
-                Clicked="EliminarButton_Clicked"/>
+                Command="{Binding EliminarCommand}"/>
         
         <Button Text="Editar"
                 WidthRequest="150"
@@ -65,7 +66,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 TextColor="White"
-                Clicked="EditarButton_Clicked"/>
+                Command="{Binding EditarCommand}"/>
         
         <!--BoxView Grid.Row="0"
                  Grid.Column="1"
@@ -209,7 +210,9 @@
 
         <syncfusion:SfDataGrid x:Name="dataGrid"
                                CellTapped="dataGrid_CellTapped"
-                               SelectionMode="Multiple"
+                               SelectionMode="Single"
+                               SelectedIndex="{Binding SelectedIndex,
+                                Mode=TwoWay}"
                                NavigationMode="Row"
                                AutoGenerateColumnsMode="None"
                                ItemsSource="{Binding OrderInfoCollection}"

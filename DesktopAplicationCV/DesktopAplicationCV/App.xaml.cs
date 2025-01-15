@@ -1,4 +1,5 @@
-﻿using DesktopAplicationCV.Views;
+﻿using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Views;
 
 namespace DesktopAplicationCV
 {
@@ -7,6 +8,8 @@ namespace DesktopAplicationCV
         public App()
         {
             InitializeComponent();
+
+            DependencyService.Register<INavigationService, NavigationService>();
 
             //MainPage = new AppShell();
             MainPage = new NavigationPage(new MenuPrincipal());
