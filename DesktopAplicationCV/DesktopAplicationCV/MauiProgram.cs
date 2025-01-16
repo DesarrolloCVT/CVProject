@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DesktopAplicationCV.Models;
+using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
 
 namespace DesktopAplicationCV
@@ -20,6 +21,10 @@ namespace DesktopAplicationCV
     		builder.Logging.AddDebug();
 #endif
             builder.ConfigureSyncfusionCore();
+
+            // Registrar el NavigationService
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
+
             return builder.Build();
         }
     }

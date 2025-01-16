@@ -1,15 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DesktopAplicationCV.Views;
-using Syncfusion.Maui.Core.Carousel;
-using Syncfusion.Maui.DataGrid;
+using DesktopAplicationCV.ViewModel;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 
 namespace DesktopAplicationCV.Models
 {
-    public partial class SocioViewModel : ObservableObject
+    public partial class SocioViewModel : BaseViewModel
     {
         private readonly INavigationService _navigationService;
 
@@ -100,18 +97,15 @@ namespace DesktopAplicationCV.Models
             }
         }
         [RelayCommand]
-        public void Editar()
+        public async void Editar()
         {
             try
             {
                 if (selectedIndex >= 0)
                 {
                     //Problema para la navegacion.
-                    _navigationService.NavigateToAsync("Editar_Socio_Negocio");
-                    //navigation.PushAsync(new Editar_Socio_Negocio(0, "Germany"));
-                    //Navigation?.PushAsync(new Editar_Socio_Negocio(0, "Germany"));
-                    
-                    //Navigation.PushAsync(new Editar_Socio_Negocio(0, "Germany"));
+                    var parameter = new { Id = 123, Name = "Detalle de ejemplo" };
+                    await _navigationService.NavigateToAsync("EditorSocio", parameter);
                 }
                 else
                 {

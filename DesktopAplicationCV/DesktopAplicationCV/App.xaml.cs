@@ -5,14 +5,24 @@ namespace DesktopAplicationCV
 {
     public partial class App : Application
     {
-        public App()
+        public App(INavigationService navigationService)
         {
             InitializeComponent();
 
-            DependencyService.Register<INavigationService, NavigationService>();
+            // Crear una NavigationPage
+            var navigationPage = new NavigationPage(new Socio_Negocio());
 
-            //MainPage = new AppShell();
-            MainPage = new NavigationPage(new MenuPrincipal());
+            // Configurar la NavigationPage en el servicio
+            if (navigationService is NavigationService navService)
+            {
+                navService.SetNavigationPage(navigationPage);
+            }
+
+            // Registrar las páginas
+            navigationService.Configure("SocioNegocio", typeof(Socio_Negocio));
+            navigationService.Configure("EditorSocio", typeof(Editar_Socio_Negocio));
+
+            MainPage = navigationPage;
         }
     }
 }
