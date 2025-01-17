@@ -2,8 +2,7 @@
 {
     public interface INavigationService
     {
-        Task NavigateToAsync(string pageKey, object parameter = null);
+        Task NavigateToAsync(string route);
         Task GoBackAsync();
-        void Configure(string pageKey, Type pageType);
     }
 }

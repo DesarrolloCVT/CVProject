@@ -6,10 +6,6 @@
              x:Class="DesktopAplicationCV.Views.Socio_Negocio"
              Title="Socio de Negocio">
 
-    <ContentPage.BindingContext>
-        <local:SocioViewModel x:Name="ViewModel"/>
-    </ContentPage.BindingContext>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
@@ -66,7 +62,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 TextColor="White"
-                Command="{Binding EditarCommand}"/>
+                Command="{Binding NavigateCommand}"/>
         
         <!--BoxView Grid.Row="0"
                  Grid.Column="1"

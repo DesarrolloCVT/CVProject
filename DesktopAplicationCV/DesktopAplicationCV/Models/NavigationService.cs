@@ -1,70 +1,32 @@
 ﻿using DesktopAplicationCV.ViewModel;
-using DesktopAplicationCV.Views;
-
-
 
 namespace DesktopAplicationCV.Models
 {
     public class NavigationService : INavigationService
     {
-        private readonly IDictionary<string, Type> _pages = new Dictionary<string, Type>();
-        private NavigationPage _navigationPage;
+        private readonly INavigation _navigation;
 
-        public void Configure(string pageKey, Type pageType)
+        // Constructor donde inyectamos el objeto INavigation (para navegar)
+        public NavigationService(INavigation navigation)
         {
-            if (_pages.ContainsKey(pageKey))
-            {
-                throw new ArgumentException($"La clave '{pageKey}' ya está registrada.");
-            }
-            _pages[pageKey] = pageType;
+            _navigation = navigation ?? throw new ArgumentNullException(nameof(navigation));
         }
 
-        public void SetNavigationPage(NavigationPage navigationPage)
+        // Método para navegar a una página
+        public async Task NavigateToAsync(string route)
         {
-            _navigationPage = navigationPage ?? throw new ArgumentNullException(nameof(navigationPage));
-        }
-
-        public async Task NavigateToAsync(string pageKey, object parameter = null)
-        {
-            if (!_pages.ContainsKey(pageKey))
+            var pageType = Type.GetType(route);
+            if (pageType != null)
             {
-                throw new ArgumentException($"No se encontró una página registrada con la clave '{pageKey}'.");
-            }
-
-            var pageType = _pages[pageKey];
-            var page = Activator.CreateInstance(pageType) as Page;
-
-            if (page == null)
-            {
-                throw new InvalidOperationException($"No se pudo crear una instancia de la página '{pageKey}'.");
-            }
-
-            // Pasar el parámetro al BindingContext del ViewModel si es necesario
-            if (parameter != null && page.BindingContext is BaseViewModel viewModel)
-            {
-                await viewModel.InitializeAsync(parameter);
-            }
-
-            if (_navigationPage != null)
-            {
-                await _navigationPage.PushAsync(page);
-            }
-            else
-            {
-                throw new InvalidOperationException("NavigationPage no está inicializado. Asegúrate de configurarlo antes de navegar.");
+                var page = (Page)Activator.CreateInstance(pageType);
+                await _navigation.PushAsync(page);
             }
         }
 
+        // Método para retroceder a la página anterior
         public async Task GoBackAsync()
         {
-            if (_navigationPage != null)
-            {
-                await _navigationPage.PopAsync();
-            }
-            else
-            {
-                throw new InvalidOperationException("NavigationPage no está inicializado. Asegúrate de configurarlo antes de navegar.");
-            }
+            await _navigation.PopAsync();
         }
     }
 }

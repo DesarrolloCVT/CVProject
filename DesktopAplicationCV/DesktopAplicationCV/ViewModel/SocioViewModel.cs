@@ -2,13 +2,15 @@
 using CommunityToolkit.Mvvm.Input;
 using DesktopAplicationCV.ViewModel;
 using System.Collections.ObjectModel;
-
+using System.Windows.Input;
 
 namespace DesktopAplicationCV.Models
 {
     public partial class SocioViewModel : BaseViewModel
     {
         private readonly INavigationService _navigationService;
+
+        public ICommand NavigateCommand { get; }
 
         [ObservableProperty]
         private int selectedIndex;
@@ -31,22 +33,21 @@ namespace DesktopAplicationCV.Models
             set { orderInfo = value; }
         }
 
-        public SocioViewModel()//INavigationService navigationService)
+        public SocioViewModel(INavigationService navigationService)
         {
             //_navigationService = navigationService;
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            // Inicializamos el comando de navegación
+            NavigateCommand = new Command(OnNavigate);
+
             orderInfo = new ObservableCollection<OrderInfo>();
             GenerateOrders();
         }
 
-        public SocioViewModel(INavigationService navigationService)//INavigationService navigationService)
-        {
-            _navigationService = navigationService;
-        }
-
         public void GenerateOrders()
         {
-            orderInfo.Add(new OrderInfo(0, "Germany", "ALFKI", 10));
-            orderInfo.Add(new OrderInfo(1, "Mexico", "ANATR", 10));
+            orderInfo.Add(new OrderInfo(0,"Germany", "ALFKI", 10));
+            orderInfo.Add(new OrderInfo(1,"Mexico", "ANATR", 10));
             orderInfo.Add(new OrderInfo(2,"Mexico", "ANTON", 10));
             orderInfo.Add(new OrderInfo(3,"UK", "AROUT", 10));
             orderInfo.Add(new OrderInfo(4,"Sweden", "BERGS", 10));
@@ -59,8 +60,8 @@ namespace DesktopAplicationCV.Models
             orderInfo.Add(new OrderInfo(11,"Germany", "BLAUS", 10));
             orderInfo.Add(new OrderInfo(12,"France", "BLONP", 10));
             orderInfo.Add(new OrderInfo(13,"UK", "AROUT", 10));
-            orderInfo.Add(new OrderInfo(14, "CL", "TANGANANA", 1050));
-            orderInfo.Add(new OrderInfo(15, "CL", "TANGANANICA", 3550));
+            orderInfo.Add(new OrderInfo(14,"CL", "TANGANANA", 1050));
+            orderInfo.Add(new OrderInfo(15,"CL", "TANGANANICA", 3550));
         }
 
         [RelayCommand]
@@ -72,10 +73,10 @@ namespace DesktopAplicationCV.Models
                 {
                     OrderInfo.RemoveAt((SelectedIndex - 1));
                 }
-                else
-                {
+                else {
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
+
                 #region Codigo original
                 /*if (SelectedRows.Count > 0)
                 {
@@ -90,6 +91,7 @@ namespace DesktopAplicationCV.Models
                     Application.Current.MainPage.DisplayAlert("Alerta", "Seleccione las filas que desea eliminar", "Ok");
                 }*/
                 #endregion
+
             }
             catch (Exception)
             {
@@ -97,22 +99,21 @@ namespace DesktopAplicationCV.Models
             }
         }
         [RelayCommand]
-        public async void Editar()
+        public async Task Editar()
         {
             try
             {
                 if (selectedIndex >= 0)
                 {
                     //Problema para la navegacion.
-                    var parameter = new { Id = 123, Name = "Detalle de ejemplo" };
-                    await _navigationService.NavigateToAsync("EditorSocio", parameter);
-                }
-                else
+                    var parameter = new { Codigo = 123, Nombre = "Detalle de ejemplo" };
+                    await _navigationService.NavigateToAsync("SocioNegocio");
+
+                }else
                 {
                     Application.Current.MainPage.DisplayAlert("Alerta", "Seleccione una fila para modificar", "Ok");
                 }
-            }
-            catch (Exception)
+            }catch (Exception)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
             }
@@ -126,7 +127,15 @@ namespace DesktopAplicationCV.Models
 
         private async void OnNavigate()
         {
-            await _navigationService.NavigateToAsync("Namespace.PageName");
+            // Usamos el servicio de navegación para navegar a otra página
+            await _navigationService.NavigateToAsync("YourAppNamespace.YourPage");
         }
+
+        /*
+         * No posee Metodo, (Antiguo). 
+         public override Task InitializeAsync(object parameter)
+        {
+            return base.InitializeAsync(parameter);
+        }*/
     }
 }
