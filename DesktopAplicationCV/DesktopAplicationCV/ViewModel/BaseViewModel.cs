@@ -1,11 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace DesktopAplicationCV.ViewModel
 {
-    public class BaseViewModel : ObservableObject
+    public partial class BaseViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private string agregar = "Agregar";
+
+        [ObservableProperty]
+        private string eliminar = "Eliminar";
+
+        [ObservableProperty]
+        private string editar = "Editar";
+
         public virtual Task InitializeAsync(object parameter)
         {
             return Task.CompletedTask;

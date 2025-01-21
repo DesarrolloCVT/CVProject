@@ -1,5 +1,7 @@
 ﻿using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Views;
+using DesktopAplicationCV.Views.Add;
+using DesktopAplicationCV.Views.Edit;
 
 namespace DesktopAplicationCV
 {
@@ -13,7 +15,7 @@ namespace DesktopAplicationCV
             DependencyService.Register<INavigationService, NavigationService>();
 
             // Asignamos la página principal con un NavigationPage
-            MainPage = new NavigationPage(new Socio_Negocio());
+            MainPage = new NavigationPage(new Editar_Tipo());
         }
     }
 }

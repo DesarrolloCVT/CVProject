@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Add.Agregar_Cuentas"
+             Title="Agregar Nueva Cuenta">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Codigo"
+                   FontSize="Small"
+                   Grid.Row="0" Grid.Column="1"/>
+            <Editor Placeholder="Codigo"
+                    Grid.Row="0" Grid.Column="2"/>
+            <Label Text="Nombre"
+                   FontSize="Small"
+                   Grid.Row="1" Grid.Column="1"/>
+            <Editor Placeholder="Nombre"
+                    Grid.Row="1" Grid.Column="2"/>
+            <Label Text="Tipo"
+                   FontSize="Small"
+                   Grid.Row="2" Grid.Column="1"
+                   FontAttributes="Bold"/>
+            <Picker x:Name="PkrTipo"
+                    Grid.Row="2" Grid.Column="2"/>
+            <Button Text="Ingresar"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="4" Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Clicked="AddAccountButton_Clicked"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

@@ -1,6 +1,7 @@
 namespace DesktopAplicationCV.Views;
 
 using DesktopAplicationCV.Models;
+using DesktopAplicationCV.ViewModel;
 using Syncfusion.Maui.DataGrid;
 
 public partial class Socio_Negocio : ContentPage
@@ -19,14 +20,14 @@ public partial class Socio_Negocio : ContentPage
 	{
         InitializeComponent();
 
-        try
+        /*try
         {
             BindingContext = new SocioViewModel(DependencyService.Get<INavigationService>());
         }
         catch (Exception ex)
         {
             Console.WriteLine("Exception: Socio_Negocio: " + ex.Message);
-        }
+        }*/
         //SfDataGrid dataGrid = new SfDataGrid();
     }
 

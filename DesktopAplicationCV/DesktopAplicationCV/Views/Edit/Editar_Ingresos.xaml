@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Edit.Editar_Ingresos"
+             Title="Modificar Ingresos">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Folio"
+                   FontSize="Small"
+                   Grid.Row="0" Grid.Column="1"/>
+            <Editor Placeholder="Folio"
+                    Grid.Row="0" Grid.Column="2"/>
+            <Label Text="Tipo"
+                   FontSize="Small"
+                   Grid.Row="1" Grid.Column="1"/>
+            <Editor Placeholder="Tipo"
+                    Grid.Row="1" Grid.Column="2"/>
+            <Label Text="Moneda"
+                   FontSize="Small"
+                   Grid.Row="2" Grid.Column="1"/>
+            <Editor Placeholder="Moneda"
+                    Grid.Row="2" Grid.Column="2"/>
+            <Label Text="Fecha"
+                   FontSize="Small"
+                   Grid.Row="3" Grid.Column="1"/>
+            <DatePicker Grid.Row="3" Grid.Column="2"
+                        Format="dd-mm-yyyy"/>
+            <Label Text="Cliente"
+                   FontSize="Small"
+                   Grid.Row="4" Grid.Column="1"/>
+            <Editor Placeholder="Cliente"
+                    Grid.Row="4" Grid.Column="2"/>
+            <Label Text="Metodo de Pago"
+                   FontSize="Small"
+                   Grid.Row="5" Grid.Column="1"/>
+            <Editor Placeholder="Metodo de Pago"
+                    Grid.Row="5" Grid.Column="2"/>
+            <Label Text="Banco"
+                   FontSize="Small"
+                   Grid.Row="6" Grid.Column="1"/>
+            <Editor Placeholder="Banco"
+                    Grid.Row="6" Grid.Column="2"/>
+            <Label Text="Cuenta"
+                   FontSize="Small"
+                   Grid.Row="7" Grid.Column="1"/>
+            <Editor Placeholder="Cuenta"
+                    Grid.Row="7" Grid.Column="2"/>
+            <Button Text="Ingresar"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="9" Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Clicked="EditarIngresoButton_Clicked"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

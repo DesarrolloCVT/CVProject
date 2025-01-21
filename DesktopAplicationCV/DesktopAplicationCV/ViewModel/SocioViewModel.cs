@@ -1,16 +1,49 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DesktopAplicationCV.ViewModel;
+using DesktopAplicationCV.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace DesktopAplicationCV.Models
+using Syncfusion.Data;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+
+
+namespace DesktopAplicationCV.ViewModel
 {
     public partial class SocioViewModel : BaseViewModel
     {
+        #region Variables
         private readonly INavigationService _navigationService;
 
         public ICommand NavigateCommand { get; }
+
+        [ObservableProperty]
+        private string filterText;
+
+        [ObservableProperty]
+        private string codigo = "Codigo";
+
+        [ObservableProperty]
+        public string txtcodigo;
+
+        [ObservableProperty]
+        private string nombre = "Nombre";
+
+        [ObservableProperty]
+        public string txtnombre;
+
+        [ObservableProperty]
+        private string tipo = "Tipo";
+
+        [ObservableProperty]
+        public string txttipo;
+
+        [ObservableProperty]
+        private string saldo = "Saldo";
+
+        [ObservableProperty]
+        public string txtsaldo;
 
         [ObservableProperty]
         private int selectedIndex;
@@ -21,28 +54,40 @@ namespace DesktopAplicationCV.Models
         [ObservableProperty]
         private string seleccionado;
 
-        [ObservableProperty]
-        private int codigo;
+        #endregion
 
-        [ObservableProperty]
-        private string nombre;
+        public ObservableCollection<OrderInfo> Items { get; set; }
+        public ICollectionView ItemsView { get; private set; }
 
+
+        #region Inicializadores
         public ObservableCollection<OrderInfo> OrderInfoCollection
         {
             get { return orderInfo; }
             set { orderInfo = value; }
+        }
+        #endregion
+
+        #region Constructores
+        public SocioViewModel()
+        {
+            orderInfo = new ObservableCollection<OrderInfo>();
+            GenerateOrders();
         }
 
         public SocioViewModel(INavigationService navigationService)
         {
             //_navigationService = navigationService;
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+
             // Inicializamos el comando de navegación
             NavigateCommand = new Command(OnNavigate);
 
             orderInfo = new ObservableCollection<OrderInfo>();
             GenerateOrders();
         }
+
+        #endregion
 
         public void GenerateOrders()
         {
@@ -63,6 +108,8 @@ namespace DesktopAplicationCV.Models
             orderInfo.Add(new OrderInfo(14,"CL", "TANGANANA", 1050));
             orderInfo.Add(new OrderInfo(15,"CL", "TANGANANICA", 3550));
         }
+
+        #region Binding Methods 
 
         [RelayCommand]
         public void Eliminar()
@@ -118,17 +165,122 @@ namespace DesktopAplicationCV.Models
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
             }
         }
-
         [RelayCommand]
         public void Agregar()
         {
             Application.Current.MainPage.DisplayAlert("Alerta", "Selected.Rows - Count: ", "OK");
         }
 
+
+        private void NombreEditor_Completed()
+        {
+            Seleccionado = "Nombre";
+            if (!string.IsNullOrEmpty(Txtnombre))
+            {
+                //dataGrid.View.Filter = FilterRecords;
+            }
+            else
+            {
+                //dataGrid.View.Filter = null;
+            }
+            //dataGrid.View.RefreshFilter();
+        }
+
+        private void CodigoEditor_Completed()
+        {
+            Seleccionado = "Codigo";
+            if (!string.IsNullOrEmpty(Txtcodigo))
+            {
+                //dataGrid.View.Filter = FilterRecords;
+            }
+            else
+            {
+                //dataGrid.View.Filter = null;
+            }
+            //dataGrid.View.RefreshFilter();
+        }
+
+        private void TipoEditor_Completed()
+        {
+            Seleccionado = "Tipo";
+            if (!string.IsNullOrEmpty(Txttipo))
+            {
+                //dataGrid.View.Filter = FilterRecords;
+            }
+            else
+            {
+                //dataGrid.View.Filter = null;
+            }
+            //dataGrid.View.RefreshFilter();
+        }
+
+        private void SaldoEditor_Completed()
+        {
+            Seleccionado = "Saldo";
+            if (!string.IsNullOrEmpty(Txtsaldo))
+            {
+                //dataGrid.View.Filter = FilterRecords;
+            }
+            else
+            {
+                //dataGrid.View.Filter = null;
+            }
+            //dataGrid.View.RefreshFilter();
+        }
+
+        private bool FilterRecords(object record)
+        {
+            var orderInfo = record as OrderInfo;
+            switch (seleccionado)
+            {
+                case "Nombre":
+                    if (orderInfo != null && orderInfo.Nombre.ToLower() == Txtnombre.ToLower())
+                    {
+                        return true;
+                    }
+                    return false;
+                case "Codigo":
+                    try
+                    {
+                        if (orderInfo != null && orderInfo.Codigo == int.Parse(Txtcodigo))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+
+                case "Tipo":
+                    if (orderInfo != null && orderInfo.Tipo.ToLower() == Txttipo.ToLower())
+                    {
+                        return true;
+                    }
+                    return false;
+                default:
+                    try
+                    {
+                        if (orderInfo != null && orderInfo.Saldo == int.Parse(Txtsaldo))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    catch (Exception) 
+                    {
+                        return false;
+                    }
+            }
+        }
+
+        #endregion
+
         private async void OnNavigate()
         {
             // Usamos el servicio de navegación para navegar a otra página
-            await _navigationService.NavigateToAsync("YourAppNamespace.YourPage");
+            await _navigationService.NavigateToAsync("DesktopAplicationCV.YourPage");
         }
 
         /*

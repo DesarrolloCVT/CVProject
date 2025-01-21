@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Edit.Editar_Factura_Compra_Detalle"
+             Title="Modificar Factura Compra Detalle">
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Folio"
+                   FontSize="Small"
+                   Grid.Row="0" Grid.Column="1"/>
+            <Editor Placeholder="Folio"
+                    Grid.Row="0" Grid.Column="2"/>
+            <Label Text="Codigo de Producto"
+                   FontSize="Small"
+                   Grid.Row="1" Grid.Column="1"/>
+            <Editor Placeholder="Codigo de Producto"
+                    Grid.Row="1" Grid.Column="2"/>
+            <Label Text="Cantidad"
+                   FontSize="Small"
+                   Grid.Row="2" Grid.Column="1"/>
+            <Editor Placeholder="Cantidad"
+                    Grid.Row="2" Grid.Column="2"/>
+            <Label Text="Precio"
+                   FontSize="Small"
+                   Grid.Row="3" Grid.Column="1"/>
+            <Editor Placeholder="Precio"
+                    Grid.Row="3" Grid.Column="2"/>
+            <Button Text="Modificar"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="5" Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Clicked="EditPurchaseInvoiceDetailButton_Clicked"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

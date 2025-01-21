@@ -1,230 +1,173 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
-             xmlns:local="clr-namespace:DesktopAplicationCV.Models"
              x:Class="DesktopAplicationCV.Views.Socio_Negocio"
-             Title="Socio de Negocio">
+             Title="Socios de Negocio">
+    <ContentPage.BindingContext>
+        <ViewModel:SocioViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <!--BoxView Grid.Row="0"
-                 Grid.Column="0"
-                 Color="Blue"/>
-        <Label Grid.Row="0"
-               Grid.Column="0"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Text="Row=0 Column=0"/-->
-        
-        <Button Text="Agregar"
-                WidthRequest="150"
-                Grid.Column="0"
-                Grid.Row="0"
-                BackgroundColor="Green"
-                CornerRadius="10"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                TextColor="White"
-                Command="{Binding AgregarCommand}"
-                Clicked="AgregarButton_Clicked"/>
-
-        <Button Text="Eliminar"
-                WidthRequest="150"
-                Grid.Column="1"
-                Grid.Row="0"
-                BackgroundColor="Green"
-                CornerRadius="10"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                TextColor="White"
-                Command="{Binding EliminarCommand}"/>
-        
-        <Button Text="Editar"
-                WidthRequest="150"
-                Grid.Column="1"
-                Grid.Row="0"
-                Margin="0,120,0,0"
-                BackgroundColor="Green"
-                CornerRadius="10"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                TextColor="White"
-                Command="{Binding NavigateCommand}"/>
-        
-        <!--BoxView Grid.Row="0"
-                 Grid.Column="1"
-                 Color="Red"/>
-        <Label Grid.Row="0"
-               Grid.Column="1"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Text="Row=0 Column=1"/-->
-        
-        <!--BoxView Grid.Row="0"
-                 Grid.Column="2"
-                 Color="Green"/>
-        <Label Grid.Row="0"
-               Grid.Column="2"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Text="Row=0 Column=2"/-->
-        
-        <Label Text="Codigo"
-               TextColor="White"
-               FontSize="Small"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               Grid.Row="0"
-               Grid.Column="2"
-               Padding="0,0,0,25"/>
-        
-        <Editor x:Name="txtCodigo"
-                WidthRequest="100"
-                AutoSize="Disabled"
-                Keyboard="Numeric"
-                Grid.Row="0"
-                Grid.Column="2"
-                HeightRequest="10"
-                Margin="0,50,0,0"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Completed="CodigoEditor_Completed"/>
-        
-        <!--BoxView Grid.Row="0"
-                 Grid.Column="3"
-                 Color="Yellow"/>
-        <Label Grid.Row="0"
-               Grid.Column="3"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Text="Row=0 Column=3"/-->
-        
-        <Label Text="Nombre"
-               TextColor="White"
-               FontSize="Small"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               Grid.Row="0"
-               Grid.Column="3"
-               Padding="0,0,0,25"/>
-
-        <Editor x:Name="txtNombre"
-                WidthRequest="150"
-                Grid.Row="0"
-                Grid.Column="3"
-                HeightRequest="10"
-                Margin="0,50,0,0"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Keyboard="Numeric"
-                Completed="NombreEditor_Completed"/>
-        
-        <!--BoxView Grid.Row="0"
-                 Grid.Column="4"
-                 Color="Cyan"/>
-        <Label Grid.Row="0"
-               Grid.Column="4"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Text="Row=0 Column=4"/-->
-        
-        <Label Text="Tipo"
-               TextColor="White"
-               FontSize="Small"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               Grid.Row="0"
-               Grid.Column="4"
-               Padding="0,0,0,25"/>
-        
-        <Editor x:Name="txtTipo"
-                WidthRequest="150"
-                Grid.Row="0"
-                Grid.Column="4"
-                HeightRequest="10"
-                Margin="0,50,0,0"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Completed="TipoEditor_Completed"/>
-        
-        <!--BoxView Grid.Row="0"
-                 Grid.Column="5"
-                 Color="Gray"/>
-        
-        <Label Grid.Row="0"
-               Grid.Column="5"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Text="Row=0 Column=5"/-->
-        
-        <Label Grid.Row="0"
-               Grid.Column="5"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               TextColor="White"
-               FontSize="Small"
-               Text="Saldo"
-               Padding="0,0,0,25"/>
-        
-        <Editor x:Name="txtSaldo"
-                WidthRequest="150"
-                Grid.Row="0"
-                Grid.Column="5"
-                HeightRequest="10"
-                Margin="0,50,0,0"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Completed="SaldoEditor_Completed"/>
-        
-        <!--Label Grid.Row="1"
-               Grid.ColumnSpan="6"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Text="Row=1 ColumnSpan=6"
-               TextColor="Black"/-->
-
-        <!--syncfusion:SfDataGrid x:Name="dataGrid"
-                               BackgroundColor="LightGreen"
-                               ItemsSource="{Binding OrderInfoCollection}"
-                               Grid.Row="1"
-                               Grid.ColumnSpan="6"
-                               HorizontalOptions="Center"
-                               ColumnWidthMode="Fill"/-->
-
-        <syncfusion:SfDataGrid x:Name="dataGrid"
-                               CellTapped="dataGrid_CellTapped"
-                               SelectionMode="Single"
-                               SelectedIndex="{Binding SelectedIndex,
-                                Mode=TwoWay}"
-                               NavigationMode="Row"
-                               AutoGenerateColumnsMode="None"
-                               ItemsSource="{Binding OrderInfoCollection}"
-                               DefaultColumnWidth="130"
-                               GridLinesVisibility="Both"
-                               HeaderGridLinesVisibility="Both"
-                               BackgroundColor="LightGreen"
-                               Grid.Row="1"
-                               Grid.ColumnSpan="6"
-                               ColumnWidthMode="Fill">
-            <syncfusion:SfDataGrid.Columns>
-                <syncfusion:DataGridTextColumn MappingName="Codigo" HeaderText="Codigo"></syncfusion:DataGridTextColumn>
-                <syncfusion:DataGridTextColumn MappingName="Nombre" HeaderText="Nombre"></syncfusion:DataGridTextColumn>
-                <syncfusion:DataGridTextColumn MappingName="Tipo" HeaderText="Tipo"></syncfusion:DataGridTextColumn>
-                <syncfusion:DataGridTextColumn MappingName="Saldo" HeaderText="Saldo"></syncfusion:DataGridTextColumn>
-            </syncfusion:SfDataGrid.Columns>
-        </syncfusion:SfDataGrid>
-    </Grid>
+            <Button Text="{Binding Agregar}"
+                    WidthRequest="150"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    BackgroundColor="Green"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding AgregarCommand}"
+                    Clicked="AgregarButton_Clicked"/>
+            
+            <Button Text="{Binding Eliminar}"
+                    WidthRequest="150"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    BackgroundColor="Green"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding EliminarCommand}"/>
+            
+            <Button Text="{Binding Editar}"
+                    WidthRequest="150"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Margin="0,120,0,0"
+                    BackgroundColor="Green"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding EditarCommand}"/>
+            
+            <Label Text="{Binding Codigo}"
+                   TextColor="White"
+                   FontSize="Small"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Row="0"
+                   Grid.Column="2"
+                   Padding="0,0,0,25"/>
+            
+            <Editor x:Name="txtCodigo"
+                    Text="{Binding Txtcodigo}"
+                    WidthRequest="100"
+                    AutoSize="Disabled"
+                    Keyboard="Numeric"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    HeightRequest="10"
+                    Margin="0,50,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Completed="CodigoEditor_Completed"/>
+            
+            <Label Text="{Binding Nombre}"
+                   TextColor="White"
+                   FontSize="Small"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Row="0"
+                   Grid.Column="3"
+                   Padding="0,0,0,25"/>
+            
+            <Editor x:Name="txtNombre"
+                    Text="{Binding Txtnombre}"
+                    WidthRequest="150"
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    HeightRequest="10"
+                    Margin="0,50,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Keyboard="Numeric"
+                    Completed="NombreEditor_Completed"/>
+            <Label Text="{Binding Tipo}"
+                   TextColor="White"
+                   FontSize="Small"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Row="0"
+                   Grid.Column="4"
+                   Padding="0,0,0,25"/>
+            
+            <Editor x:Name="txtTipo"
+                    Text="{Binding Txttipo}"
+                    WidthRequest="150"
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    HeightRequest="10"
+                    Margin="0,50,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Completed="TipoEditor_Completed"/>
+            
+            <Label Grid.Row="0"
+                   Grid.Column="5"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   TextColor="White"
+                   FontSize="Small"
+                   Text="{Binding Saldo}"
+                   Padding="0,0,0,25"/>
+            
+            <Editor x:Name="txtSaldo"
+                    Text="{Binding Txtsaldo}"
+                    WidthRequest="150"
+                    Grid.Row="0"
+                    Grid.Column="5"
+                    HeightRequest="10"
+                    Margin="0,50,0,0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Completed="SaldoEditor_Completed"/>
+            
+            <syncfusion:SfDataGrid x:Name="dataGrid"
+                                   CanUseViewFilter="True"
+                                   CellTapped="dataGrid_CellTapped"
+                                   SelectionMode="Single"
+                                   SelectedIndex="{Binding SelectedIndex,
+                Mode=TwoWay}"
+                                   NavigationMode="Row"
+                                   AutoGenerateColumnsMode="None"
+                                   ItemsSource="{Binding OrderInfoCollection}"
+                                   DefaultColumnWidth="130"
+                                   GridLinesVisibility="Both"
+                                   HeaderGridLinesVisibility="Both"
+                                   BackgroundColor="LightGreen"
+                                   Grid.Row="1"
+                                   Grid.ColumnSpan="6"
+                                   ColumnWidthMode="Fill">
+                <syncfusion:SfDataGrid.View>
+                    <!--Configuración del filtrado-->
+                    <syncfusion:DataGridView Filter="{Binding GridFilter}" />
+                </syncfusion:SfDataGrid.View>
+                
+                <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:DataGridTextColumn MappingName="Codigo" HeaderText="Codigo"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Nombre" HeaderText="Nombre"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Tipo" HeaderText="Tipo"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Saldo" HeaderText="Saldo"></syncfusion:DataGridTextColumn>
+                </syncfusion:SfDataGrid.Columns>
+            </syncfusion:SfDataGrid>
+        </Grid>
+    </ScrollView>
 </ContentPage>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DesktopAplicationCV.Views.Banco_Detalle">
+             x:Class="DesktopAplicationCV.Views.Add.Agregar_Banco_Detalle"
+             Title="Agregar Banco Detalle">
     <ScrollView>
-        <Grid Padding="45,45,0,0">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
@@ -12,35 +13,35 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="210"/>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Label Text="Codigo Banco"
                    FontSize="Small"
-                   Grid.Row="0" Grid.Column="0"/>
-            <Editor WidthRequest="150"
-                    Placeholder="Codigo Banco"
-                    Grid.Row="0" Grid.Column="1"/>
+                   Grid.Row="0" Grid.Column="1"/>
+            <Editor Placeholder="Codigo Banco"
+                    Grid.Row="0" Grid.Column="2"/>
             <Label Text="Numero"
                    FontSize="Small"
-                   Grid.Row="1" Grid.Column="0"/>
-            <Editor WidthRequest="150"
-                    Placeholder="Numero"
-                    Grid.Row="1" Grid.Column="1"/>
+                   Grid.Row="1" Grid.Column="1"/>
+            <Editor Placeholder="Numero"
+                    Grid.Row="1" Grid.Column="2"/>
             <Label Text="Saldo"
                    FontSize="Small"
-                   Grid.Row="2" Grid.Column="0"/>
-            <Editor WidthRequest="150"
-                    IsReadOnly="True"
+                   Grid.Row="2" Grid.Column="1"/>
+            <Editor IsReadOnly="True"
                     Placeholder="Saldo"
-                    Grid.Row="2" Grid.Column="1"/>
+                    Grid.Row="2" Grid.Column="2"/>
             <Button Text="Ingresar"
                     TextColor="White"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
-                    Grid.Row="4" Grid.Column="0"
-                    Clicked="Button_Clicked"/>
+                    Grid.Row="4" Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Clicked="AddBankDetailButton_Clicked"/>
         </Grid>
     </ScrollView>
 </ContentPage>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DesktopAplicationCV.Views.Banco">
+             x:Class="DesktopAplicationCV.Views.Add.Agregar_Productos"
+             Title="Agregar Productos">
     <ScrollView>
-        <Grid Padding="45,45,0,0">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
@@ -11,29 +12,29 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Nombre"
-                   FontSize="Small"
-                   Grid.Row="0" Grid.Column="0"/>
-            <Editor WidthRequest="150"
-                    Placeholder="Nombre"
-                    Grid.Row="0" Grid.Column="1"/>
             <Label Text="Codigo"
                    FontSize="Small"
-                   Grid.Row="1" Grid.Column="0"/>
-            <Editor WidthRequest="150"
-                    Placeholder="Codigo"
-                    Grid.Row="1" Grid.Column="1"/>
+                   Grid.Row="0" Grid.Column="1"/>
+            <Editor Placeholder="Codigo"
+                    Grid.Row="0" Grid.Column="2"/>
+            <Label Text="Producto"
+                   FontSize="Small"
+                   Grid.Row="1" Grid.Column="1"/>
+            <Editor Placeholder="Producto"
+                    Grid.Row="1" Grid.Column="2"/>
             <Button Text="Ingresar"
                     TextColor="White"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
-                    Grid.Row="3" Grid.Column="0"
-                    Clicked="Button_Clicked"/>
+                    Grid.Row="3" Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Clicked="AddProductsButton_Clicked"/>
         </Grid>
     </ScrollView>
-    
 </ContentPage>

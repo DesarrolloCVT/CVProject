@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Add.Agregar_Factura_Ventas"
+             Title="Agregar Factura de Ventas">
+    <ScrollView>
+        <Grid Padding="45,45,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Folio"
+                   FontSize="Small"
+                   Grid.Row="0" Grid.Column="1"/>
+            <Editor Placeholder="Folio"
+                    Grid.Row="0" Grid.Column="2"/>
+            <Label Text="Cliente"
+                   FontSize="Small"
+                   Grid.Row="1" Grid.Column="1"/>
+            <Editor Placeholder="Cliente"
+                    Grid.Row="1" Grid.Column="2"/>
+            <Label Text="Direccion de Despacho"
+                   FontSize="Small"
+                   Grid.Row="2" Grid.Column="1"/>
+            <Editor Placeholder="Direccion de Despacho"
+                    Grid.Row="2" Grid.Column="2"/>
+            <Label Text="Moneda"
+                   FontSize="Small"
+                   Grid.Row="3" Grid.Column="1"/>
+            <Editor Placeholder="Moneda"
+                    Grid.Row="3" Grid.Column="2"/>
+            <Label Text="Fecha"
+                   FontSize="Small"
+                   Grid.Row="4" Grid.Column="1"/>
+            <DatePicker Grid.Row="4" Grid.Column="2"
+                        Format="dd-mm-yyyy"/>
+            <Label Text="Total"
+                   FontSize="Small"
+                   Grid.Row="5" Grid.Column="1"/>
+            <Editor IsReadOnly="True"
+                    Placeholder="Total"
+                    Grid.Row="5" Grid.Column="2"/>
+            <Button Text="Ingresar"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="7" Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Clicked="AddSalesInvoiceButton_Clicked"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>
