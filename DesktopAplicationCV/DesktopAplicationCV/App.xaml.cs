@@ -15,7 +15,7 @@ namespace DesktopAplicationCV
             DependencyService.Register<INavigationService, NavigationService>();
 
             // Asignamos la página principal con un NavigationPage
-            MainPage = new NavigationPage(new Editar_Tipo());
+            MainPage = new NavigationPage(new Views.Productos());
         }
     }
 }

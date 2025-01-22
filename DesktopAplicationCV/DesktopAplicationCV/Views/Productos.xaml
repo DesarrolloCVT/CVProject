@@ -5,9 +5,6 @@
              xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              x:Class="DesktopAplicationCV.Views.Productos"
              Title="Productos">
-    <ContentPage.BindingContext>
-        <ViewModel:ProductosViewModel/>
-    </ContentPage.BindingContext>
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -32,7 +29,7 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     TextColor="White"
-                    Command="{Binding BtnAgregarCommand}"/>
+                    Command="{Binding AgregarCommand}"/>
 
             <Button Text="{Binding Eliminar}"
                     WidthRequest="150"
@@ -43,13 +40,12 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     TextColor="White"
-                    Command="{Binding BtnEliminarCommand}"/>
+                    Command="{Binding EliminarCommand}"/>
 
             <Button Text="{Binding Editar}"
                     WidthRequest="150"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Grid.Row="0"
-                    Margin="0,120,0,0"
                     BackgroundColor="Green"
                     CornerRadius="10"
                     HorizontalOptions="Center"
@@ -57,49 +53,23 @@
                     TextColor="White"
                     Command="{Binding BtnEditarCommand}"/>
 
-            <Label Text="{Binding Codigo}"
-                   TextColor="White"
-                   FontSize="Small"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Grid.Row="0"
-                   Grid.Column="2"
-                   Padding="0,0,0,25"/>
-            
-            <Editor x:Name="txtCodigo"
-                    WidthRequest="100"
+            <!-- * Busqueda * -->
+
+            <Editor x:Name="txtBusqueda"
+                    Placeholder="Busqueda"
+                    HorizontalTextAlignment="Center"
+                    WidthRequest="350"
+                    Text="{Binding FilterText}"
                     AutoSize="Disabled"
                     Keyboard="Numeric"
                     Grid.Row="0"
-                    Grid.Column="2"
-                    HeightRequest="10"
-                    Margin="0,50,0,0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"/>
-            
-            <Label Text="{Binding Producto}"
-                   TextColor="White"
-                   FontSize="Small"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Grid.Row="0"
-                   Grid.Column="3"
-                   Padding="0,0,0,25"/>
-            
-            <Editor x:Name="txtProducto"
-                    WidthRequest="150"
-                    Grid.Row="0"
                     Grid.Column="3"
-                    HeightRequest="10"
-                    Margin="0,50,0,0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Keyboard="Numeric"/>
-            
+                    Grid.ColumnSpan="3"
+                    HeightRequest="10"/>
+
             <syncfusion:SfDataGrid x:Name="dataGrid"
                                    SelectionMode="Single"
-                                   SelectedIndex="{Binding SelectedIndex,
-                Mode=TwoWay}"
+                                   SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
                                    NavigationMode="Row"
                                    AutoGenerateColumnsMode="None"
                                    ItemsSource="{Binding OrderInfoCollection}"

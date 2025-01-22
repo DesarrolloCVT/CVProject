@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace DesktopAplicationCV.Models
 {
-    public class OrderInfo
+    public class SocioNegocio
     {
         private int codigo;
         private string nombre;
@@ -40,7 +40,7 @@ namespace DesktopAplicationCV.Models
             set { this.saldo = value; }
         }
 
-        public OrderInfo(int codigo, string nombre, string tipo, int saldo)
+        public SocioNegocio(int codigo, string nombre, string tipo, int saldo)
         {
             this.Codigo = codigo;
             this.Nombre = nombre;

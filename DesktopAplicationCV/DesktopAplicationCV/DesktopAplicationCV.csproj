@@ -68,6 +68,9 @@
 	  <Compile Update="Views\Add\Agregar_Socio_Negocio.xaml.cs">
 	    <DependentUpon>Agregar_Socio_Negocio.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Edit\EditarViews_Socio_Negocio.xaml.cs">
+	    <DependentUpon>EditarViews_Socio_Negocio.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Socio_Negocio.xaml.cs">
 	    <DependentUpon>Socio_Negocio.xaml</DependentUpon>
 	  </Compile>
@@ -149,7 +152,7 @@
 	  <MauiXaml Update="Views\Edit\Editar_Productos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Edit\Editar_Socio_Negocio.xaml">
+	  <MauiXaml Update="Views\Edit\EditarViews_Socio_Negocio.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Edit\Editar_Tipo.xaml">

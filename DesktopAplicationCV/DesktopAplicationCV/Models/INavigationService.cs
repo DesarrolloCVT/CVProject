@@ -1,8 +1,10 @@
-﻿namespace DesktopAplicationCV.Models
+﻿using DesktopAplicationCV.ViewModel;
+
+namespace DesktopAplicationCV.Models
 {
     public interface INavigationService
     {
-        Task NavigateToAsync(string route);
+        Task NavigateToAsync<TViewModel>(string dato) where TViewModel : BaseViewModel;
         Task GoBackAsync();
     }
 }

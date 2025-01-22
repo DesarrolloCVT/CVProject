@@ -5,9 +5,6 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              x:Class="DesktopAplicationCV.Views.Socio_Negocio"
              Title="Socios de Negocio">
-    <ContentPage.BindingContext>
-        <ViewModel:SocioViewModel/>
-    </ContentPage.BindingContext>
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -23,6 +20,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <!-- * Botones de accion * -->
+            
             <Button Text="{Binding Agregar}"
                     WidthRequest="150"
                     Grid.Column="0"
@@ -32,8 +31,7 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     TextColor="White"
-                    Command="{Binding AgregarCommand}"
-                    Clicked="AgregarButton_Clicked"/>
+                    Command="{Binding AgregarCommand}"/>
             
             <Button Text="{Binding Eliminar}"
                     WidthRequest="150"
@@ -48,104 +46,32 @@
             
             <Button Text="{Binding Editar}"
                     WidthRequest="150"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Grid.Row="0"
-                    Margin="0,120,0,0"
                     BackgroundColor="Green"
                     CornerRadius="10"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     TextColor="White"
-                    Command="{Binding EditarCommand}"/>
+                    Command="{Binding NavigateToDetailCommand}"/>
             
-            <Label Text="{Binding Codigo}"
-                   TextColor="White"
-                   FontSize="Small"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Grid.Row="0"
-                   Grid.Column="2"
-                   Padding="0,0,0,25"/>
+            <!-- * Busqueda * -->
             
-            <Editor x:Name="txtCodigo"
-                    Text="{Binding Txtcodigo}"
-                    WidthRequest="100"
+            <Editor x:Name="txtBusqueda"
+                    Placeholder="Busqueda"
+                    HorizontalTextAlignment="Center"
+                    WidthRequest="350"
+                    Text="{Binding FilterText}"
                     AutoSize="Disabled"
                     Keyboard="Numeric"
                     Grid.Row="0"
-                    Grid.Column="2"
-                    HeightRequest="10"
-                    Margin="0,50,0,0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Completed="CodigoEditor_Completed"/>
-            
-            <Label Text="{Binding Nombre}"
-                   TextColor="White"
-                   FontSize="Small"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Grid.Row="0"
-                   Grid.Column="3"
-                   Padding="0,0,0,25"/>
-            
-            <Editor x:Name="txtNombre"
-                    Text="{Binding Txtnombre}"
-                    WidthRequest="150"
-                    Grid.Row="0"
                     Grid.Column="3"
-                    HeightRequest="10"
-                    Margin="0,50,0,0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Keyboard="Numeric"
-                    Completed="NombreEditor_Completed"/>
-            <Label Text="{Binding Tipo}"
-                   TextColor="White"
-                   FontSize="Small"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Grid.Row="0"
-                   Grid.Column="4"
-                   Padding="0,0,0,25"/>
-            
-            <Editor x:Name="txtTipo"
-                    Text="{Binding Txttipo}"
-                    WidthRequest="150"
-                    Grid.Row="0"
-                    Grid.Column="4"
-                    HeightRequest="10"
-                    Margin="0,50,0,0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Completed="TipoEditor_Completed"/>
-            
-            <Label Grid.Row="0"
-                   Grid.Column="5"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center"
-                   TextColor="White"
-                   FontSize="Small"
-                   Text="{Binding Saldo}"
-                   Padding="0,0,0,25"/>
-            
-            <Editor x:Name="txtSaldo"
-                    Text="{Binding Txtsaldo}"
-                    WidthRequest="150"
-                    Grid.Row="0"
-                    Grid.Column="5"
-                    HeightRequest="10"
-                    Margin="0,50,0,0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Completed="SaldoEditor_Completed"/>
+                    Grid.ColumnSpan="3"
+                    HeightRequest="10"/>
             
             <syncfusion:SfDataGrid x:Name="dataGrid"
-                                   CanUseViewFilter="True"
-                                   CellTapped="dataGrid_CellTapped"
                                    SelectionMode="Single"
-                                   SelectedIndex="{Binding SelectedIndex,
-                Mode=TwoWay}"
+                                   SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
                                    NavigationMode="Row"
                                    AutoGenerateColumnsMode="None"
                                    ItemsSource="{Binding OrderInfoCollection}"
@@ -156,11 +82,6 @@
                                    Grid.Row="1"
                                    Grid.ColumnSpan="6"
                                    ColumnWidthMode="Fill">
-                <syncfusion:SfDataGrid.View>
-                    <!--Configuración del filtrado-->
-                    <syncfusion:DataGridView Filter="{Binding GridFilter}" />
-                </syncfusion:SfDataGrid.View>
-                
                 <syncfusion:SfDataGrid.Columns>
                     <syncfusion:DataGridTextColumn MappingName="Codigo" HeaderText="Codigo"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Nombre" HeaderText="Nombre"></syncfusion:DataGridTextColumn>

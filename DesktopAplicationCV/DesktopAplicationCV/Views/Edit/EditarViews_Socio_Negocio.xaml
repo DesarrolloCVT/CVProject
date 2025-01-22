@@ -2,11 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:DesktopAplicationCV.ViewModel"
-             x:Class="DesktopAplicationCV.Views.Editar_Socio_Negocio"
+             x:Class="DesktopAplicationCV.Views.EditarViews_Socio_Negocio"
              Title="Socio de Negocio">
-    <ContentPage.BindingContext>
-        <local:EditorSocioViewModel x:Name="ViewModel"/>
-    </ContentPage.BindingContext>
 
     <ScrollView>
         <Grid Padding="45,45,0,0">

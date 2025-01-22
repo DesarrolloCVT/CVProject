@@ -7,10 +7,24 @@ public partial class Productos : ContentPage
 {
 	public Productos()
 	{
-		InitializeComponent();
+        INavigationService navigationService = new NavigationService();
+
+        InitializeComponent();
         try
         {
-            BindingContext = new ProductosViewModel(DependencyService.Get<INavigationService>());
+            BindingContext = new ProductosViewModel(navigationService);
+
+            var viewModel = BindingContext as ProductosViewModel;
+
+            if (viewModel != null)
+            {
+                // Vincular la acción para aplicar el filtro
+                viewModel.ApplyFilterAction = () =>
+                {
+                    dataGrid.View.Filter = viewModel.GetFilter();
+                    dataGrid.View.RefreshFilter();
+                };
+            }
         }
         catch (Exception ex)
         {
@@ -18,8 +32,8 @@ public partial class Productos : ContentPage
         }
     }
 
-    private void Button_Clicked(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        DisplayAlert("Alerta", "Se ingresaran los datos", "OK");
+        base.OnAppearing();
     }
 }

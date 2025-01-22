@@ -1,32 +1,40 @@
 ﻿using DesktopAplicationCV.ViewModel;
 
 namespace DesktopAplicationCV.Models
-{
+{   
     public class NavigationService : INavigationService
     {
-        private readonly INavigation _navigation;
-
-        // Constructor donde inyectamos el objeto INavigation (para navegar)
-        public NavigationService(INavigation navigation)
+        public async Task NavigateToAsync<TViewModel>(string identificador) where TViewModel : BaseViewModel
         {
-            _navigation = navigation ?? throw new ArgumentNullException(nameof(navigation));
-        }
 
-        // Método para navegar a una página
-        public async Task NavigateToAsync(string route)
-        {
-            var pageType = Type.GetType(route);
-            if (pageType != null)
+            var pageType = GetPageTypeForViewModel(typeof(TViewModel), identificador);
+            var page = (Page)Activator.CreateInstance(pageType);
+            if (Application.Current.MainPage is NavigationPage navigationPage)
             {
-                var page = (Page)Activator.CreateInstance(pageType);
-                await _navigation.PushAsync(page);
+                await navigationPage.Navigation.PushAsync(page);
             }
         }
 
-        // Método para retroceder a la página anterior
         public async Task GoBackAsync()
         {
-            await _navigation.PopAsync();
+            if (Application.Current.MainPage is NavigationPage navigationPage)
+            {
+                await navigationPage.Navigation.PopAsync();
+            }
+        }
+
+        private Type GetPageTypeForViewModel(Type viewModelType, string id)
+        {
+            var viewName = viewModelType.FullName.Replace("ViewModel", "Views");
+            var viewNameValidate = (viewName + id);
+            var viewType = Type.GetType(viewNameValidate);
+
+            if (viewType == null)
+            {
+                throw new InvalidOperationException($"No se pudo localizar la página para {viewModelType}");
+            }
+
+            return viewType;
         }
     }
 }
