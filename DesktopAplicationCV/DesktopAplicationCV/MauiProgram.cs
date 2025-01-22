@@ -1,6 +1,7 @@
 ﻿using DesktopAplicationCV.Models;
 using DesktopAplicationCV.ViewModel;
 using DesktopAplicationCV.Views;
+using DesktopAplicationCV.Views.Add;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
 
@@ -27,14 +28,16 @@ namespace DesktopAplicationCV
 
             // Registrar ViewModels
             builder.Services.AddSingleton<SocioViewModel>();
-            builder.Services.AddSingleton<EditarViewModel>();
+            builder.Services.AddSingleton<NavigationViewModel>();
             builder.Services.AddSingleton<ProductosViewModel>();
 
             // Registrar Páginas
             builder.Services.AddTransient<Socio_Negocio>();
-            builder.Services.AddTransient<Views.Productos>();
-            builder.Services.AddTransient<EditarViews_Socio_Negocio>();
+            builder.Services.AddTransient<Productos>();
+            builder.Services.AddTransient<Editar_Socio_Negocio>();
+            builder.Services.AddTransient<Editar_Productos>();
             builder.Services.AddTransient<Agregar_Socio_Negocio>();
+            builder.Services.AddTransient<Agregar_Productos>();
 
             // Registrar servicios
             builder.Services.AddSingleton<INavigationService, NavigationService>();

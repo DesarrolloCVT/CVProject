@@ -1,7 +1,7 @@
+namespace DesktopAplicationCV.Views;
+
 using DesktopAplicationCV.Models;
 using DesktopAplicationCV.ViewModel;
-
-namespace DesktopAplicationCV.Views;
 
 public partial class Productos : ContentPage
 {
@@ -10,25 +10,18 @@ public partial class Productos : ContentPage
         INavigationService navigationService = new NavigationService();
 
         InitializeComponent();
-        try
+        BindingContext = new ProductosViewModel(navigationService);
+
+        var viewModel = BindingContext as ProductosViewModel;
+
+        if (viewModel != null)
         {
-            BindingContext = new ProductosViewModel(navigationService);
-
-            var viewModel = BindingContext as ProductosViewModel;
-
-            if (viewModel != null)
+            // Vincular la acción para aplicar el filtro
+            viewModel.ApplyFilterAction = () =>
             {
-                // Vincular la acción para aplicar el filtro
-                viewModel.ApplyFilterAction = () =>
-                {
-                    dataGrid.View.Filter = viewModel.GetFilter();
-                    dataGrid.View.RefreshFilter();
-                };
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Exception: Socio_Negocio: " + ex.Message);
+                dataGridProducto.View.Filter = viewModel.GetFilter();
+                dataGridProducto.View.RefreshFilter();
+            };
         }
     }
 

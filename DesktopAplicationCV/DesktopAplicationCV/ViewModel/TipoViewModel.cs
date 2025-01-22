@@ -1,37 +1,38 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Views;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace DesktopAplicationCV.ViewModel
 {
-    public partial class SocioViewModel : BaseViewModel
+    public partial class TipoViewModel : BaseViewModel
     {
         #region Variables
         private readonly INavigationService _navigationService;
-        
+
         [ObservableProperty]
         private int selectedIndex;
 
         [ObservableProperty]
-        private ObservableCollection<SocioNegocio> socio;
+        private ObservableCollection<TipoModel> tipo;
 
         private string _filterText;
 
         #endregion
 
-        public ObservableCollection<SocioNegocio> Items { get; set; }
+        public ObservableCollection<TipoModel> Items { get; set; }
 
-        
+
         #region Inicializadores
-        public ObservableCollection<SocioNegocio> SocioInfoCollection
+        public ObservableCollection<TipoModel> TipoInfoCollection
         {
-            get { return socio; }
-            set { socio = value; }
+            get { return tipo; }
+            set { tipo = value; }
         }
         #endregion
-        
+
+
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
         {
@@ -53,10 +54,10 @@ namespace DesktopAplicationCV.ViewModel
 
         #region Constructores
 
-        public SocioViewModel(INavigationService navigationService)
+        public TipoViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            socio = new ObservableCollection<SocioNegocio>();
+            tipo = new ObservableCollection<TipoModel>();
             GenerateOrders();
         }
 
@@ -67,13 +68,13 @@ namespace DesktopAplicationCV.ViewModel
         {
             return item =>
             {
-                if (item is SocioNegocio data)
+                if (item is TipoModel data)
                 {
                     return string.IsNullOrWhiteSpace(FilterText) ||
                            data.Nombre.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Codigo.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Tipo.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Saldo.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase);
+                           data.Cuenta.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase);
                 }
                 return false;
             };
@@ -81,22 +82,22 @@ namespace DesktopAplicationCV.ViewModel
 
         public void GenerateOrders()
         {
-            socio.Add(new SocioNegocio(0,"Germany", "ALFKI", 10));
-            socio.Add(new SocioNegocio(1,"Mexico", "ANATR", 10));
-            socio.Add(new SocioNegocio(2,"Mexico", "ANTON", 10));
-            socio.Add(new SocioNegocio(3,"UK", "AROUT", 10));
-            socio.Add(new SocioNegocio(4,"Sweden", "BERGS", 10));
-            socio.Add(new SocioNegocio(5,"Germany", "BLAUS", 10));
-            socio.Add(new SocioNegocio(6,"France", "BLONP", 10));
-            socio.Add(new SocioNegocio(7,"Spain", "BOLID", 10));
-            socio.Add(new SocioNegocio(8,"France", "BONAP", 10));
-            socio.Add(new SocioNegocio(9,"Canada", "BOTTM", 10));
-            socio.Add(new SocioNegocio(10,"UK", "AROUT", 10));
-            socio.Add(new SocioNegocio(11,"Germany", "BLAUS", 10));
-            socio.Add(new SocioNegocio(12,"France", "BLONP", 10));
-            socio.Add(new SocioNegocio(13,"UK", "AROUT", 10));
-            socio.Add(new SocioNegocio(14,"CL", "TANGANANA", 1050));
-            socio.Add(new SocioNegocio(15,"CL", "TANGANANICA", 3550));
+            tipo.Add(new TipoModel(0, "Germany", "ALFKI", 10));
+            tipo.Add(new TipoModel(1, "Mexico", "ANATR", 10));
+            tipo.Add(new TipoModel(2, "Mexico", "ANTON", 10));
+            tipo.Add(new TipoModel(3, "UK", "AROUT", 10));
+            tipo.Add(new TipoModel(4, "Sweden", "BERGS", 10));
+            tipo.Add(new TipoModel(5, "Germany", "BLAUS", 10));
+            tipo.Add(new TipoModel(6, "France", "BLONP", 10));
+            tipo.Add(new TipoModel(7, "Spain", "BOLID", 10));
+            tipo.Add(new TipoModel(8, "France", "BONAP", 10));
+            tipo.Add(new TipoModel(9, "Canada", "BOTTM", 10));
+            tipo.Add(new TipoModel(10, "UK", "AROUT", 10));
+            tipo.Add(new TipoModel(11, "Germany", "BLAUS", 10));
+            tipo.Add(new TipoModel(12, "France", "BLONP", 10));
+            tipo.Add(new TipoModel(13, "UK", "AROUT", 10));
+            tipo.Add(new TipoModel(14, "CL", "TANGANANA", 1050));
+            tipo.Add(new TipoModel(15, "CL", "TANGANANICA", 3550));
         }
 
         #region Binding Methods 
@@ -106,11 +107,12 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if(selectedIndex >= 0)
+                if (selectedIndex >= 0)
                 {
-                    Socio.RemoveAt((SelectedIndex - 1));
+                    Tipo.RemoveAt((SelectedIndex - 1));
                 }
-                else {
+                else
+                {
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
@@ -125,7 +127,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                await _navigationService.NavigateToAsync<NavigationViewModel>("Agregar_Socio_Negocio");
+                await _navigationService.NavigateToAsync<NavigationViewModel>("Agregar_Tipo");
             }
             catch (Exception Ex)
             {
@@ -139,7 +141,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Socio_Negocio");
+                await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Tipo");
             }
             catch (Exception Ex)
             {

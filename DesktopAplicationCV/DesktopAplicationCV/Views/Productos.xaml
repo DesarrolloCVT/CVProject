@@ -51,7 +51,7 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     TextColor="White"
-                    Command="{Binding BtnEditarCommand}"/>
+                    Command="{Binding EditarCommand}"/>
 
             <!-- * Busqueda * -->
 
@@ -67,12 +67,12 @@
                     Grid.ColumnSpan="3"
                     HeightRequest="10"/>
 
-            <syncfusion:SfDataGrid x:Name="dataGrid"
+            <syncfusion:SfDataGrid x:Name="dataGridProducto"
                                    SelectionMode="Single"
                                    SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
                                    NavigationMode="Row"
                                    AutoGenerateColumnsMode="None"
-                                   ItemsSource="{Binding OrderInfoCollection}"
+                                   ItemsSource="{Binding ProdInfoCollection}"
                                    DefaultColumnWidth="130"
                                    GridLinesVisibility="Both"
                                    HeaderGridLinesVisibility="Both"
@@ -81,8 +81,8 @@
                                    Grid.ColumnSpan="6"
                                    ColumnWidthMode="Fill">
                 <syncfusion:SfDataGrid.Columns>
-                    <syncfusion:DataGridTextColumn MappingName="{Binding Codigo}" HeaderText="{Binding Codigo}"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="{Binding Producto}" HeaderText="{Binding Producto}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Codigo" HeaderText="Codigo"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Producto" HeaderText="Producto"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>
             </syncfusion:SfDataGrid>
         </Grid>

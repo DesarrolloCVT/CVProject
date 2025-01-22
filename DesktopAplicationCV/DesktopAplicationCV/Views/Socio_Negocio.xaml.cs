@@ -2,8 +2,6 @@ namespace DesktopAplicationCV.Views;
 
 using DesktopAplicationCV.Models;
 using DesktopAplicationCV.ViewModel;
-using Syncfusion.Maui.Core.Carousel;
-using Syncfusion.Maui.DataGrid;
 
 public partial class Socio_Negocio : ContentPage
 {

@@ -1,21 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopAplicationCV.Models;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DesktopAplicationCV.ViewModel
 {
-    public partial class SocioViewModel : BaseViewModel
+    public partial class FacturaVentaViewModel : BaseViewModel
     {
         #region Variables
         private readonly INavigationService _navigationService;
-        
+
         [ObservableProperty]
         private int selectedIndex;
 
         [ObservableProperty]
-        private ObservableCollection<SocioNegocio> socio;
+        private ObservableCollection<FacturaVentaModel> factura;
 
         private string _filterText;
 
@@ -23,15 +27,15 @@ namespace DesktopAplicationCV.ViewModel
 
         public ObservableCollection<SocioNegocio> Items { get; set; }
 
-        
+
         #region Inicializadores
-        public ObservableCollection<SocioNegocio> SocioInfoCollection
+        public ObservableCollection<FacturaVentaModel> FacturaVentaInfoCollection
         {
-            get { return socio; }
-            set { socio = value; }
+            get { return factura; }
+            set { factura = value; }
         }
         #endregion
-        
+
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
         {
@@ -53,10 +57,10 @@ namespace DesktopAplicationCV.ViewModel
 
         #region Constructores
 
-        public SocioViewModel(INavigationService navigationService)
+        public FacturaVentaViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            socio = new ObservableCollection<SocioNegocio>();
+            factura = new ObservableCollection<FacturaVentaModel>();
             GenerateOrders();
         }
 
@@ -67,13 +71,14 @@ namespace DesktopAplicationCV.ViewModel
         {
             return item =>
             {
-                if (item is SocioNegocio data)
+                if (item is FacturaVentaModel data)
                 {
                     return string.IsNullOrWhiteSpace(FilterText) ||
-                           data.Nombre.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Codigo.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Tipo.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Saldo.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase);
+                           data.Folio.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Cliente.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Direccion_Despacho.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Moneda.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Fecha.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase);
                 }
                 return false;
             };
@@ -81,22 +86,22 @@ namespace DesktopAplicationCV.ViewModel
 
         public void GenerateOrders()
         {
-            socio.Add(new SocioNegocio(0,"Germany", "ALFKI", 10));
-            socio.Add(new SocioNegocio(1,"Mexico", "ANATR", 10));
-            socio.Add(new SocioNegocio(2,"Mexico", "ANTON", 10));
-            socio.Add(new SocioNegocio(3,"UK", "AROUT", 10));
-            socio.Add(new SocioNegocio(4,"Sweden", "BERGS", 10));
-            socio.Add(new SocioNegocio(5,"Germany", "BLAUS", 10));
-            socio.Add(new SocioNegocio(6,"France", "BLONP", 10));
-            socio.Add(new SocioNegocio(7,"Spain", "BOLID", 10));
-            socio.Add(new SocioNegocio(8,"France", "BONAP", 10));
-            socio.Add(new SocioNegocio(9,"Canada", "BOTTM", 10));
-            socio.Add(new SocioNegocio(10,"UK", "AROUT", 10));
-            socio.Add(new SocioNegocio(11,"Germany", "BLAUS", 10));
-            socio.Add(new SocioNegocio(12,"France", "BLONP", 10));
-            socio.Add(new SocioNegocio(13,"UK", "AROUT", 10));
-            socio.Add(new SocioNegocio(14,"CL", "TANGANANA", 1050));
-            socio.Add(new SocioNegocio(15,"CL", "TANGANANICA", 3550));
+            socio.Add(new SocioNegocio(0, "Germany", "ALFKI", 10));
+            socio.Add(new SocioNegocio(1, "Mexico", "ANATR", 10));
+            socio.Add(new SocioNegocio(2, "Mexico", "ANTON", 10));
+            socio.Add(new SocioNegocio(3, "UK", "AROUT", 10));
+            socio.Add(new SocioNegocio(4, "Sweden", "BERGS", 10));
+            socio.Add(new SocioNegocio(5, "Germany", "BLAUS", 10));
+            socio.Add(new SocioNegocio(6, "France", "BLONP", 10));
+            socio.Add(new SocioNegocio(7, "Spain", "BOLID", 10));
+            socio.Add(new SocioNegocio(8, "France", "BONAP", 10));
+            socio.Add(new SocioNegocio(9, "Canada", "BOTTM", 10));
+            socio.Add(new SocioNegocio(10, "UK", "AROUT", 10));
+            socio.Add(new SocioNegocio(11, "Germany", "BLAUS", 10));
+            socio.Add(new SocioNegocio(12, "France", "BLONP", 10));
+            socio.Add(new SocioNegocio(13, "UK", "AROUT", 10));
+            socio.Add(new SocioNegocio(14, "CL", "TANGANANA", 1050));
+            socio.Add(new SocioNegocio(15, "CL", "TANGANANICA", 3550));
         }
 
         #region Binding Methods 
@@ -106,11 +111,12 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if(selectedIndex >= 0)
+                if (selectedIndex >= 0)
                 {
                     Socio.RemoveAt((SelectedIndex - 1));
                 }
-                else {
+                else
+                {
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }

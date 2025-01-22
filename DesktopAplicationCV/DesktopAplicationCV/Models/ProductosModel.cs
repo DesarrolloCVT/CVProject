@@ -2,7 +2,7 @@
 
 namespace DesktopAplicationCV.Models
 {
-    public class Productos
+    public class ProductosModel
     {
         private int codigo;
         private string producto;
@@ -21,7 +21,7 @@ namespace DesktopAplicationCV.Models
             set { this.producto = value; }
         }
 
-        public Productos(int codigo, string producto)
+        public ProductosModel(int codigo, string producto)
         {
             this.Codigo = codigo;
             this.Producto = producto;

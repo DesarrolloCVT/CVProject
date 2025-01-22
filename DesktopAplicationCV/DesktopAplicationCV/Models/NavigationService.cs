@@ -23,11 +23,11 @@ namespace DesktopAplicationCV.Models
             }
         }
 
-        private Type GetPageTypeForViewModel(Type viewModelType, string id)
+        private Type GetPageTypeForViewModel(Type viewModelType, string Nombre)
         {
-            var viewName = viewModelType.FullName.Replace("ViewModel", "Views");
-            var viewNameValidate = (viewName + id);
-            var viewType = Type.GetType(viewNameValidate);
+            var viewOrigin = viewModelType.FullName.Replace("ViewModel", "Views");
+            var viewName = viewOrigin.Replace("NavigationViews", Nombre);
+            var viewType = Type.GetType(viewName);
 
             if (viewType == null)
             {

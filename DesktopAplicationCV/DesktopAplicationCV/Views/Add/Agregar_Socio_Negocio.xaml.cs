@@ -14,7 +14,7 @@ public partial class Agregar_Socio_Negocio : ContentPage
     private void InsertarButton_Clicked(object sender, EventArgs e)
     {
         DisplayAlert("Alerta", "Se registra nuevo dato en la BD", "OK");
-        //ViewModel.OrderInfoCollection.Insert(ViewModel.OrderInfoCollection.Count, new SocioNegocio(100, "Chile", "CLP", 1050));
-        //ViewModel.OrderInfoCollection.Insert(ViewModel.OrderInfoCollection.Count - 1, new SocioNegocio(int.Parse(edtCodigo.Text), edtNombre.Text, "CLP", 10));
+        //ViewModel.SocioInfoCollection.Insert(ViewModel.SocioInfoCollection.Count, new SocioNegocio(100, "Chile", "CLP", 1050));
+        //ViewModel.SocioInfoCollection.Insert(ViewModel.SocioInfoCollection.Count - 1, new SocioNegocio(int.Parse(edtCodigo.Text), edtNombre.Text, "CLP", 10));
     }
 }

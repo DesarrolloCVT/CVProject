@@ -1,4 +1,4 @@
-namespace DesktopAplicationCV.Views.Add;
+namespace DesktopAplicationCV.Views;
 
 public partial class Agregar_Productos : ContentPage
 {

@@ -2,12 +2,12 @@
 
 namespace DesktopAplicationCV.Models
 {
-    public class SocioNegocio
+    public class TipoModel
     {
         private int codigo;
         private string nombre;
         private string tipo;
-        private int saldo;
+        private int cuenta;
 
         private ICommand buttonCommand;
 
@@ -29,21 +29,18 @@ namespace DesktopAplicationCV.Models
             set { this.tipo = value; }
         }
 
-        public int Saldo
+        public int Cuenta
         {
-            get { return saldo; }
-            set { this.saldo = value; }
+            get { return cuenta; }
+            set { this.cuenta = value; }
         }
 
-        public SocioNegocio(int codigo, string nombre, string tipo, int saldo)
+        public TipoModel(int codigo, string nombre, string tipo, int cuenta)
         {
             this.Codigo = codigo;
             this.Nombre = nombre;
             this.Tipo = tipo;
-            this.Saldo = saldo;
+            this.Cuenta = cuenta;
         }
     }
 }
-
-
-
