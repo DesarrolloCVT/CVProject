@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DesktopAplicationCV.ViewModel
 {
-    public partial class FacturaVentaViewModel : BaseViewModel
+    public partial class FacturaCompraDetalleViewModel : BaseViewModel
     {
         #region Variables
         private readonly INavigationService _navigationService;
@@ -19,20 +19,20 @@ namespace DesktopAplicationCV.ViewModel
         private int selectedIndex;
 
         [ObservableProperty]
-        private ObservableCollection<FacturaVentaModel> factura;
+        private ObservableCollection<FacturaCompraDetalleModel> compraDetalle;
 
         private string _filterText;
 
         #endregion
 
-        public ObservableCollection<FacturaVentaModel> Items { get; set; }
+        public ObservableCollection<FacturaCompraDetalleModel> Items { get; set; }
 
 
         #region Inicializadores
-        public ObservableCollection<FacturaVentaModel> FacturaVentaInfoCollection
+        public ObservableCollection<FacturaCompraDetalleModel> FacturaCompraDetalleInfoCollection
         {
-            get { return factura; }
-            set { factura = value; }
+            get { return compraDetalle; }
+            set { compraDetalle = value; }
         }
         #endregion
 
@@ -57,10 +57,10 @@ namespace DesktopAplicationCV.ViewModel
 
         #region Constructores
 
-        public FacturaVentaViewModel(INavigationService navigationService)
+        public FacturaCompraDetalleViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            factura = new ObservableCollection<FacturaVentaModel>();
+            compraDetalle = new ObservableCollection<FacturaCompraDetalleModel>();
             GenerateOrders();
         }
 
@@ -71,14 +71,12 @@ namespace DesktopAplicationCV.ViewModel
         {
             return item =>
             {
-                if (item is FacturaVentaModel data)
+                if (item is FacturaCompraDetalleModel data)
                 {
                     return string.IsNullOrWhiteSpace(FilterText) ||
-                           data.Folio.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Cliente.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Direccion_Despacho.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Moneda.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Fecha.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase);
+                           data.Codigo_Producto.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Fecha.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Moneda.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase);
                 }
                 return false;
             };
@@ -86,22 +84,22 @@ namespace DesktopAplicationCV.ViewModel
 
         public void GenerateOrders()
         {
-            factura.Add(new FacturaVentaModel(0, "Germany", "ALFKI", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(1, "Mexico", "ANATR", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(2, "Mexico", "ANTON", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(3, "UK", "AROUT", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(4, "Sweden", "BERGS", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(5, "Germany", "BLAUS", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(6, "France", "BLONP", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(7, "Spain", "BOLID", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(8, "France", "BONAP", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(9, "Canada", "BOTTM", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(10, "UK", "AROUT", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(11, "Germany", "BLAUS", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(12, "France", "BLONP", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(13, "UK", "AROUT", 10, "10/01/254"));
-            factura.Add(new FacturaVentaModel(14, "CL", "TANGANANA", 1050, "10/01/254"));
-            factura.Add(new FacturaVentaModel(15, "CL", "TANGANANICA", 3550, "10/01/254"));
+            compraDetalle.Add(new FacturaCompraDetalleModel(0, "01/02/25",10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(1, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(2, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(3, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(4, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(5, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(6, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(7, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(8, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(9, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(10, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(11, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(12, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(13, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(14, "01/02/25", 10));
+            compraDetalle.Add(new FacturaCompraDetalleModel(15, "01/02/25", 10));
         }
 
         #region Binding Methods 
@@ -113,7 +111,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    factura.RemoveAt((SelectedIndex - 1));
+                    CompraDetalle.RemoveAt((SelectedIndex - 1));
                 }
                 else
                 {
@@ -131,7 +129,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                await _navigationService.NavigateToAsync<NavigationViewModel>("Agregar_Factura_Ventas");
+                await _navigationService.NavigateToAsync<NavigationViewModel>("Agregar_Factura_Compras_Detalle");
             }
             catch (Exception Ex)
             {
@@ -145,7 +143,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Factura_Ventas");
+                await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Factura_Compra_Detalle");
             }
             catch (Exception Ex)
             {

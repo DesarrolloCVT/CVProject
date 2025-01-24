@@ -1,59 +1,93 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              x:Class="DesktopAplicationCV.Views.Factura_Compra">
     <ScrollView>
-        <Grid Padding="45,45,0,0">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Folio"
-               FontSize="Small"
-               Grid.Row="0" Grid.Column="0"/>
-            <Editor WidthRequest="150"
-                Placeholder="Folio"
-                Grid.Row="0" Grid.Column="1"/>
-            <Label Text="Proveedor"
-               FontSize="Small"
-               Grid.Row="1" Grid.Column="0"/>
-            <Editor WidthRequest="150"
-                Placeholder="Proveedor"
-                Grid.Row="1" Grid.Column="1"/>
-            <Label Text="Fecha"
-                   FontSize="Small"
-                   Grid.Row="2" Grid.Column="0"/>
-            <DatePicker Grid.Row="2" Grid.Column="1"
-                        Format="dd-mm-yyyy"/>
-            <Label Text="Moneda"
-               FontSize="Small"
-               Grid.Row="3" Grid.Column="0"/>
-            <Editor WidthRequest="150"
-                Placeholder="Moneda"
-                Grid.Row="3" Grid.Column="1"/>
-            <Label Text="Total"
-               FontSize="Small"
-               Grid.Row="4" Grid.Column="0"/>
-            <Editor WidthRequest="150"
-                IsReadOnly="True"
-                Placeholder="Total"
-                Grid.Row="4" Grid.Column="1"/>
-            <Button Text="Ingresar"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    BackgroundColor="ForestGreen"
-                    Grid.Row="6" Grid.Column="0"
-                    Clicked="Button_Clicked"/>
+            <!-- * Botones de accion * -->
+
+            <Button Text="{Binding Agregar}"
+                WidthRequest="150"
+                Grid.Column="0"
+                Grid.Row="0"
+                BackgroundColor="Green"
+                CornerRadius="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor="White"
+                Command="{Binding AgregarCommand}"/>
+
+            <Button Text="{Binding Eliminar}"
+                WidthRequest="150"
+                Grid.Column="1"
+                Grid.Row="0"
+                BackgroundColor="Green"
+                CornerRadius="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor="White"
+                Command="{Binding EliminarCommand}"/>
+
+            <Button Text="{Binding Editar}"
+                WidthRequest="150"
+                Grid.Column="2"
+                Grid.Row="0"
+                BackgroundColor="Green"
+                CornerRadius="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor="White"
+                Command="{Binding EditarCommand}"/>
+
+            <!-- * Busqueda * -->
+
+            <Editor x:Name="txtBusqueda"
+                Placeholder="Busqueda"
+                HorizontalTextAlignment="Center"
+                WidthRequest="350"
+                Text="{Binding FilterText}"
+                AutoSize="Disabled"
+                Keyboard="Numeric"
+                Grid.Row="0"
+                Grid.Column="3"
+                Grid.ColumnSpan="3"
+                HeightRequest="10"/>
+
+            <syncfusion:SfDataGrid x:Name="dataGrid"
+                               SelectionMode="Single"
+                               SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
+                               NavigationMode="Row"
+                               AutoGenerateColumnsMode="None"
+                               ItemsSource="{Binding FacturaCompraInfoCollection}"
+                               DefaultColumnWidth="130"
+                               GridLinesVisibility="Both"
+                               HeaderGridLinesVisibility="Both"
+                               BackgroundColor="LightGreen"
+                               Grid.Row="1"
+                               Grid.ColumnSpan="6"
+                               ColumnWidthMode="Fill">
+                <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:DataGridTextColumn MappingName="Folio" HeaderText="Folio"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Proveedor" HeaderText="Proveedor"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Fecha" HeaderText="Fecha"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Moneda" HeaderText="Moneda"></syncfusion:DataGridTextColumn>
+                </syncfusion:SfDataGrid.Columns>
+            </syncfusion:SfDataGrid>
         </Grid>
     </ScrollView>
 </ContentPage>

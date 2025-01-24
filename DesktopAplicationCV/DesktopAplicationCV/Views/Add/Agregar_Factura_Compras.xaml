@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DesktopAplicationCV.Views.Add.Agregar_Factura_Compras"
+             x:Class="DesktopAplicationCV.Views.Agregar_Factura_Compras"
              Title="Agregar Factura de Compras">
     <ScrollView>
         <Grid>

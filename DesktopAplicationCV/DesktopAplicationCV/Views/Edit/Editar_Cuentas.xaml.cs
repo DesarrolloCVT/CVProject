@@ -1,4 +1,4 @@
-namespace DesktopAplicationCV.Views.Edit;
+namespace DesktopAplicationCV.Views;
 
 public partial class Editar_Cuentas : ContentPage
 {

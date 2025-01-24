@@ -2,7 +2,7 @@
 
 namespace DesktopAplicationCV.Models
 {
-    public class SocioNegocio
+    public class SocioNegocioModel
     {
         private int codigo;
         private string nombre;
@@ -35,7 +35,7 @@ namespace DesktopAplicationCV.Models
             set { this.saldo = value; }
         }
 
-        public SocioNegocio(int codigo, string nombre, string tipo, int saldo)
+        public SocioNegocioModel(int codigo, string nombre, string tipo, int saldo)
         {
             this.Codigo = codigo;
             this.Nombre = nombre;

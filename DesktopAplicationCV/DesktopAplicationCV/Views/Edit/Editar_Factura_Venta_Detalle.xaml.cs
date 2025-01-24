@@ -1,4 +1,4 @@
-namespace DesktopAplicationCV.Views.Edit;
+namespace DesktopAplicationCV.Views;
 
 public partial class Editar_Factura_Venta_Detalle : ContentPage
 {

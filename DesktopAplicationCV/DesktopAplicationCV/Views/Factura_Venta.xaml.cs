@@ -1,14 +1,32 @@
+using DesktopAplicationCV.Models;
+using DesktopAplicationCV.ViewModel;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Factura_Venta : ContentPage
 {
 	public Factura_Venta()
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void Button_Clicked(object sender, EventArgs e)
+        InitializeComponent();
+        BindingContext = new FacturaVentaViewModel(navigationService);
+
+        var viewModel = BindingContext as FacturaVentaViewModel;
+
+        if (viewModel != null)
+        {
+            // Vincular la acción para aplicar el filtro
+            viewModel.ApplyFilterAction = () =>
+            {
+                dataGrid.View.Filter = viewModel.GetFilter();
+                dataGrid.View.RefreshFilter();
+            };
+        }
+    }
+
+    protected override void OnAppearing()
     {
-        DisplayAlert("Alerta", "Se ingresaran los datos", "OK");
+        base.OnAppearing();
     }
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DesktopAplicationCV.ViewModel"
+             x:Class="DesktopAplicationCV.Views.UsuariosPage"
+             Title="UsuariosPage">
+
+    <StackLayout Padding="10">
+        <Label Text="Usuarios" FontSize="24" HorizontalOptions="Center" />
+        <ListView ItemsSource="{Binding Usuarios}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Nombre}" Detail="{Binding Email}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Cargar Usuarios" Command="{Binding CargarUsuariosCommand}" />
+    </StackLayout>
+</ContentPage>

@@ -15,17 +15,17 @@ namespace DesktopAplicationCV.ViewModel
         private int selectedIndex;
 
         [ObservableProperty]
-        private ObservableCollection<SocioNegocio> socio;
+        private ObservableCollection<SocioNegocioModel> socio;
 
         private string _filterText;
 
         #endregion
 
-        public ObservableCollection<SocioNegocio> Items { get; set; }
+        public ObservableCollection<SocioNegocioModel> Items { get; set; }
 
         
         #region Inicializadores
-        public ObservableCollection<SocioNegocio> SocioInfoCollection
+        public ObservableCollection<SocioNegocioModel> SocioInfoCollection
         {
             get { return socio; }
             set { socio = value; }
@@ -56,7 +56,7 @@ namespace DesktopAplicationCV.ViewModel
         public SocioViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            socio = new ObservableCollection<SocioNegocio>();
+            socio = new ObservableCollection<SocioNegocioModel>();
             GenerateOrders();
         }
 
@@ -67,7 +67,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             return item =>
             {
-                if (item is SocioNegocio data)
+                if (item is SocioNegocioModel data)
                 {
                     return string.IsNullOrWhiteSpace(FilterText) ||
                            data.Nombre.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
@@ -81,22 +81,22 @@ namespace DesktopAplicationCV.ViewModel
 
         public void GenerateOrders()
         {
-            socio.Add(new SocioNegocio(0,"Germany", "ALFKI", 10));
-            socio.Add(new SocioNegocio(1,"Mexico", "ANATR", 10));
-            socio.Add(new SocioNegocio(2,"Mexico", "ANTON", 10));
-            socio.Add(new SocioNegocio(3,"UK", "AROUT", 10));
-            socio.Add(new SocioNegocio(4,"Sweden", "BERGS", 10));
-            socio.Add(new SocioNegocio(5,"Germany", "BLAUS", 10));
-            socio.Add(new SocioNegocio(6,"France", "BLONP", 10));
-            socio.Add(new SocioNegocio(7,"Spain", "BOLID", 10));
-            socio.Add(new SocioNegocio(8,"France", "BONAP", 10));
-            socio.Add(new SocioNegocio(9,"Canada", "BOTTM", 10));
-            socio.Add(new SocioNegocio(10,"UK", "AROUT", 10));
-            socio.Add(new SocioNegocio(11,"Germany", "BLAUS", 10));
-            socio.Add(new SocioNegocio(12,"France", "BLONP", 10));
-            socio.Add(new SocioNegocio(13,"UK", "AROUT", 10));
-            socio.Add(new SocioNegocio(14,"CL", "TANGANANA", 1050));
-            socio.Add(new SocioNegocio(15,"CL", "TANGANANICA", 3550));
+            socio.Add(new SocioNegocioModel(0,"Germany", "ALFKI", 10));
+            socio.Add(new SocioNegocioModel(1,"Mexico", "ANATR", 10));
+            socio.Add(new SocioNegocioModel(2,"Mexico", "ANTON", 10));
+            socio.Add(new SocioNegocioModel(3,"UK", "AROUT", 10));
+            socio.Add(new SocioNegocioModel(4,"Sweden", "BERGS", 10));
+            socio.Add(new SocioNegocioModel(5,"Germany", "BLAUS", 10));
+            socio.Add(new SocioNegocioModel(6,"France", "BLONP", 10));
+            socio.Add(new SocioNegocioModel(7,"Spain", "BOLID", 10));
+            socio.Add(new SocioNegocioModel(8,"France", "BONAP", 10));
+            socio.Add(new SocioNegocioModel(9,"Canada", "BOTTM", 10));
+            socio.Add(new SocioNegocioModel(10,"UK", "AROUT", 10));
+            socio.Add(new SocioNegocioModel(11,"Germany", "BLAUS", 10));
+            socio.Add(new SocioNegocioModel(12,"France", "BLONP", 10));
+            socio.Add(new SocioNegocioModel(13,"UK", "AROUT", 10));
+            socio.Add(new SocioNegocioModel(14,"CL", "TANGANANA", 1050));
+            socio.Add(new SocioNegocioModel(15,"CL", "TANGANANICA", 3550));
         }
 
         #region Binding Methods 

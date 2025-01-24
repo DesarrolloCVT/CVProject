@@ -1,7 +1,8 @@
-﻿using DesktopAplicationCV.Models;
+﻿using DesktopAplicationCV.Data;
+using DesktopAplicationCV.Models;
 using DesktopAplicationCV.ViewModel;
 using DesktopAplicationCV.Views;
-using DesktopAplicationCV.Views.Add;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
 
@@ -12,6 +13,21 @@ namespace DesktopAplicationCV
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
+            var text = FileSystem.AppDataDirectory;
+
+            // Cargar appsettings.json
+            var config = new ConfigurationBuilder()
+                .SetBasePath(FileSystem.AppDataDirectory) // Ubicación base
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            // Agregar la configuración al contenedor de servicios
+            builder.Configuration.AddConfiguration(config);
+
+            builder.Services.AddSingleton<UsuarioService>();
+            builder.Services.AddSingleton<UsuarioViewModel>();
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>

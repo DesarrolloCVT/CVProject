@@ -1,14 +1,32 @@
+using DesktopAplicationCV.Models;
+using DesktopAplicationCV.ViewModel;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Banco : ContentPage
 {
 	public Banco()
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void Button_Clicked(object sender, EventArgs e)
+        InitializeComponent();
+        BindingContext = new BancoViewModel(navigationService);
+
+        var viewModel = BindingContext as BancoViewModel;
+
+        if (viewModel != null)
+        {
+            // Vincular la acción para aplicar el filtro
+            viewModel.ApplyFilterAction = () =>
+            {
+                dataGrid.View.Filter = viewModel.GetFilter();
+                dataGrid.View.RefreshFilter();
+            };
+        }
+    }
+
+    protected override void OnAppearing()
     {
-        DisplayAlert("Alerta", "Se ingresaran los datos", "OK");
+        base.OnAppearing();
     }
 }

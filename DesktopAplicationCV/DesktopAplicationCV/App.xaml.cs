@@ -1,7 +1,6 @@
 ﻿using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Views;
-using DesktopAplicationCV.Views.Add;
-using DesktopAplicationCV.Views.Edit;
+using Microsoft.Extensions.Configuration;
 
 namespace DesktopAplicationCV
 {
@@ -16,7 +15,7 @@ namespace DesktopAplicationCV
 
             // Asignamos la página principal con un NavigationPage
             //MainPage = new NavigationPage(new Productos());
-            MainPage = new NavigationPage(new Ingresos_Detalle());
+            MainPage = new NavigationPage(new UsuariosPage());
         }
     }
 }
