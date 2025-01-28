@@ -1,8 +1,7 @@
-﻿using DesktopAplicationCV.Data;
-using DesktopAplicationCV.Models;
+﻿using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Services;
 using DesktopAplicationCV.ViewModel;
 using DesktopAplicationCV.Views;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
 
@@ -15,18 +14,6 @@ namespace DesktopAplicationCV
             var builder = MauiApp.CreateBuilder();
 
             var text = FileSystem.AppDataDirectory;
-
-            // Cargar appsettings.json
-            var config = new ConfigurationBuilder()
-                .SetBasePath(FileSystem.AppDataDirectory) // Ubicación base
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
-
-            // Agregar la configuración al contenedor de servicios
-            builder.Configuration.AddConfiguration(config);
-
-            builder.Services.AddSingleton<UsuarioService>();
-            builder.Services.AddSingleton<UsuarioViewModel>();
 
             builder
                 .UseMauiApp<App>()
@@ -41,11 +28,21 @@ namespace DesktopAplicationCV
 #endif
             builder.ConfigureSyncfusionCore();
 
+            
+            //API
+            builder.Services.AddHttpClient("ApiClient", client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:44302/api/");
+            });
 
             // Registrar ViewModels
             builder.Services.AddSingleton<SocioViewModel>();
             builder.Services.AddSingleton<NavigationViewModel>();
             builder.Services.AddSingleton<ProductosViewModel>();
+            builder.Services.AddSingleton<UsuarioViewModel>();
+            
+            builder.Services.AddTransient<UsuarioViewModel>();
+
 
             // Registrar Páginas
             builder.Services.AddTransient<Socio_Negocio>();
@@ -57,6 +54,12 @@ namespace DesktopAplicationCV
 
             // Registrar servicios
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+            builder.Services.AddSingleton<UsuarioService>();
+            
+            builder.Services.AddTransient<UsuarioService>();
+
+            // Registrar View
+            builder.Services.AddTransient<UsuariosPage>();
 
             return builder.Build();
         }

@@ -4,23 +4,18 @@ namespace DesktopAplicationCV.Views;
 
 public partial class UsuariosPage : ContentPage
 {
-	public UsuariosPage()
-	{   
+    private UsuarioViewModel _viewModel;
+
+    public UsuariosPage(UsuarioViewModel viewModel)
+    {
         InitializeComponent();
-		try
-		{
-            //BindingContext = App.Current.Handler?.MauiContext?.Services?.GetService<UsuarioViewModel>();
-            HandlerChanged += OnHandlerChanged;
-        }
-		catch (Exception ex)
-		{
-			Console.WriteLine("Error: " + ex.Message);
-		}
-        
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    void OnHandlerChanged(object sender, EventArgs e)
+    protected override async void OnAppearing()
     {
-        BindingContext = Handler.MauiContext.Services.GetService<UsuarioViewModel>();
+        base.OnAppearing();
+        await _viewModel.CargarUsuariosAsync();
     }
 }

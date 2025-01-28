@@ -6,7 +6,7 @@ namespace DesktopAplicationCV
 {
     public partial class App : Application
     {
-        public App()
+        public App(UsuariosPage usuariosPage)
         {
             InitializeComponent();
 
@@ -15,7 +15,7 @@ namespace DesktopAplicationCV
 
             // Asignamos la página principal con un NavigationPage
             //MainPage = new NavigationPage(new Productos());
-            MainPage = new NavigationPage(new UsuariosPage());
+            MainPage = new NavigationPage(usuariosPage);
         }
     }
 }

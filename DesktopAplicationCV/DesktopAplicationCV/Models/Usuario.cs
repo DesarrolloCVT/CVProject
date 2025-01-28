@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DesktopAplicationCV.Models
 {
     public class Usuario
     {
-        public int IdUsuario { get; set; }
+        [Key]
+        public string IdUsuario { get; set; }
         public string NombreUsuario { get; set; }
         public string ClaveEncriptada { get; set; }
+        public int Clave { get; set; }
     }
 }
