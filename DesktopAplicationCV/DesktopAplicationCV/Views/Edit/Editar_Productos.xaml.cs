@@ -1,14 +1,22 @@
+using DesktopAplicationCV.Services;
+using DesktopAplicationCV.Models;
+using DesktopAplicationCV.ViewModel;
+using System.Reflection;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Editar_Productos : ContentPage
 {
-	public Editar_Productos()
+	public Editar_Productos(object obj)
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void ModificarProdButton_Clicked(object sender, EventArgs e)
-    {
+        InitializeComponent();
+        BindingContext = new ProductosViewModel(navigationService);
+        var viewModel = BindingContext as ProductosViewModel;
 
+        ProductosModel productoModel = (ProductosModel)obj;
+        EditCodigo.Text = productoModel.Codigo.ToString();
+        EditProducto.Text = productoModel.Producto;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Services;
 using DesktopAplicationCV.Views;
 using Microsoft.Extensions.Configuration;
 
@@ -6,7 +7,7 @@ namespace DesktopAplicationCV
 {
     public partial class App : Application
     {
-        public App(UsuariosPage usuariosPage)
+        public App()
         {
             InitializeComponent();
 
@@ -14,8 +15,7 @@ namespace DesktopAplicationCV
             DependencyService.Register<INavigationService, NavigationService>();
 
             // Asignamos la página principal con un NavigationPage
-            //MainPage = new NavigationPage(new Productos());
-            MainPage = new NavigationPage(usuariosPage);
+            MainPage = new NavigationPage(new Productos());
         }
     }
 }

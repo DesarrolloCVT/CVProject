@@ -1,6 +1,7 @@
 namespace DesktopAplicationCV.Views;
 
 using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Services;
 using DesktopAplicationCV.ViewModel;
 
 public partial class Socio_Negocio : ContentPage

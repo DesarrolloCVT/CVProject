@@ -1,14 +1,14 @@
 ﻿using DesktopAplicationCV.ViewModel;
 
-namespace DesktopAplicationCV.Models
-{   
+namespace DesktopAplicationCV.Services
+{
     public class NavigationService : INavigationService
     {
-        public async Task NavigateToAsync<TViewModel>(string identificador) where TViewModel : BaseViewModel
+        public async Task NavigateToAsync<TViewModel>(string identificador, object obj) where TViewModel : BaseViewModel
         {
 
-            var pageType = GetPageTypeForViewModel(typeof(TViewModel), identificador);
-            var page = (Page)Activator.CreateInstance(pageType);
+            var pageType = GetPageTypeForViewModel(typeof(TViewModel), identificador, obj);
+            var page = (Page)Activator.CreateInstance(pageType, args:obj);
             if (Application.Current.MainPage is NavigationPage navigationPage)
             {
                 await navigationPage.Navigation.PushAsync(page);
@@ -23,7 +23,7 @@ namespace DesktopAplicationCV.Models
             }
         }
 
-        private Type GetPageTypeForViewModel(Type viewModelType, string Nombre)
+        private Type GetPageTypeForViewModel(Type viewModelType, string Nombre, object? obj)
         {
             var viewOrigin = viewModelType.FullName.Replace("ViewModel", "Views");
             var viewName = viewOrigin.Replace("NavigationViews", Nombre);

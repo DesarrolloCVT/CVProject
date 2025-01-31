@@ -1,6 +1,7 @@
 namespace DesktopAplicationCV.Views;
 
 using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Services;
 using DesktopAplicationCV.ViewModel;
 
 public partial class Productos : ContentPage
@@ -28,5 +29,6 @@ public partial class Productos : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        dataGridProducto.Refresh();
     }
 }

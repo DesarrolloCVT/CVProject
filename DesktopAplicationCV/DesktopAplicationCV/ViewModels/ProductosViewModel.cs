@@ -1,7 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Services;
+using Syncfusion.Maui.DataGrid;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace DesktopAplicationCV.ViewModel
@@ -9,27 +13,40 @@ namespace DesktopAplicationCV.ViewModel
     public partial class ProductosViewModel : BaseViewModel
     {
         #region Variables
-        private readonly INavigationService _navigationService;
 
-        //public ICommand NavigateToDetailCommand => new AsyncRelayCommand(NavigateToDetail);
+        private object OldProduct;
+        private object NewProduct;
+
+        private int CodigoCeldaSeleccionada;
+        private string NombreProductoCeldaSeleccionada;
+
+        private readonly INavigationService _navigationService;
+        private readonly ProductoService _productoService;
 
         [ObservableProperty]
         private int selectedIndex;
 
-        [ObservableProperty]
-        private ObservableCollection<ProductosModel> producto;
+        private ObservableCollection<ProductosModel> Productos;
 
         private string _filterText;
+        private string _nombreProductoIngresadoText;
+        private int _codigoProductoIngresadoText;
+        private string _editNombreProducto;
+        private int _editCodigoProducto;
+
+        public ICommand CargarProductosCommand { get; }
+        public ICommand AgregarProductoCommand { get; }
+        public ICommand EliminarProductoCommand { get; }
+        public ICommand ActualizarProductoCommand { get; }
+        public ICommand CeldaTocadaCommand { get; }
 
         #endregion
-
-        public ObservableCollection<ProductosModel> Items { get; set; }
 
         #region Inicializadores
         public ObservableCollection<ProductosModel> ProdInfoCollection
         {
-            get { return producto; }
-            set { producto = value; }
+            get { return Productos; }
+            set { Productos = value; }
         }
         #endregion
 
@@ -49,15 +66,72 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        public string NombreProductoIngresado
+        {
+            get => _nombreProductoIngresadoText;
+            set
+            {
+                if (_nombreProductoIngresadoText != value)
+                {
+                    _nombreProductoIngresadoText = value;
+                    OnPropertyChanged(nameof(NombreProductoIngresado));
+                }
+            }
+        }
+
+        public string EditNombreProducto
+        {
+            get => _editNombreProducto;
+            set
+            {
+                if (_editNombreProducto != value)
+                {
+                    _editNombreProducto = value;
+                    OnPropertyChanged(nameof(EditNombreProducto));
+                }
+            }
+        }
+
+        public int CodigoProductoIngresado
+        {
+            get => _codigoProductoIngresadoText;
+            set
+            {
+                if (_codigoProductoIngresadoText != value)
+                {
+                    _codigoProductoIngresadoText = value;
+                    OnPropertyChanged(nameof(CodigoProductoIngresado));
+                }
+            }
+        }
+
+        public int EditCodigoProducto
+        {
+            get => _editCodigoProducto;
+            set
+            {
+                if (_editCodigoProducto != value)
+                {
+                    _editCodigoProducto = value;
+                    OnPropertyChanged(nameof(EditCodigoProducto));
+                }
+            }
+        }
+
+
         // Acción para establecer la lógica del filtro
         public Action ApplyFilterAction { get; set; }
 
         #region Constructores
         public ProductosViewModel(INavigationService navigationService)
         {
+            _productoService = new ProductoService();
+            Productos = new ObservableCollection<ProductosModel>();
+
             _navigationService = navigationService;
-            producto = new ObservableCollection<ProductosModel>();
-            GenerateOrders();
+            CargarProductos();
+
+            CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
         #endregion
 
@@ -76,24 +150,27 @@ namespace DesktopAplicationCV.ViewModel
             };
         }
 
-        public void GenerateOrders()
+        // Método que se ejecuta cuando se toca una celda
+        private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            producto.Add(new ProductosModel(0, "Germany"));
-            producto.Add(new ProductosModel(1, "Mexico"));
-            producto.Add(new ProductosModel(2, "Mexico"));
-            producto.Add(new ProductosModel(3, "UK"));
-            producto.Add(new ProductosModel(4, "Sweden"));
-            producto.Add(new ProductosModel(5, "Germany"));
-            producto.Add(new ProductosModel(6, "France"));
-            producto.Add(new ProductosModel(7, "Spain"));
-            producto.Add(new ProductosModel(8, "France"));
-            producto.Add(new ProductosModel(9, "Canada"));
-            producto.Add(new ProductosModel(10, "UK"));
-            producto.Add(new ProductosModel(11, "Germany"));
-            producto.Add(new ProductosModel(12, "France"));
-            producto.Add(new ProductosModel(13, "UK"));
-            producto.Add(new ProductosModel(14, "CL"));
-            producto.Add(new ProductosModel(15, "CL"));
+            if (e.RowData is ProductosModel productos)
+            {
+                CodigoCeldaSeleccionada = productos.Codigo;
+                NombreProductoCeldaSeleccionada = productos.Producto;
+                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        [RelayCommand]
+        public void GridCargado()
+        {
+            CargarProductos();
         }
 
         [RelayCommand]
@@ -103,7 +180,8 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    Producto.RemoveAt((SelectedIndex - 1));
+                    EliminarProducto(CodigoCeldaSeleccionada);
+                    CargarProductos();
                 }
                 else
                 {
@@ -129,17 +207,103 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        //private async Task NavigateToDetail()
+        [RelayCommand]
+        public async void InsertarProducto()
+        {
+            if(CodigoProductoIngresado != 0 && !string.IsNullOrEmpty(NombreProductoIngresado))
+            {
+                AgregarProducto(new ProductosModel(CodigoProductoIngresado, NombreProductoIngresado));
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+            }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+            }
+        }
+
         [RelayCommand]
         private async void Editar()
         {
-            try
+            if (selectedIndex >= 0)
             {
-                await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Productos");
+                try
+                {
+                    OldProduct = new ProductosModel(CodigoCeldaSeleccionada, NombreProductoCeldaSeleccionada)
+                    {
+                        Codigo = CodigoCeldaSeleccionada,
+                        Producto = NombreProductoCeldaSeleccionada
+                    };
+
+                    await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Productos", OldProduct);
+                }
+                catch (Exception Ex)
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                }
             }
-            catch (Exception Ex)
+            else
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+            }
+
+            
+        }
+
+        private async Task CargarProductos()
+        {
+            var productos = await _productoService.GetProductosAsync();
+            Productos.Clear();
+            foreach (var producto in productos)
+            {
+                Productos.Add(producto);
+            }
+        }
+
+        private async Task AgregarProducto(ProductosModel producto)
+        {
+            if (await _productoService.AddProductoAsync(producto))
+            {
+                Productos.Add(producto);
+            }
+        }
+
+        private async Task EliminarProducto(int codigo)
+        {
+            if (await _productoService.DeleteProductoAsync(codigo))
+            {
+                var producto = Productos.FirstOrDefault(p => p.Codigo == codigo);
+                if (producto != null)
+                {
+                    Productos.Remove(producto);
+                }
+            }
+        }
+
+        [RelayCommand]
+        public void Update()
+        {
+            ActualizarProducto((ProductosModel)OldProduct);
+        }
+
+
+        private async Task ActualizarProducto(ProductosModel AntiguoProducto)
+        {
+            var cod = 1;
+            var prod = "Porotos";
+            NewProduct = new ProductosModel(cod, prod)
+            {
+                Codigo = cod,
+                Producto = prod
+            };
+
+            if (await _productoService.UpdateProductoAsync((ProductosModel)NewProduct))
+            {
+                //Remove Old Product
+                Productos.Remove(AntiguoProducto);
+
+                //Add new product
+                Productos.Add((ProductosModel)NewProduct);
+
             }
         }
     }

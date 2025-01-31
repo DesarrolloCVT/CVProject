@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Services;
 using DesktopAplicationCV.Views;
 using System.Collections.ObjectModel;
 

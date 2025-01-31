@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Productos"
+             xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              Title="Agregar Productos">
     <ScrollView>
         <Grid>
@@ -22,11 +23,13 @@
                    FontSize="Small"
                    Grid.Row="0" Grid.Column="1"/>
             <Editor Placeholder="Codigo"
+                    Text="{Binding CodigoProductoIngresado}"
                     Grid.Row="0" Grid.Column="2"/>
             <Label Text="Producto"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Producto"
+                    Text="{Binding NombreProductoIngresado}"
                     Grid.Row="1" Grid.Column="2"/>
             <Button Text="Ingresar"
                     TextColor="White"
@@ -34,7 +37,7 @@
                     BackgroundColor="ForestGreen"
                     Grid.Row="3" Grid.Column="1"
                     Grid.ColumnSpan="2"
-                    Clicked="AddProductsButton_Clicked"/>
+                    Command="{Binding InsertarProductoCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

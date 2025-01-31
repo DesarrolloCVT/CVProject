@@ -1,4 +1,5 @@
-﻿using DesktopAplicationCV.Models;
+﻿using CommunityToolkit.Maui;
+using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Services;
 using DesktopAplicationCV.ViewModel;
 using DesktopAplicationCV.Views;
@@ -17,6 +18,7 @@ namespace DesktopAplicationCV
 
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -39,9 +41,6 @@ namespace DesktopAplicationCV
             builder.Services.AddSingleton<SocioViewModel>();
             builder.Services.AddSingleton<NavigationViewModel>();
             builder.Services.AddSingleton<ProductosViewModel>();
-            builder.Services.AddSingleton<UsuarioViewModel>();
-            
-            builder.Services.AddTransient<UsuarioViewModel>();
 
 
             // Registrar Páginas
@@ -54,12 +53,6 @@ namespace DesktopAplicationCV
 
             // Registrar servicios
             builder.Services.AddSingleton<INavigationService, NavigationService>();
-            builder.Services.AddSingleton<UsuarioService>();
-            
-            builder.Services.AddTransient<UsuarioService>();
-
-            // Registrar View
-            builder.Services.AddTransient<UsuariosPage>();
 
             return builder.Build();
         }

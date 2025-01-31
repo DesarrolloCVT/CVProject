@@ -2,11 +2,12 @@
 
 namespace DesktopAplicationCV.Models
 {
-    public class Usuario
+    public class Usuarios
     {
         [Key]
-        public string IdUsuario { get; set; }
+        public int IdUsuario { get; set; }
         public string NombreUsuario { get; set; }
+        public string uUsuario { get; set; }
         public string ClaveEncriptada { get; set; }
         public int Clave { get; set; }
     }

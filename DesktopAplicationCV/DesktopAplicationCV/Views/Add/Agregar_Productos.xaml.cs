@@ -1,14 +1,17 @@
+using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Services;
+using DesktopAplicationCV.ViewModel;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Agregar_Productos : ContentPage
 {
 	public Agregar_Productos()
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void AddProductsButton_Clicked(object sender, EventArgs e)
-    {
-
+        InitializeComponent();
+        BindingContext = new ProductosViewModel(navigationService);
+        var viewModel = BindingContext as ProductosViewModel;
     }
 }

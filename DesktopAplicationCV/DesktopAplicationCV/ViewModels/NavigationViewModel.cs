@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Services;
 using System.Windows.Input;
 
 namespace DesktopAplicationCV.ViewModel
