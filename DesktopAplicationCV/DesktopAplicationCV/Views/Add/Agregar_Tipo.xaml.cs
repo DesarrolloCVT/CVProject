@@ -1,14 +1,16 @@
+using DesktopAplicationCV.Services;
+using DesktopAplicationCV.ViewModel;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Agregar_Tipo : ContentPage
 {
 	public Agregar_Tipo()
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void AddTypeButton_Clicked(object sender, EventArgs e)
-    {
-
+        InitializeComponent();
+        BindingContext = new TipoViewModel(navigationService);
+        var viewModel = BindingContext as TipoViewModel;
     }
 }

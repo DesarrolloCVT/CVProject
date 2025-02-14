@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="DesktopAplicationCV.Views.Ingresos"
-             Title="Ingresos">
+             Title="{Binding TituloPagina}">
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -81,14 +82,21 @@
                                BackgroundColor="LightGreen"
                                Grid.Row="1"
                                Grid.ColumnSpan="6"
-                               ColumnWidthMode="Fill">
+                               ColumnWidthMode="Fill"
+                               CellTappedCommand="{Binding CeldaTocadaCommand}">
+
+                <syncfusion:SfDataGrid.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="Loaded"
+                                Command="{Binding GridCargadoCommand}" />
+                </syncfusion:SfDataGrid.Behaviors>
+
                 <syncfusion:SfDataGrid.Columns>
                     <syncfusion:DataGridTextColumn MappingName="Folio" HeaderText="Folio"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Tipo" HeaderText="Tipo"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Moneda" HeaderText="Moneda"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Fecha" HeaderText="Fecha"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Cliente" HeaderText="Cliente"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Metodo_Pago" HeaderText="Metodo_Pago"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Metodo_Pago" HeaderText="Metodo de Pago"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Banco" HeaderText="Banco"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Cuenta" HeaderText="Cuenta"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>

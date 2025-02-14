@@ -12,8 +12,8 @@ namespace DesktopAplicationCV.Models
         private int folio;
         private string cliente;
         private string direccion_despacho;
-        private int moneda;
-        private string fecha;
+        private string moneda;
+        private DateTime fecha;
 
         private ICommand buttonCommand;
 
@@ -35,25 +35,19 @@ namespace DesktopAplicationCV.Models
             set { this.direccion_despacho = value; }
         }
 
-        public int Moneda
-
-        {
-            get { return moneda;
-            }
+        public string Moneda
+        { 
+            get { return moneda; }
             set { this.moneda = value; }
         }
 
-        public string Fecha
-
+        public DateTime Fecha
         {
-            get
-            {
-                return fecha;
-            }
+            get { return fecha; }
             set { this.fecha = value; }
         }
 
-        public FacturaVentaModel(int folio, string cliente, string direccion_despacho, int moneda, string fecha)
+        public FacturaVentaModel(int folio, string cliente, string direccion_despacho, string moneda, DateTime fecha)
         {
             this.Folio = folio;
             this.Cliente = cliente;

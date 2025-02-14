@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Operaciones_Bancarias"
              xmlns:local="clr-namespace:DesktopAplicationCV.Views"
-             Title="Operaciones_Bancarias">
+             Title="Operaciones Bancarias">
 
     <TabBar>
         <Tab Title="Ingresos">

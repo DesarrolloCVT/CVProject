@@ -33,11 +33,21 @@
                     Grid.Row="1" Grid.Column="2"/>
             <Button Text="Ingresar"
                     TextColor="White"
+                    WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
                     Grid.Row="3" Grid.Column="1"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="1"
                     Command="{Binding InsertarProductoCommand}"/>
+            <Button 
+                Text="Cancelar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="ForestGreen"
+                Grid.Row="3" Grid.Column="2"
+                Grid.ColumnSpan="1"
+                Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

@@ -9,35 +9,43 @@ namespace DesktopAplicationCV.Models
 {
     public  class FacturaCompraDetalleModel
     {
-        private int codigo_producto;
-        private string fecha;
-        private int moneda;
+        private int folio;
+        private string codigo_producto;
+        private int cantidad;
+        private int precio;
 
         private ICommand buttonCommand;
 
-        public int Codigo_Producto
+        public int Folio
+        {
+            get { return this.folio; }
+            set { this.folio = value; }
+        }
+
+        public string Codigo_Producto
         {
             get { return this.codigo_producto; }
             set { this.codigo_producto = value; }
         }
 
-        public string Fecha
+        public int Cantidad
         {
-            get { return fecha; }
-            set { this.fecha = value; }
+            get { return cantidad; }
+            set { this.cantidad = value; }
         }
 
-        public int Moneda
+        public int Precio
         {
-            get { return moneda; }
-            set { this.moneda = value; }
+            get { return precio; }
+            set { this.precio = value; }
         }
 
-        public FacturaCompraDetalleModel(int codigo_producto, string fecha, int moneda)
+        public FacturaCompraDetalleModel(int folio, string codigo_producto, int cantidad, int precio)
         {
+            this.Folio = folio;
             this.Codigo_Producto = codigo_producto;
-            this.Fecha = fecha;
-            this.Moneda = moneda;
+            this.Cantidad = cantidad;
+            this.Precio = precio;
         }
     }
 }

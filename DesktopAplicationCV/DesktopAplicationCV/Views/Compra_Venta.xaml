@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Compra_Venta"
              xmlns:local="clr-namespace:DesktopAplicationCV.Views"
-             Title="Compra_Venta">
+             Title="Compra y Venta">
     <TabBar>
         <Tab Title="Factura de Venta">
             <ShellContent

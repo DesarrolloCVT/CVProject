@@ -18,25 +18,45 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Nombre"
-                   FontSize="Small"
-                   Grid.Row="0" Grid.Column="1"/>
-            <Editor WidthRequest="150"
-                    Placeholder="Nombre"
-                    Grid.Row="0" Grid.Column="2"/>
-            <Label Text="Codigo"
-                   FontSize="Small"
-                   Grid.Row="1" Grid.Column="1"/>
-            <Editor WidthRequest="150"
-                    Placeholder="Codigo"
-                    Grid.Row="1" Grid.Column="2"/>
-            <Button Text="Modificar"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    BackgroundColor="ForestGreen"
-                    Grid.Row="3" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Clicked="ModificarBancButton_Clicked"/>
+            <Label 
+                Text="Codigo"
+                FontSize="Small"
+                Grid.Row="0" Grid.Column="1"/>
+            <Editor 
+                x:Name="EditCodigo"
+                IsReadOnly="True"
+                WidthRequest="150"
+                Text="{Binding EditCodigoBanco}"
+                Placeholder="Codigo"
+                Grid.Row="0" Grid.Column="2"/>
+            <Label 
+                Text="Nombre"
+                FontSize="Small"
+                Grid.Row="1" Grid.Column="1"/>
+            <Editor 
+                x:Name="EditNombre"
+                WidthRequest="150"
+                Text="{Binding EditNombreBanco}"
+                Placeholder="Nombre"
+                Grid.Row="1" Grid.Column="2"/>
+            <Button 
+                Text="Modificar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="ForestGreen"
+                Grid.Row="3" Grid.Column="1"
+                Grid.ColumnSpan="1"
+                Command="{Binding UpdateCommand}"/>
+            <Button 
+                Text="Cancelar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="ForestGreen"
+                Grid.Row="3" Grid.Column="2"
+                Grid.ColumnSpan="1"
+                Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

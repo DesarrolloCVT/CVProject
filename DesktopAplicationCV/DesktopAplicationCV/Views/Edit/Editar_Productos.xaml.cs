@@ -16,7 +16,7 @@ public partial class Editar_Productos : ContentPage
         var viewModel = BindingContext as ProductosViewModel;
 
         ProductosModel productoModel = (ProductosModel)obj;
-        EditCodigo.Text = productoModel.Codigo.ToString();
-        EditProducto.Text = productoModel.Producto;
+        EditCodigo.Text = productoModel.Codigo.ToString().Trim();
+        EditProducto.Text = productoModel.Producto.Trim();
     }
 }

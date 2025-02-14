@@ -29,55 +29,78 @@
                    FontSize="Small"
                    Grid.Row="0" Grid.Column="1"/>
             <Editor Placeholder="Codigo"
+                    Text="{Binding CodigoTipoIngresado}"
                     Grid.Row="0" Grid.Column="2"/>
             <Label Text="Nombre"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Nombre"
+                    Text="{Binding NombreTipoIngresado}"
                     Grid.Row="1" Grid.Column="2"/>
             <Label Text="Tipo"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Picker x:Name="PkrTipo"
-                    Grid.Row="2" Grid.Column="2"/>
+                    SelectedItem="{Binding TipoIngresado}"
+                    Grid.Row="2" Grid.Column="2">
+                <Picker.Items>
+                    <x:String>Ingreso</x:String>
+                    <x:String>Egreso</x:String>
+                </Picker.Items>
+            </Picker>
             <Label Text="Cuenta"
                    FontSize="Small"
                    Grid.Row="3" Grid.Column="1"/>
             <Editor Placeholder="Cuenta"
+                    Text="{Binding CuentaTipoIngresado}"
                     Grid.Row="3" Grid.Column="2"/>
             <Label Text="Pago de Factura"
                    FontSize="Small"
                    Grid.Row="4" Grid.Column="1"/>
             <Editor Placeholder="Pago de Factura"
+                    Text="{Binding PagoFacturaTipoIngresado}"
                     Grid.Row="4" Grid.Column="2"/>
             <Label Text="Gasto de Comercializacion"
                    FontSize="Small"
                    Grid.Row="5" Grid.Column="1"/>
             <Editor Placeholder="Gasto de Comercializacion"
+                    Text="{Binding GastoComercializacionTipoIngresado}"
                     Grid.Row="5" Grid.Column="2"/>
             <Label Text="Comisiones"
                    FontSize="Small"
                    Grid.Row="6" Grid.Column="1"/>
             <Editor Placeholder="Comisiones"
+                    Text="{Binding ComisionesTipoIngresado}"
                     Grid.Row="6" Grid.Column="2"/>
             <Label Text="Gasto Financiero"
                    FontSize="Small"
                    Grid.Row="7" Grid.Column="1"/>
             <Editor Placeholder="Gasto Financiero"
+                    Text="{Binding GastoFinancieroTipoIngresado}"
                     Grid.Row="7" Grid.Column="2"/>
             <Label Text="Anticipo"
                    FontSize="Small"
                    Grid.Row="8" Grid.Column="1"/>
             <Editor Placeholder="Anticipo"
+                    Text="{Binding AnticipoTipoIngresado}"
                     Grid.Row="8" Grid.Column="2"/>
             <Button Text="Ingresar"
                     TextColor="White"
+                    WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
                     Grid.Row="10" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Clicked="AddTypeButton_Clicked"/>
+                    Grid.ColumnSpan="1"
+                    Command="{Binding InsertarTipoCommand}"/>
+            <Button     Text="Cancelar"
+                        TextColor="White"
+                        WidthRequest="200"
+                        FontAttributes="Bold"
+                        BackgroundColor="ForestGreen"
+                        Grid.Row="10" Grid.Column="2"
+                        Grid.ColumnSpan="1"
+                        Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

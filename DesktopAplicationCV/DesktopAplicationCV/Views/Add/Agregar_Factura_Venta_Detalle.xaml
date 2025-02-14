@@ -24,29 +24,42 @@
                    FontSize="Small"
                    Grid.Row="0" Grid.Column="1"/>
             <Editor Placeholder="Folio"
+                    Text="{Binding FolioFactVentaDetalleIngresado}"
                     Grid.Row="0" Grid.Column="2"/>
             <Label Text="Codigo de Producto"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Codigo de Producto"
+                    Text="{Binding CodProductoFactVentaDetalleIngresado}"
                     Grid.Row="1" Grid.Column="2"/>
             <Label Text="Cantidad"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
             <Editor Placeholder="Cantidad"
+                    Text="{Binding CantidadFactVentaDetalleIngresado}"
                     Grid.Row="2" Grid.Column="2"/>
             <Label Text="Precio"
                    FontSize="Small"
                    Grid.Row="3" Grid.Column="1"/>
             <Editor Placeholder="Precio"
+                    Text="{Binding PrecioFactVentaDetalleIngresado}"
                     Grid.Row="3" Grid.Column="2"/>
-            <Button Text="Ingresar"
+            <Button Text="Insertar"
                     TextColor="White"
+                    WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
                     Grid.Row="5" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Clicked="AddSalesInvoiceDetailButton_Clicked"/>
+                    Grid.ColumnSpan="1"
+                    Command="{Binding InsertarFactVentaDetalleCommand}"/>
+            <Button Text="Cancelar"
+                    TextColor="White"
+                    WidthRequest="200"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="5" Grid.Column="2"
+                    Grid.ColumnSpan="1"
+                    Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

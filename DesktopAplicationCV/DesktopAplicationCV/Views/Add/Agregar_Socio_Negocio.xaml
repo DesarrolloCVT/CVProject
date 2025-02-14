@@ -26,6 +26,7 @@
                    FontAttributes="Bold"/>
             <Editor WidthRequest="300" 
                     x:Name="edtCodigo"
+                    Text="{Binding CodigoSocioIngresado}"
                     Keyboard="Numeric"
                     Placeholder="Codigo"
                     Grid.Row="0" Grid.Column="2"/>
@@ -37,6 +38,7 @@
                    Grid.Row="1" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Editor WidthRequest="300"
+                    Text="{Binding NombreSocioIngresado}"
                     Placeholder="Nombre"
                     Grid.Row="1" Grid.Column="2"/>
 
@@ -46,17 +48,33 @@
                    Grid.Row="2" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Picker x:Name="PkrTipo"
+                    SelectedItem="{Binding TipoSocioIngresado}"
                     Title="Seleccione Tipo de Socio"
                     WidthRequest="300"
-                    Grid.Row="2" Grid.Column="2"/>
+                    Grid.Row="2" Grid.Column="2">
+            <Picker.Items>
+                <x:String>Cliente</x:String>
+                <x:String>Proveedor</x:String>
+                </Picker.Items>
+            </Picker>
 
             <Button Text="Insertar"
                     TextColor="White"
+                    WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
                     Grid.Row="5" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Clicked="InsertarButton_Clicked"/>
+                    Grid.ColumnSpan="1"
+                    Command="{Binding InsertarSocioCommand}"/>
+            <Button 
+                Text="Cancelar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="ForestGreen"
+                Grid.Row="5" Grid.Column="2"
+                Grid.ColumnSpan="1"
+                Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

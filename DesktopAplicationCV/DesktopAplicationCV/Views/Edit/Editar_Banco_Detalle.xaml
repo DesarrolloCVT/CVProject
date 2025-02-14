@@ -23,25 +23,32 @@
                    FontSize="Small"
                    Grid.Row="0" Grid.Column="1"/>
             <Editor Placeholder="Codigo Banco"
+                    Text="{Binding EditCodigoBancoDetalles}"
+                    x:Name="EditCodigoBanco"
                     Grid.Row="0" Grid.Column="2"/>
             <Label Text="Numero"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Numero"
+                    Text="{Binding EditNumerobancoDetalles}"
+                    x:Name="EditNumero"
                     Grid.Row="1" Grid.Column="2"/>
-            <Label Text="Saldo"
-                   FontSize="Small"
-                   Grid.Row="2" Grid.Column="1"/>
-            <Editor IsReadOnly="True"
-                    Placeholder="Saldo"
-                    Grid.Row="2" Grid.Column="2"/>
-            <Button Text="Ingresar"
+            <Button Text="Modificar"
                     TextColor="White"
+                    WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
                     Grid.Row="4" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Clicked="EditBakDetailButton_Clicked"/>
+                    Grid.ColumnSpan="1"
+                    Command="{Binding UpdateCommand}"/>
+            <Button Text="Cancelar"
+                    TextColor="White"
+                    WidthRequest="200"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="4" Grid.Column="2"
+                    Grid.ColumnSpan="1"
+                    Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

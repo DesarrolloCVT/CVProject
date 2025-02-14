@@ -1,14 +1,17 @@
+using DesktopAplicationCV.Services;
+using DesktopAplicationCV.ViewModel;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Agregar_Factura_Ventas : ContentPage
 {
 	public Agregar_Factura_Ventas()
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void AddSalesInvoiceButton_Clicked(object sender, EventArgs e)
-    {
-
+        InitializeComponent();
+        BindingContext = new FacturaVentaViewModel(navigationService);
+        var viewModel = BindingContext as FacturaVentaViewModel;
+        PkrFecha.Date = DateTime.Now;
     }
 }

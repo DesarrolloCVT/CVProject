@@ -1,14 +1,16 @@
+using DesktopAplicationCV.Services;
+using DesktopAplicationCV.ViewModel;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Agregar_Factura_Compras_Detalle : ContentPage
 {
 	public Agregar_Factura_Compras_Detalle()
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void AddPurchaseInvoiceDetailButton_Clicked(object sender, EventArgs e)
-    {
-
+        InitializeComponent();
+        BindingContext = new FacturaCompraDetalleViewModel(navigationService);
+        var viewModel = BindingContext as FacturaCompraDetalleViewModel;
     }
 }

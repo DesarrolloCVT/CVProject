@@ -13,15 +13,15 @@ namespace DesktopAplicationCV.Models
 {
     public partial class IngresoDetalleModel : BaseViewModel
     {
-        private int folio_factura_Ventas;
+        private int folio_FacturaVenta;
         private int monto;
 
         private ICommand buttonCommand;
 
-        public int Folio_Factura_Ventas
+        public int Folio_FacturaVenta
         {
-            get { return this.folio_factura_Ventas; }
-            set { this.folio_factura_Ventas = value; }
+            get { return this.folio_FacturaVenta; }
+            set { this.folio_FacturaVenta = value; }
         }
 
         public int Monto
@@ -30,9 +30,9 @@ namespace DesktopAplicationCV.Models
             set { this.monto = value; }
         }
 
-        public IngresoDetalleModel(int folio_factura_Ventas, int monto)
+        public IngresoDetalleModel(int folio_FacturaVenta, int monto)
         {
-            this.Folio_Factura_Ventas = folio_factura_Ventas;
+            this.Folio_FacturaVenta = folio_FacturaVenta;
             this.Monto = monto;
         }
     }   

@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Editar_Cuentas"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             NavigationPage.HasBackButton="True"
              Title="Modificar Cuentas">
     <ScrollView>
         <Grid>
@@ -23,25 +25,45 @@
                    FontSize="Small"
                    Grid.Row="0" Grid.Column="1"/>
             <Editor Placeholder="Codigo"
-                    Grid.Row="0" Grid.Column="2"/>
+                    x:Name="EditCodigo"
+                    Text="{Binding EditCodigoCuenta}"
+                    Grid.Row="0" Grid.Column="2"
+                    IsReadOnly="True"/>
             <Label Text="Nombre"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Nombre"
+                    x:Name="EditNombre"
+                    Text="{Binding EditNombreCuenta}"
                     Grid.Row="1" Grid.Column="2"/>
             <Label Text="Tipo"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Picker x:Name="PkrTipo"
-                    Grid.Row="2" Grid.Column="2"/>
-            <Button Text="Ingresar"
+                    SelectedItem="{Binding EditTipoCuenta}"
+                    Grid.Row="2" Grid.Column="2">
+                <Picker.Items>
+                    <x:String>Corriente</x:String>
+                    <x:String>Vista</x:String>
+                </Picker.Items>
+            </Picker>
+            <Button Text="Modificar"
                     TextColor="White"
+                    WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
                     Grid.Row="4" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Clicked="EditarCuentasButton_Clicked"/>
+                    Grid.ColumnSpan="1"
+                    Command="{Binding UpdateCommand}"/>
+            <Button Text="Cancelar"
+                    TextColor="White"
+                    WidthRequest="200"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="4" Grid.Column="2"
+                    Grid.ColumnSpan="1"
+                    Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

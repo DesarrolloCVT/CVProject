@@ -6,16 +6,16 @@ namespace DesktopAplicationCV.Views;
 
 public partial class Editar_Socio_Negocio : ContentPage
 {
-	INavigationService navigation;
-	public Editar_Socio_Negocio()
+	public Editar_Socio_Negocio(object obj)
 	{
-		navigation = new NavigationService();
-		InitializeComponent();
-		BindingContext = new NavigationViewModel(navigation);
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void ModificarButton_Clicked(object sender, EventArgs e)
-    {
-		DisplayAlert("Alerta", "Se modifican los datos en la BD", "OK");
+        InitializeComponent();
+        BindingContext = new SocioViewModel(navigationService);
+        var viewModel = BindingContext as SocioViewModel;
+
+        SocioNegocioModel socioModel = (SocioNegocioModel)obj;
+        EditCodigo.Text = socioModel.Codigo.ToString().Trim();
+        EditNombre.Text = socioModel.Nombre.Trim();
     }
 }

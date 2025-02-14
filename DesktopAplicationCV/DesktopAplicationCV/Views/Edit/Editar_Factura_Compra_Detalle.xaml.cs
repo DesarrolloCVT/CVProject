@@ -1,14 +1,23 @@
+using DesktopAplicationCV.Models;
+using DesktopAplicationCV.Services;
+using DesktopAplicationCV.ViewModel;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Editar_Factura_Compra_Detalle : ContentPage
 {
-	public Editar_Factura_Compra_Detalle()
+	public Editar_Factura_Compra_Detalle(object obj)
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void EditPurchaseInvoiceDetailButton_Clicked(object sender, EventArgs e)
-    {
+        InitializeComponent();
+        BindingContext = new FacturaCompraDetalleViewModel(navigationService);
+        var viewModel = BindingContext as FacturaCompraDetalleViewModel;
 
+        FacturaCompraDetalleModel facturaCompraDetalleModel = (FacturaCompraDetalleModel)obj;
+        EditFolio.Text = facturaCompraDetalleModel.Folio.ToString().Trim();
+        EditCodigoProducto.Text = facturaCompraDetalleModel.Codigo_Producto.Trim();
+        EditCantidad.Text = facturaCompraDetalleModel.Cantidad.ToString().Trim();
+        EditPrecio.Text = facturaCompraDetalleModel.Precio.ToString().Trim();
     }
 }

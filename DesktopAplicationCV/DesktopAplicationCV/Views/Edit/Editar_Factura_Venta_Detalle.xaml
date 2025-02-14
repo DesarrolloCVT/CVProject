@@ -24,29 +24,46 @@
                    FontSize="Small"
                    Grid.Row="0" Grid.Column="1"/>
             <Editor Placeholder="Folio"
+                    Text="{Binding EditfolioFactVentaDetalle}"
+                    x:Name="EditFolio"
                     Grid.Row="0" Grid.Column="2"/>
             <Label Text="Codigo de Producto"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Codigo de Producto"
+                    Text="{Binding EditCodProductoFactVentaDetalle}"
+                    x:Name="EditCodProducto"
                     Grid.Row="1" Grid.Column="2"/>
             <Label Text="Cantidad"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
             <Editor Placeholder="Cantidad"
+                    Text="{Binding EditCantidadFactVentaDetalle}"
+                    x:Name="EditCantidad"
                     Grid.Row="2" Grid.Column="2"/>
             <Label Text="Precio"
                    FontSize="Small"
                    Grid.Row="3" Grid.Column="1"/>
             <Editor Placeholder="Precio"
+                    Text="{Binding EditPrecioFactVentaDetalle}"
+                    x:Name="EditPrecio"
                     Grid.Row="3" Grid.Column="2"/>
             <Button Text="Modificar"
                     TextColor="White"
+                    WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
                     Grid.Row="5" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Clicked="EditSalesInvoiceDetailButton_Clicked"/>
+                    Grid.ColumnSpan="1"
+                    Command="{Binding UpdateCommand}"/>
+            <Button Text="Cancelar"
+                    TextColor="White"
+                    WidthRequest="200"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="5" Grid.Column="2"
+                    Grid.ColumnSpan="1"
+                    Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

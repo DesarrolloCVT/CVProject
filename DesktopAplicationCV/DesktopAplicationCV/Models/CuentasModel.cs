@@ -10,7 +10,7 @@ namespace DesktopAplicationCV.Models
     public class CuentasModel
     {
         private int codigo;
-        private int numero;
+        private string nombre;
         private string tipo;
 
         private ICommand buttonCommand;
@@ -21,10 +21,10 @@ namespace DesktopAplicationCV.Models
             set { this.codigo = value; }
         }
 
-        public int Numero
+        public string Nombre
         {
-            get { return numero; }
-            set { this.numero = value; }
+            get { return nombre; }
+            set { this.nombre = value; }
         }
 
         public string Tipo
@@ -33,10 +33,10 @@ namespace DesktopAplicationCV.Models
             set { this.tipo = value; }
         }
 
-        public CuentasModel(int codigo, int numero, string tipo)
+        public CuentasModel(int codigo, string nombre, string tipo)
         {
             this.Codigo = codigo;
-            this.Numero = numero;
+            this.Nombre = nombre;
             this.Tipo = tipo;
         }
     }

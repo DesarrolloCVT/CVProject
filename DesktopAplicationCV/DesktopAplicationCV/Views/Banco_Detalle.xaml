@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="DesktopAplicationCV.Views.Banco_Detalle"
              Title="Detalle de Banco">
     <ScrollView>
@@ -81,7 +82,14 @@
                                BackgroundColor="LightGreen"
                                Grid.Row="1"
                                Grid.ColumnSpan="6"
-                               ColumnWidthMode="Fill">
+                               ColumnWidthMode="Fill"
+                               CellTappedCommand="{Binding CeldaTocadaCommand}">
+
+                <syncfusion:SfDataGrid.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="Loaded"
+                                Command="{Binding GridCargadoCommand}" />
+                </syncfusion:SfDataGrid.Behaviors>
+
                 <syncfusion:SfDataGrid.Columns>
                     <syncfusion:DataGridTextColumn MappingName="Codigo_Banco" HeaderText="Codigo_Banco"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Numero" HeaderText="Numero"></syncfusion:DataGridTextColumn>

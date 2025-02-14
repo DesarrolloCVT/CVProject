@@ -12,11 +12,11 @@ namespace DesktopAplicationCV.Models
         private int folio;
         private string tipo;
         private string moneda;
-        private string fecha;
+        private DateTime fecha;
         private string cliente;
         private string metodo_pago;
         private string banco;
-        private int cuenta;
+        private string cuenta;
 
         private ICommand buttonCommand;
 
@@ -38,7 +38,7 @@ namespace DesktopAplicationCV.Models
             set { this.moneda = value; }
         }
 
-        public string Fecha
+        public DateTime Fecha
         {
             get { return fecha; }
             set { this.fecha = value; }
@@ -62,13 +62,13 @@ namespace DesktopAplicationCV.Models
             set { this.banco = value; }
         }
 
-        public int Cuenta
+        public string Cuenta
         {
             get { return cuenta; }
             set { this.cuenta = value; }
         }
 
-        public IngresosModel(int folio, string tipo, string moneda, string fecha, string cliente, string metodo_pago, string banco, int cuenta)
+        public IngresosModel(int folio, string tipo, string moneda, DateTime fecha, string cliente, string metodo_pago, string banco, string cuenta)
         {
             this.Folio = folio;
             this.Tipo = tipo;

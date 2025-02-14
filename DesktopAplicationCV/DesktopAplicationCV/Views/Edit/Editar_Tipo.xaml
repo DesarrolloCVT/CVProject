@@ -25,67 +25,99 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Codigo"
-           FontSize="Small"
-           Grid.Row="0" Grid.Column="1"/>
+            <Label 
+                Text="Codigo"
+                FontSize="Small"
+                Grid.Row="0" Grid.Column="1"/>
             <Editor
-            Placeholder="Codigo"
-            Grid.Row="0" Grid.Column="2"/>
+                x:Name="EditCodigo"
+                Text="{Binding EditCodigoTipo}"
+                Placeholder="Codigo"
+                Grid.Row="0" Grid.Column="2"/>
             <Label Text="Nombre"
-           FontSize="Small"
-           Grid.Row="1" Grid.Column="1"/>
+                   FontSize="Small"
+                   Grid.Row="1" Grid.Column="1"/>
             <Editor
-            Placeholder="Nombre"
-            Grid.Row="1" Grid.Column="2"/>
+                x:Name="EditNombre"
+                Text="{Binding EditNombreTipo}"
+                Placeholder="Nombre"
+                Grid.Row="1" Grid.Column="2"/>
             <Label Text="Tipo"
-           FontSize="Small"
-           Grid.Row="2" Grid.Column="1"
-           FontAttributes="Bold"/>
+                   FontSize="Small"
+                   Grid.Row="2" Grid.Column="1"
+                   FontAttributes="Bold"/>
             <Picker x:Name="PkrTipo"
-            Grid.Row="2" Grid.Column="2"/>
+                    SelectedItem="{Binding EditTipo}"
+                    Grid.Row="2" Grid.Column="2">
+                <Picker.Items>
+                    <x:String>Ingreso</x:String>
+                    <x:String>Egreso</x:String>
+                </Picker.Items>
+            </Picker>
             <Label Text="Cuenta"
-           FontSize="Small"
-           Grid.Row="3" Grid.Column="1"/>
+                   FontSize="Small"
+                   Grid.Row="3" Grid.Column="1"/>
             <Editor
-            Placeholder="Cuenta"
-            Grid.Row="3" Grid.Column="2"/>
+                x:Name="EditCuenta"
+                Text="{Binding EditCuentaTipo}"
+                Placeholder="Cuenta"
+                Grid.Row="3" Grid.Column="2"/>
             <Label Text="Pago de Factura"
-           FontSize="Small"
-           Grid.Row="4" Grid.Column="1"/>
+                   FontSize="Small"
+                   Grid.Row="4" Grid.Column="1"/>
             <Editor
-            Placeholder="Pago de Factura"
-            Grid.Row="4" Grid.Column="2"/>
+                x:Name="EditPagoFactura"
+                Text="{Binding EditPagoFacturaTipo}"
+                Placeholder="Pago de Factura"
+                Grid.Row="4" Grid.Column="2"/>
             <Label Text="Gasto de Comercializacion"
-           FontSize="Small"
-           Grid.Row="5" Grid.Column="1"/>
+                   FontSize="Small"
+                   Grid.Row="5" Grid.Column="1"/>
             <Editor
-            Placeholder="Gasto de Comercializacion"
-            Grid.Row="5" Grid.Column="2"/>
+                x:Name="EditGastoComercializacion"
+                Text="{Binding EditGastoComercializacionTipo}"
+                Placeholder="Gasto de Comercializacion"
+                Grid.Row="5" Grid.Column="2"/>
             <Label Text="Comisiones"
-           FontSize="Small"
-           Grid.Row="6" Grid.Column="1"/>
+                   FontSize="Small"
+                   Grid.Row="6" Grid.Column="1"/>
             <Editor
-            Placeholder="Comisiones"
-            Grid.Row="6" Grid.Column="2"/>
+                x:Name="EditComisiones"
+                Text="{Binding EditComisionesTipo}"
+                Placeholder="Comisiones"
+                Grid.Row="6" Grid.Column="2"/>
             <Label Text="Gasto Financiero"
-           FontSize="Small"
-           Grid.Row="7" Grid.Column="1"/>
+                   FontSize="Small"
+                   Grid.Row="7" Grid.Column="1"/>
             <Editor
-            Placeholder="Gasto Financiero"
-            Grid.Row="7" Grid.Column="2"/>
+                x:Name="EditGastoFinanciero"
+                Text="{Binding EditGastoFinancieroTipo}"
+                Placeholder="Gasto Financiero"
+                Grid.Row="7" Grid.Column="2"/>
             <Label Text="Anticipo"
-           FontSize="Small"
-           Grid.Row="8" Grid.Column="1"/>
+                   FontSize="Small"
+                   Grid.Row="8" Grid.Column="1"/>
             <Editor
-            Placeholder="Anticipo"
-            Grid.Row="8" Grid.Column="2"/>
+                x:Name="EditAnticipo"
+                Text="{Binding EditAnticipoTipo}"
+                Placeholder="Anticipo"
+                Grid.Row="8" Grid.Column="2"/>
             <Button Text="Modificar"
-            TextColor="White"
-            FontAttributes="Bold"
-            BackgroundColor="ForestGreen"
-            Grid.Row="10" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-            Clicked="EditarTipButton_Clicked"/>
+                    TextColor="White"
+                    WidthRequest="200"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="10" Grid.Column="0"
+                    Grid.ColumnSpan="1"
+                    Command="{Binding UpdateCommand}"/>
+            <Button Text="Cancelar"
+                    TextColor="White"
+                    WidthRequest="200"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="10" Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

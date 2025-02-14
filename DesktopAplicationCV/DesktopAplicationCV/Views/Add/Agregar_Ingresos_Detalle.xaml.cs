@@ -1,14 +1,16 @@
+using DesktopAplicationCV.Services;
+using DesktopAplicationCV.ViewModel;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Agregar_Ingresos_Detalle : ContentPage
 {
 	public Agregar_Ingresos_Detalle()
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void AddIncomeDetailButton_Clicked(object sender, EventArgs e)
-    {
-
+        InitializeComponent();
+        BindingContext = new IngresoDetalleViewsModel(navigationService);
+        var viewModel = BindingContext as IngresoDetalleViewsModel;
     }
 }

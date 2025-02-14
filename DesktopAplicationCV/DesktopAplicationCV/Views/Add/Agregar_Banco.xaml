@@ -18,25 +18,37 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Nombre"
+            <Label Text="Codigo"
                    FontSize="Small"
                    Grid.Row="0" Grid.Column="1"/>
             <Editor WidthRequest="150"
-                    Placeholder="Nombre"
+                    Text="{Binding CodigoBancoIngresado}"
+                    Placeholder="Codigo"
                     Grid.Row="0" Grid.Column="2"/>
-            <Label Text="Codigo"
+            <Label Text="Nombre"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
             <Editor WidthRequest="150"
-                    Placeholder="Codigo"
+                    Text="{Binding NombreBancoIngresado}"
+                    Placeholder="Nombre"
                     Grid.Row="1" Grid.Column="2"/>
             <Button Text="Ingresar"
                     TextColor="White"
+                    WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
                     Grid.Row="3" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Clicked="AddBankButton_Clicked"/>
+                    Grid.ColumnSpan="1"
+                    Command="{Binding InsertarBancoCommand}"/>
+            <Button 
+                Text="Cancelar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="ForestGreen"
+                Grid.Row="5" Grid.Column="2"
+                Grid.ColumnSpan="1"
+                Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

@@ -25,35 +25,43 @@
                    FontSize="Small"
                    Grid.Row="0" Grid.Column="1"/>
             <Editor Placeholder="Folio"
+                    Text="{Binding FolioFactCompraIngresado}"
                     Grid.Row="0" Grid.Column="2"/>
             <Label Text="Proveedor"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Proveedor"
+                    Text="{Binding ProveedorFactCompraIngresado}"
                     Grid.Row="1" Grid.Column="2"/>
             <Label Text="Fecha"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
             <DatePicker Grid.Row="2" Grid.Column="2"
+                        x:Name="PkrFecha"
+                        Date="{Binding FechaFactCompraIngresado}"
                         Format="dd-mm-yyyy"/>
             <Label Text="Moneda"
                    FontSize="Small"
                    Grid.Row="3" Grid.Column="1"/>
             <Editor Placeholder="Moneda"
+                    Text="{Binding MonedaFactCompraIngresado}"
                     Grid.Row="3" Grid.Column="2"/>
-            <Label Text="Total"
-                   FontSize="Small"
-                   Grid.Row="4" Grid.Column="1"/>
-            <Editor IsReadOnly="True"
-                    Placeholder="Total"
-                    Grid.Row="4" Grid.Column="2"/>
-            <Button Text="Ingresar"
+            <Button Text="Insertar"
                     TextColor="White"
+                    WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
                     Grid.Row="6" Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Clicked="AddPurchaseInvoiceButton_Clicked"/>
+                    Grid.ColumnSpan="1"
+                    Command="{Binding InsertarFacturaCompraCommand}"/>
+            <Button Text="Cancelar"
+                    TextColor="White"
+                    WidthRequest="200"
+                    FontAttributes="Bold"
+                    BackgroundColor="ForestGreen"
+                    Grid.Row="6" Grid.Column="2"
+                    Grid.ColumnSpan="1"
+                    Command="{Binding CancelarCommand}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

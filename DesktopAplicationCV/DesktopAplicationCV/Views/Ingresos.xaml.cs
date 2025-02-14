@@ -6,14 +6,15 @@ namespace DesktopAplicationCV.Views;
 
 public partial class Ingresos : ContentPage
 {
-	public Ingresos()
+    IngresosViewModel viewModel;
+    public Ingresos()
 	{
         INavigationService navigationService = new NavigationService();
 
         InitializeComponent();
         BindingContext = new IngresosViewModel(navigationService);
 
-        var viewModel = BindingContext as SocioViewModel;
+        viewModel = BindingContext as IngresosViewModel;
 
         if (viewModel != null)
         {
@@ -24,10 +25,12 @@ public partial class Ingresos : ContentPage
                 dataGrid.View.RefreshFilter();
             };
         }
+        viewModel.CambiarTitulo();
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        viewModel.CambiarTitulo();
     }
 }

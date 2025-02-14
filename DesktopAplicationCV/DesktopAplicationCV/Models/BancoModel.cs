@@ -9,16 +9,10 @@ namespace DesktopAplicationCV.Models
 {
     public class BancoModel
     {
-        private int nombre;
         private int codigo;
+        private string nombre;
 
         private ICommand buttonCommand;
-
-        public int Nombre
-        {
-            get { return this.nombre; }
-            set { this.nombre = value; }
-        }
 
         public int Codigo
         {
@@ -26,10 +20,16 @@ namespace DesktopAplicationCV.Models
             set { this.codigo = value; }
         }
 
-        public BancoModel(int nombre, int codigo)
+        public string Nombre
         {
-            this.Nombre = nombre;
+            get { return this.nombre; }
+            set { this.nombre = value; }
+        }
+
+        public BancoModel(int codigo, string nombre)
+        {
             this.Codigo = codigo;
+            this.Nombre = nombre;
         }
     }
 }

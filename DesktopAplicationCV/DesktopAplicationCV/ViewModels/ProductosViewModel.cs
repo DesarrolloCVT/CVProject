@@ -14,7 +14,7 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
-        private object OldProduct;
+        private static object _oldProduct;
         private object NewProduct;
 
         private int CodigoCeldaSeleccionada;
@@ -31,6 +31,7 @@ namespace DesktopAplicationCV.ViewModel
         private string _filterText;
         private string _nombreProductoIngresadoText;
         private int _codigoProductoIngresadoText;
+        
         private string _editNombreProducto;
         private int _editCodigoProducto;
 
@@ -66,6 +67,21 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        // Acción para establecer la lógica del filtro
+        public Action ApplyFilterAction { get; set; }
+
+        public object OldProduct
+        {
+            get => _oldProduct;
+            set
+            {
+                if (_oldProduct != value)
+                {
+                    _oldProduct = value;
+                }
+            }
+        }
+
         public string NombreProductoIngresado
         {
             get => _nombreProductoIngresadoText;
@@ -84,7 +100,7 @@ namespace DesktopAplicationCV.ViewModel
             get => _editNombreProducto;
             set
             {
-                if (_editNombreProducto != value)
+               if (_editNombreProducto != value)
                 {
                     _editNombreProducto = value;
                     OnPropertyChanged(nameof(EditNombreProducto));
@@ -119,8 +135,7 @@ namespace DesktopAplicationCV.ViewModel
         }
 
 
-        // Acción para establecer la lógica del filtro
-        public Action ApplyFilterAction { get; set; }
+        
 
         #region Constructores
         public ProductosViewModel(INavigationService navigationService)
@@ -134,6 +149,12 @@ namespace DesktopAplicationCV.ViewModel
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
         #endregion
+
+        [RelayCommand]
+        public void Cancelar()
+        {
+            _navigationService.GoBackAsync();
+        }
 
         // Lógica de filtrado como delegado
         public Predicate<object> GetFilter()
@@ -214,6 +235,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 AgregarProducto(new ProductosModel(CodigoProductoIngresado, NombreProductoIngresado));
                 Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                _navigationService.GoBackAsync();
             }
             else
             {
@@ -283,13 +305,19 @@ namespace DesktopAplicationCV.ViewModel
         public void Update()
         {
             ActualizarProducto((ProductosModel)OldProduct);
+            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+            _navigationService.GoBackAsync();
         }
 
 
         private async Task ActualizarProducto(ProductosModel AntiguoProducto)
         {
-            var cod = 1;
-            var prod = "Porotos";
+            Console.WriteLine("EditCodigoProducto: " + EditCodigoProducto);
+            Console.WriteLine("EditNombreProducto: " + EditNombreProducto);
+
+            var cod = EditCodigoProducto;
+            var prod = EditNombreProducto;
+
             NewProduct = new ProductosModel(cod, prod)
             {
                 Codigo = cod,

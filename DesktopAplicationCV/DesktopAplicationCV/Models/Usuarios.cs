@@ -7,8 +7,8 @@ namespace DesktopAplicationCV.Models
         [Key]
         public int IdUsuario { get; set; }
         public string NombreUsuario { get; set; }
-        public string uUsuario { get; set; }
+        public string UsuarioSistema { get; set; }
         public string ClaveEncriptada { get; set; }
-        public int Clave { get; set; }
+        public string Clave { get; set; }
     }
 }

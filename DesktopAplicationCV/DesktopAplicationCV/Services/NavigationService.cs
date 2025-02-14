@@ -4,11 +4,26 @@ namespace DesktopAplicationCV.Services
 {
     public class NavigationService : INavigationService
     {
-        public async Task NavigateToAsync<TViewModel>(string identificador, object obj) where TViewModel : BaseViewModel
+        public async Task NavigateToAsync<TViewModel>(string identificador, object? obj = null) where TViewModel : BaseViewModel
         {
+            Page page;
+            var pageType = GetPageTypeForViewModel(typeof(TViewModel), identificador);
+            if(obj != null)
+            {
+                page = (Page)Activator.CreateInstance(pageType, args:obj);
+            }
+            else
+            {
+                page = (Page)Activator.CreateInstance(pageType);
+            }
+            if (Application.Current.MainPage is NavigationPage navigationPage)
+            {
+                await navigationPage.Navigation.PushAsync(page);
+            }
+        }
 
-            var pageType = GetPageTypeForViewModel(typeof(TViewModel), identificador, obj);
-            var page = (Page)Activator.CreateInstance(pageType, args:obj);
+        public async void NavigationAsync(Page page)
+        {
             if (Application.Current.MainPage is NavigationPage navigationPage)
             {
                 await navigationPage.Navigation.PushAsync(page);
@@ -23,7 +38,7 @@ namespace DesktopAplicationCV.Services
             }
         }
 
-        private Type GetPageTypeForViewModel(Type viewModelType, string Nombre, object? obj)
+        private Type GetPageTypeForViewModel(Type viewModelType, string Nombre)
         {
             var viewOrigin = viewModelType.FullName.Replace("ViewModel", "Views");
             var viewName = viewOrigin.Replace("NavigationViews", Nombre);

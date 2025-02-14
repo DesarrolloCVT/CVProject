@@ -2,38 +2,79 @@
 using CommunityToolkit.Mvvm.Input;
 using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Services;
+using Syncfusion.Maui.DataGrid;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace DesktopAplicationCV.ViewModel
 {
     public partial class IngresosViewModel : BaseViewModel
     {
         #region Variables
+
+        private static object _oldIngreso;
+        private object NewIngreso;
+
+        private int FolioIngresoCeldaSeleccionada;
+        private string TipoIngresoCeldaSeleccionada;
+        private string MonedaIngresoCeldaSeleccionada;
+        private DateTime FechaIngresoCeldaSeleccionada;
+        private string ClienteIngresoCeldaSeleccionada;
+        private string MetodoPagoIngresoCeldaSeleccionada;
+        private string BancoIngresoCeldaSeleccionada;
+        private string CuentaIngresoCeldaSeleccionada;
+
         private readonly INavigationService _navigationService;
+        private readonly IngresosService _ingresoService;
 
         [ObservableProperty]
         private int selectedIndex;
 
-        [ObservableProperty]
-        private ObservableCollection<IngresosModel> ingresos;
+        private ObservableCollection<IngresosModel> Ingresos;
 
         private string _filterText;
+        private string _tituloPagina;
+
+        private int _folioIngresosIngresadoText;
+        private string _tipoIngresosIngresadoText;
+        private string _monedaIngresosIngresadoText;
+        private DateTime _fechaIngresosIngresadoText;
+        private string _clienteIngresosIngresadoText;
+        private string _metodoPagoIngresosIngresadoText;
+        private string _bancoIngresosIngresadoText;
+        private string _cuentaIngresosIngresadoText;
+
+
+        private int _editFolioIngresos;
+        private string _editTipoIngresos;
+        private string _editMonedaIngresos;
+        private DateTime _editFechaIngresos;
+        private string _editClienteIngresos;
+        private string _editMetodoPagoIngresos;
+        private string _editBancoIngresos;
+        private string _editCuentaIngresos;
+
+        public ICommand CargarIngresosCommand { get; }
+        public ICommand AgregarIngresoCommand { get; }
+        public ICommand EliminarIngresoCommand { get; }
+        public ICommand ActualizarIngresoCommand { get; }
+        public ICommand CeldaTocadaCommand { get; }
 
         #endregion
-
-        public ObservableCollection<IngresosModel> Items { get; set; }
-
 
         #region Inicializadores
         public ObservableCollection<IngresosModel> IngresosInfoCollection
         {
-            get { return ingresos; }
-            set { ingresos = value; }
+            get { return Ingresos; }
+            set { Ingresos = value; }
         }
         #endregion
 
@@ -56,16 +97,264 @@ namespace DesktopAplicationCV.ViewModel
         // Acción para establecer la lógica del filtro
         public Action ApplyFilterAction { get; set; }
 
-        #region Constructores
+        public string TituloPagina
+        {
+            get => _tituloPagina;
+            set
+            {
+                _tituloPagina = value;
+                OnPropertyChanged(nameof(TituloPagina));
+            }
+        }
 
+        public object OldIngreso
+        {
+            get => _oldIngreso;
+            set
+            {
+                if (_oldIngreso != value)
+                {
+                    _oldIngreso = value;
+                }
+            }
+        }
+
+        public int FolioIngresosIngresadoText
+        {
+            get => _folioIngresosIngresadoText;
+            set
+            {
+                if (_folioIngresosIngresadoText != value)
+                {
+                    _folioIngresosIngresadoText = value;
+                    OnPropertyChanged(nameof(FolioIngresosIngresadoText));
+                }
+            }
+        }
+
+        public int EditFolioIngresos
+        {
+            get => _editFolioIngresos;
+            set
+            {
+                if (_editFolioIngresos != value)
+                {
+                    _editFolioIngresos = value;
+                    OnPropertyChanged(nameof(EditFolioIngresos));
+                }
+            }
+        }
+
+        public string TipoIngresosIngresadoText
+        {
+            get => _tipoIngresosIngresadoText;
+            set
+            {
+                if (_tipoIngresosIngresadoText != value)
+                {
+                    _tipoIngresosIngresadoText = value;
+                    OnPropertyChanged(nameof(TipoIngresosIngresadoText));
+                }
+            }
+        }
+
+        public string EditTipoIngresos
+        {
+            get => _editTipoIngresos;
+            set
+            {
+                if (_editTipoIngresos != value)
+                {
+                    _editTipoIngresos = value;
+                    OnPropertyChanged(nameof(EditTipoIngresos));
+                }
+            }
+        }
+
+        public string MonedaIngresosIngresadoText
+        {
+            get => _monedaIngresosIngresadoText;
+            set
+            {
+                if (_monedaIngresosIngresadoText != value)
+                {
+                    _monedaIngresosIngresadoText = value;
+                    OnPropertyChanged(nameof(MonedaIngresosIngresadoText));
+                }
+            }
+        }
+
+        public string EditMonedaIngresos
+        {
+            get => _editMonedaIngresos;
+            set
+            {
+                if (_editMonedaIngresos != value)
+                {
+                    _editMonedaIngresos = value;
+                    OnPropertyChanged(nameof(EditMonedaIngresos));
+                }
+            }
+        }
+
+        public DateTime FechaIngresosIngresadoText
+        {
+            get => _fechaIngresosIngresadoText;
+            set
+            {
+                if (_fechaIngresosIngresadoText != value)
+                {
+                    _fechaIngresosIngresadoText = value;
+                    OnPropertyChanged(nameof(FechaIngresosIngresadoText));
+                }
+            }
+        }
+
+        public DateTime EditFechaIngresos
+        {
+            get => _editFechaIngresos;
+            set
+            {
+                if (_editFechaIngresos != value)
+                {
+                    _editFechaIngresos = value;
+                    OnPropertyChanged(nameof(EditFechaIngresos));
+                }
+            }
+        }
+
+        public string ClienteIngresosIngresadoText
+        {
+            get => _clienteIngresosIngresadoText;
+            set
+            {
+                if (_clienteIngresosIngresadoText != value)
+                {
+                    _clienteIngresosIngresadoText = value;
+                    OnPropertyChanged(nameof(ClienteIngresosIngresadoText));
+                }
+            }
+        }
+
+        public string EditClienteIngresos
+        {
+            get => _editClienteIngresos;
+            set
+            {
+                if (_editClienteIngresos != value)
+                {
+                    _editClienteIngresos = value;
+                    OnPropertyChanged(nameof(EditClienteIngresos));
+                }
+            }
+        }
+
+        public string MetodoPagoIngresosIngresadoText
+        {
+            get => _metodoPagoIngresosIngresadoText;
+            set
+            {
+                if (_metodoPagoIngresosIngresadoText != value)
+                {
+                    _metodoPagoIngresosIngresadoText = value;
+                    OnPropertyChanged(nameof(MetodoPagoIngresosIngresadoText));
+                }
+            }
+        }
+
+        public string EditMetodoPagoIngresos
+        {
+            get => _editMetodoPagoIngresos;
+            set
+            {
+                if (_editMetodoPagoIngresos != value)
+                {
+                    _editMetodoPagoIngresos = value;
+                    OnPropertyChanged(nameof(EditMetodoPagoIngresos));
+                }
+            }
+        }
+
+        public string BancoIngresosIngresadoText
+        {
+            get => _bancoIngresosIngresadoText;
+            set
+            {
+                if (_bancoIngresosIngresadoText != value)
+                {
+                    _bancoIngresosIngresadoText = value;
+                    OnPropertyChanged(nameof(BancoIngresosIngresadoText));
+                }
+            }
+        }
+
+        public string EditBancoIngresos
+        {
+            get => _editBancoIngresos;
+            set
+            {
+                if (_editBancoIngresos != value)
+                {
+                    _editBancoIngresos = value;
+                    OnPropertyChanged(nameof(EditBancoIngresos));
+                }
+            }
+        }
+
+        public string CuentaIngresosIngresadoText
+        {
+            get => _cuentaIngresosIngresadoText;
+            set
+            {
+                if (_cuentaIngresosIngresadoText != value)
+                {
+                    _cuentaIngresosIngresadoText = value;
+                    OnPropertyChanged(nameof(CuentaIngresosIngresadoText));
+                }
+            }
+        }
+
+        public string EditCuentaIngresos
+        {
+            get => _editCuentaIngresos;
+            set
+            {
+                if (_editCuentaIngresos != value)
+                {
+                    _editCuentaIngresos = value;
+                    OnPropertyChanged(nameof(EditCuentaIngresos));
+                }
+            }
+        }
+
+
+        #region Constructores
         public IngresosViewModel(INavigationService navigationService)
         {
+            _ingresoService = new IngresosService();
+            Ingresos = new ObservableCollection<IngresosModel>();
+
             _navigationService = navigationService;
-            ingresos = new ObservableCollection<IngresosModel>();
-            GenerateOrders();
+            CargarIngresos();
+
+            CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
+        }
+        #endregion
+
+        #region Titulo
+
+        public void CambiarTitulo()
+        {
+            TituloPagina = "Ingresos";
         }
 
         #endregion
+
+        [RelayCommand]
+        public void Cancelar()
+        {
+            _navigationService.GoBackAsync();
+        }
 
         // Lógica de filtrado como delegado
         public Predicate<object> GetFilter()
@@ -77,28 +366,45 @@ namespace DesktopAplicationCV.ViewModel
                     return string.IsNullOrWhiteSpace(FilterText) ||
                            data.Folio.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Tipo.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Moneda.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Fecha.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Cliente.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Metodo_Pago.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Banco.Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Moneda.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Fecha.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Cliente.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Metodo_Pago.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Banco.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Cuenta.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase);
                 }
                 return false;
             };
         }
 
-        public void GenerateOrders()
+        // Método que se ejecuta cuando se toca una celda
+        private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            ingresos.Add(new IngresosModel(0, "Cliente", "ALFKI", "01/02/2025", "Cliente Nuevo", "Efectivo", "Itau", 10));
-            ingresos.Add(new IngresosModel(1, "Proveedor", "ALFKI", "01/02/2025", "Cliente Antiguo", "Tarjeta", "Estado", 10));
-            ingresos.Add(new IngresosModel(2, "Proveedor", "ALFKI", "01/02/2025", "Cliente Nuevo", "Efectivo", "Itau", 10));
-            ingresos.Add(new IngresosModel(3, "Cliente", "ALFKI", "01/02/2025", "Cliente Antiguo", "Tarjeta", "Estado", 10));
-            ingresos.Add(new IngresosModel(4, "Proveedor", "ALFKI", "01/02/2025", "Cliente Nuevo", "Efectivo", "Itau", 10));
-            ingresos.Add(new IngresosModel(5, "Cliente", "ALFKI", "01/02/2025", "Cliente Antiguo", "Tarjeta", "Bice", 10));
+            if (e.RowData is IngresosModel ingresos)
+            {
+                FolioIngresoCeldaSeleccionada = ingresos.Folio;
+                TipoIngresoCeldaSeleccionada = ingresos.Tipo;
+                MonedaIngresoCeldaSeleccionada = ingresos.Moneda;
+                FechaIngresoCeldaSeleccionada = ingresos.Fecha;
+                ClienteIngresoCeldaSeleccionada = ingresos.Cliente;
+                MetodoPagoIngresoCeldaSeleccionada = ingresos.Metodo_Pago;
+                BancoIngresoCeldaSeleccionada = ingresos.Banco;
+                CuentaIngresoCeldaSeleccionada = ingresos.Cuenta;
+                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+            }
         }
 
-        #region Binding Methods 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        [RelayCommand]
+        public void GridCargado()
+        {
+            CargarIngresos();
+        }
 
         [RelayCommand]
         public void Eliminar()
@@ -107,7 +413,8 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    Ingresos.RemoveAt((SelectedIndex - 1));
+                    EliminarIngresos(FolioIngresoCeldaSeleccionada);
+                    CargarIngresos();
                 }
                 else
                 {
@@ -133,20 +440,145 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        //private async Task NavigateToDetail()
         [RelayCommand]
-        private async void Editar()
+        public async void InsertarIngresos()
         {
-            try
+            if (FolioIngresosIngresadoText != 0 && !string.IsNullOrEmpty(TipoIngresosIngresadoText) && !string.IsNullOrEmpty(MonedaIngresosIngresadoText)
+                && !string.IsNullOrEmpty(ClienteIngresosIngresadoText) && !string.IsNullOrEmpty(MetodoPagoIngresosIngresadoText) 
+                && !string.IsNullOrEmpty(BancoIngresosIngresadoText) && !string.IsNullOrEmpty(CuentaIngresosIngresadoText))
             {
-                await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Ingresos");
+                AgregarIngresos(new IngresosModel(FolioIngresosIngresadoText, TipoIngresosIngresadoText, MonedaIngresosIngresadoText,
+                    FechaIngresosIngresadoText, ClienteIngresosIngresadoText, MetodoPagoIngresosIngresadoText, BancoIngresosIngresadoText,
+                    CuentaIngresosIngresadoText));
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                _navigationService.GoBackAsync();
             }
-            catch (Exception Ex)
+            else
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
             }
         }
 
-        #endregion
+        [RelayCommand]
+        private async void Editar()
+        {
+            if (selectedIndex >= 0)
+            {
+                try
+                {
+                    OldIngreso = new IngresosModel(FolioIngresoCeldaSeleccionada, TipoIngresoCeldaSeleccionada, MonedaIngresoCeldaSeleccionada,
+                        FechaIngresoCeldaSeleccionada, ClienteIngresoCeldaSeleccionada, MetodoPagoIngresoCeldaSeleccionada, BancoIngresoCeldaSeleccionada,
+                        CuentaIngresoCeldaSeleccionada)
+                    {
+                        Folio = FolioIngresoCeldaSeleccionada,
+                        Tipo = TipoIngresoCeldaSeleccionada,
+                        Moneda = MonedaIngresoCeldaSeleccionada,
+                        Fecha = FechaIngresoCeldaSeleccionada,
+                        Cliente = ClienteIngresoCeldaSeleccionada,
+                        Metodo_Pago = MetodoPagoIngresoCeldaSeleccionada,
+                        Banco = BancoIngresoCeldaSeleccionada,
+                        Cuenta = CuentaIngresoCeldaSeleccionada
+                    };
+
+                    await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Ingresos", OldIngreso);
+                }
+                catch (Exception Ex)
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                }
+            }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+            }
+
+
+        }
+
+        private async Task CargarIngresos()
+        {
+            var ingresos = await _ingresoService.GetIngresosAsync();
+            Ingresos.Clear();
+            foreach (var ingreso in ingresos)
+            {
+                Ingresos.Add(ingreso);
+            }
+        }
+
+        private async Task AgregarIngresos(IngresosModel ingreso)
+        {
+            if (await _ingresoService.AddIngresoAsync(ingreso))
+            {
+                Ingresos.Add(ingreso);
+            }
+        }
+
+        private async Task EliminarIngresos(int folio)
+        {
+            if (await _ingresoService.DeleteIngresoAsync(folio))
+            {
+                var ingreso = Ingresos.FirstOrDefault(p => p.Folio == folio);
+                if (ingreso != null)
+                {
+                    Ingresos.Remove(ingreso);
+                }
+            }
+        }
+
+        [RelayCommand]
+        public void Update()
+        {
+            ActualizarIngresos((IngresosModel)OldIngreso);
+            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+            _navigationService.GoBackAsync();
+        }
+
+
+        private async Task ActualizarIngresos(IngresosModel AntiguoIngreso)
+        {
+            Console.WriteLine("EditFolioIngresos: " + EditFolioIngresos);
+            Console.WriteLine("EditTipoIngresos: " + EditTipoIngresos);
+            Console.WriteLine("EditMonedaIngresos: " + EditMonedaIngresos);
+            Console.WriteLine("EditFechaIngresos: " + EditFechaIngresos);
+            Console.WriteLine("EditClienteIngresos: " + EditClienteIngresos);
+            Console.WriteLine("EditMetodoPagoIngresos: " + EditMetodoPagoIngresos);
+            Console.WriteLine("EditBancoIngresos: " + EditBancoIngresos);
+            Console.WriteLine("EditCuentaIngresos: " + EditCuentaIngresos);
+
+            var folio = EditFolioIngresos;
+            var tipo = EditTipoIngresos;
+            var moneda = EditMonedaIngresos;
+            DateTime fecha = EditFechaIngresos;
+            var cliente = EditClienteIngresos;
+            var metodoPago = EditMetodoPagoIngresos;
+            var banco = EditBancoIngresos;
+            var cuenta = EditCuentaIngresos;
+
+            /*var date = fecha.ToString("yyyy-MM-dd",CultureInfo.InvariantCulture);
+            var NewDate = Convert.ToDateTime(date);*/
+
+
+            NewIngreso = new IngresosModel(folio, tipo, moneda, fecha, cliente, metodoPago, banco, cuenta)
+            {
+                Folio = folio,
+                Tipo = tipo,
+                Moneda = moneda,
+                Fecha = fecha,
+                Cliente = cliente,
+                Metodo_Pago = metodoPago,
+                Banco = banco,
+                Cuenta = cuenta
+            };
+
+            if (await _ingresoService.UpdateIngresoAsync((IngresosModel)NewIngreso))
+            {
+                //Remove Old Product
+                Ingresos.Remove(AntiguoIngreso);
+
+                //Add new product
+                Ingresos.Add((IngresosModel)NewIngreso);
+
+            }
+        }
     }
 }

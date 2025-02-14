@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Inicio"
              xmlns:local="clr-namespace:DesktopAplicationCV.Views"
-             Title="Inicio"
-             NavigationPage.HasBackButton="True">
+             Title="Inicio">
     <ScrollView>
         <StackLayout>
             <Label Text="Seleccione el módulo con el que desea operar"

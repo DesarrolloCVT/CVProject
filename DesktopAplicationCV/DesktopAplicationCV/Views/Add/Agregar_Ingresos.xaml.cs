@@ -1,14 +1,17 @@
+using DesktopAplicationCV.Services;
+using DesktopAplicationCV.ViewModel;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Agregar_Ingresos : ContentPage
 {
 	public Agregar_Ingresos()
 	{
-		InitializeComponent();
-	}
+        INavigationService navigationService = new NavigationService();
 
-    private void AddIncomeButton_Clicked(object sender, EventArgs e)
-    {
-
+        InitializeComponent();
+        BindingContext = new IngresosViewModel(navigationService);
+        var viewModel = BindingContext as IngresosViewModel;
+        PkrFecha.Date = DateTime.Now;
     }
 }
