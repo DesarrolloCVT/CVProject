@@ -2,14 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Socio_Negocio">
-    <ScrollView Margin="0,100,0,0">
+    <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
                 <RowDefinition Height="80"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -19,46 +18,38 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Agregar Socio de Negocios"
-                   Margin="20,0,0,0"
-                   FontSize="Medium"
-                   TextColor="Silver"
-                   FontAttributes="Bold, Italic"
-                   Grid.Row="0" Grid.Column="0"
-                   Grid.ColumnSpan="1"/>
-
             <Label Text="Codigo"
                    FontSize="Small"
-                   Grid.Row="1" Grid.Column="1"
+                   Grid.Row="0" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Editor WidthRequest="300" 
                     x:Name="edtCodigo"
                     Text="{Binding CodigoSocioIngresado}"
                     Keyboard="Numeric"
                     Placeholder="Codigo"
-                    Grid.Row="1" Grid.Column="2"/>
+                    Grid.Row="0" Grid.Column="2"/>
 
             
             <Label Text="Nombre"
                    x:Name="edtNombre"
                    FontSize="Small"
-                   Grid.Row="2" Grid.Column="1"
+                   Grid.Row="1" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Editor WidthRequest="300"
                     Text="{Binding NombreSocioIngresado}"
                     Placeholder="Nombre"
-                    Grid.Row="2" Grid.Column="2"/>
+                    Grid.Row="1" Grid.Column="2"/>
 
             
             <Label Text="Tipo"
                    FontSize="Small"
-                   Grid.Row="3" Grid.Column="1"
+                   Grid.Row="2" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Picker x:Name="PkrTipo"
                     SelectedItem="{Binding TipoSocioIngresado}"
                     Title="Seleccione Tipo de Socio"
                     WidthRequest="300"
-                    Grid.Row="3" Grid.Column="2">
+                    Grid.Row="2" Grid.Column="2">
             <Picker.Items>
                 <x:String>Cliente</x:String>
                 <x:String>Proveedor</x:String>
@@ -70,7 +61,7 @@
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
-                    Grid.Row="5" Grid.Column="1"
+                    Grid.Row="4" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding InsertarSocioCommand}"/>
             <Button 
@@ -79,7 +70,7 @@
                 WidthRequest="200"
                 FontAttributes="Bold"
                 BackgroundColor="ForestGreen"
-                Grid.Row="5" Grid.Column="2"
+                Grid.Row="4" Grid.Column="2"
                 Grid.ColumnSpan="1"
                 Command="{Binding CancelarCommand}"/>
         </Grid>

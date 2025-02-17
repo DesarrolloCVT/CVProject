@@ -4,7 +4,13 @@
              xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="DesktopAplicationCV.Views.Ingresos_Detalle">
+             x:Class="DesktopAplicationCV.Views.Ingresos_Detalle"
+             Title="Detalle de Ingresos">
+
+    <NavigationPage.TitleView>
+        <Label Text="Detalle de Ingresos" HorizontalTextAlignment="Center"/>
+    </NavigationPage.TitleView>
+    
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
