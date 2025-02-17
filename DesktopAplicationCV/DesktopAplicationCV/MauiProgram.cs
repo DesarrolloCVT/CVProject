@@ -49,6 +49,10 @@ namespace DesktopAplicationCV
             builder.Services.AddSingleton<TipoViewModel>();
             builder.Services.AddTransient<LoginViewModel>();
 
+            builder.Services.AddSingleton<CompraVentaViewModel>();
+            builder.Services.AddSingleton<OperacionesBancariasViewModel>();
+            builder.Services.AddSingleton<MaestrosViewModel>();
+
 
             // Registrar Páginas
             builder.Services.AddTransient<Socio_Negocio>();

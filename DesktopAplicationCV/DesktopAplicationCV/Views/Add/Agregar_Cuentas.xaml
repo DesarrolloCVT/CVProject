@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Cuentas"
              Title="Agregar Nueva Cuenta">
-    <ScrollView>
+    <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
@@ -19,25 +20,33 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <Label Text="Agregar Cuentas"
+                   Margin="20,0,0,0"
+                   FontSize="Medium"
+                   TextColor="Silver"
+                   FontAttributes="Bold, Italic"
+                   Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="1"/>
+
             <Label Text="Codigo"
                    FontSize="Small"
-                   Grid.Row="0" Grid.Column="1"/>
+                   Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Codigo"
                     Text="{Binding CodigoCuentaIngresado}"
-                    Grid.Row="0" Grid.Column="2"/>
+                    Grid.Row="1" Grid.Column="2"/>
             <Label Text="Nombre"
                    FontSize="Small"
-                   Grid.Row="1" Grid.Column="1"/>
+                   Grid.Row="2" Grid.Column="1"/>
             <Editor Placeholder="Nombre"
                     Text="{Binding NombreCuentaIngresado}"
-                    Grid.Row="1" Grid.Column="2"/>
+                    Grid.Row="2" Grid.Column="2"/>
             <Label Text="Tipo"
                    FontSize="Small"
-                   Grid.Row="2" Grid.Column="1"
+                   Grid.Row="3" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Picker x:Name="PkrTipo"
                     SelectedItem="{Binding TipoCuentaIngresado}"
-                    Grid.Row="2" Grid.Column="2">
+                    Grid.Row="3" Grid.Column="2">
                 <Picker.Items>
                     <x:String>Corriente</x:String>
                     <x:String>Vista</x:String>
@@ -48,7 +57,7 @@
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
-                    Grid.Row="4" Grid.Column="1"
+                    Grid.Row="5" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding InsertarCuentaCommand}"/>
             <Button Text="Cancelar"
@@ -56,7 +65,7 @@
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
-                    Grid.Row="4" Grid.Column="2"
+                    Grid.Row="5" Grid.Column="2"
                     Grid.ColumnSpan="1"
                     Command="{Binding CancelarCommand}"/>
         </Grid>

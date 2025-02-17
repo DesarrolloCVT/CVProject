@@ -60,12 +60,12 @@ namespace DesktopAplicationCV.ViewModel
         #endregion
 
         #region Inicializadores
+
         public ObservableCollection<FacturaVentaModel> FacturaVentaInfoCollection
         {
             get { return facturaVentaModels; }
             set { facturaVentaModels = value; }
         }
-        #endregion
 
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
@@ -227,6 +227,8 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        #endregion
+
         #region Constructores
 
         public FacturaVentaViewModel(INavigationService navigationService)
@@ -269,14 +271,21 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is FacturaVentaModel facturaVentaModel)
+            try
             {
-                FolioFactVentaCeldaSeleccionada = facturaVentaModel.Folio;
-                ClienteFactVentaCeldaSeleccionada = facturaVentaModel.Cliente;
-                DirDespachoFactVentaCeldaSeleccionada = facturaVentaModel.Direccion_Despacho;
-                MonedaFactVentaCeldaSeleccionada = facturaVentaModel.Moneda;
-                FechaFactVentaCeldaSeleccionada = facturaVentaModel.Fecha;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is FacturaVentaModel facturaVentaModel)
+                {
+                    FolioFactVentaCeldaSeleccionada = facturaVentaModel.Folio;
+                    ClienteFactVentaCeldaSeleccionada = facturaVentaModel.Cliente;
+                    DirDespachoFactVentaCeldaSeleccionada = facturaVentaModel.Direccion_Despacho;
+                    MonedaFactVentaCeldaSeleccionada = facturaVentaModel.Moneda;
+                    FechaFactVentaCeldaSeleccionada = facturaVentaModel.Fecha;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error CeldaTocada FacturaVentaViewModel: " + ex.Message);
             }
         }
 
@@ -309,9 +318,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Console.WriteLine("Error Eliminar FacturaVentaViewModel: " + Ex.Message);
             }
         }
 
@@ -325,23 +335,31 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Console.WriteLine("Error Agregar FacturaVentaViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarFactVenta()
         {
-            if (FolioFactVentaIngresado != 0 && !string.IsNullOrEmpty(ClienteFactVentaIngresado) && !string.IsNullOrEmpty(DirDespachoFactVentaIngresado)
+            try
+            {
+                if (FolioFactVentaIngresado != 0 && !string.IsNullOrEmpty(ClienteFactVentaIngresado) && !string.IsNullOrEmpty(DirDespachoFactVentaIngresado)
                 && !string.IsNullOrEmpty(MonedaFactVentaIngresado))
-            {
-                AgregarFactVentas(new FacturaVentaModel(FolioFactVentaIngresado, ClienteFactVentaIngresado, DirDespachoFactVentaIngresado
-                    , MonedaFactVentaIngresado, FechaFactVentaIngresado));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                {
+                    AgregarFactVentas(new FacturaVentaModel(FolioFactVentaIngresado, ClienteFactVentaIngresado, DirDespachoFactVentaIngresado
+                        , MonedaFactVentaIngresado, FechaFactVentaIngresado));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                }
             }
-            else
-            {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+            catch(Exception Ex)
+            { 
+                Console.WriteLine("Error InsertarFactVenta FacturaVentaViewModel: " + Ex.Message);
             }
         }
 
@@ -349,101 +367,143 @@ namespace DesktopAplicationCV.ViewModel
         [RelayCommand]
         private async void Editar()
         {
-            if (selectedIndex >= 0)
+            try
             {
-                try
+                if (selectedIndex >= 0)
                 {
-                    OldFacturaVenta = new FacturaVentaModel(FolioFactVentaCeldaSeleccionada, ClienteFactVentaCeldaSeleccionada,
-                        DirDespachoFactVentaCeldaSeleccionada, MonedaFactVentaCeldaSeleccionada, FechaFactVentaCeldaSeleccionada)
+                    try
                     {
-                        Folio = FolioFactVentaCeldaSeleccionada,
-                        Cliente = ClienteFactVentaCeldaSeleccionada,
-                        Direccion_Despacho = DirDespachoFactVentaCeldaSeleccionada,
-                        Moneda = MonedaFactVentaCeldaSeleccionada,
-                        Fecha = FechaFactVentaCeldaSeleccionada
-                    };
+                        OldFacturaVenta = new FacturaVentaModel(FolioFactVentaCeldaSeleccionada, ClienteFactVentaCeldaSeleccionada,
+                            DirDespachoFactVentaCeldaSeleccionada, MonedaFactVentaCeldaSeleccionada, FechaFactVentaCeldaSeleccionada)
+                        {
+                            Folio = FolioFactVentaCeldaSeleccionada,
+                            Cliente = ClienteFactVentaCeldaSeleccionada,
+                            Direccion_Despacho = DirDespachoFactVentaCeldaSeleccionada,
+                            Moneda = MonedaFactVentaCeldaSeleccionada,
+                            Fecha = FechaFactVentaCeldaSeleccionada
+                        };
 
-                    await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Factura_Ventas", OldFacturaVenta);
+                        await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Factura_Ventas", OldFacturaVenta);
+                    }
+                    catch (Exception Ex)
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    }
                 }
-                catch (Exception Ex)
+                else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                Console.WriteLine("Error InsertarFactVenta FacturaVentaViewModel: " + Ex.Message);
             }
         }
 
         private async Task CargarFactVentas()
         {
-            var facturaVentas = await _factVentaService.GetFactVentaAsync();
-            facturaVentaModels.Clear();
-            foreach (var factVentas in facturaVentas)
+            try
             {
-                facturaVentaModels.Add(factVentas);
+                var facturaVentas = await _factVentaService.GetFactVentaAsync();
+                facturaVentaModels.Clear();
+                foreach (var factVentas in facturaVentas)
+                {
+                    facturaVentaModels.Add(factVentas);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error CargarFactVentas FacturaVentaViewModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarFactVentas(FacturaVentaModel facturaVentaModel)
         {
-            if (await _factVentaService.AddFactVentaAsync(facturaVentaModel))
+            try
             {
-                facturaVentaModels.Add(facturaVentaModel);
+                if (await _factVentaService.AddFactVentaAsync(facturaVentaModel))
+                {
+                    facturaVentaModels.Add(facturaVentaModel);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarFactVentas FacturaVentaViewModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarFactVentas(int folio)
         {
-            if (await _factVentaService.DeleteFactVentaAsync(folio))
+            try
             {
-                var facturaVenta = facturaVentaModels.FirstOrDefault(p => p.Folio == folio);
-                if (facturaVenta != null)
+                if (await _factVentaService.DeleteFactVentaAsync(folio))
                 {
-                    facturaVentaModels.Remove(facturaVenta);
+                    var facturaVenta = facturaVentaModels.FirstOrDefault(p => p.Folio == folio);
+                    if (facturaVenta != null)
+                    {
+                        facturaVentaModels.Remove(facturaVenta);
+                    }
                 }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error EliminarFactVentas FacturaVentaViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarFactVentas((FacturaVentaModel)OldFacturaVenta);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarFactVentas((FacturaVentaModel)OldFacturaVenta);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error Update FacturaVentaViewModel: " + Ex.Message);
+            }
         }
 
         private async Task ActualizarFactVentas(FacturaVentaModel AntiguoFactVentas)
         {
-            Console.WriteLine("EditFolioFactVenta: " + EditFolioFactVenta);
-            Console.WriteLine("EditClienteFactVenta: " + EditClienteFactVenta);
-            Console.WriteLine("EditDirDespachoFactVenta: " + EditDirDespachoFactVenta);
-            Console.WriteLine("EditMonedaFactVenta: " + EditMonedaFactVenta);
-            Console.WriteLine("EditFechaFactVenta: " + EditFechaFactVenta);
-
-            var folio = EditFolioFactVenta;
-            var cliente = EditClienteFactVenta;
-            var dirDespacho = EditDirDespachoFactVenta;
-            var moneda = EditMonedaFactVenta;
-            var fecha = EditFechaFactVenta;
-
-            NewFacturaVenta = new FacturaVentaModel(folio, cliente, dirDespacho, moneda, fecha)
+            try
             {
-                Folio = folio,
-                Cliente = cliente,
-                Direccion_Despacho = dirDespacho,
-                Moneda = moneda,
-                Fecha = fecha
-            };
+                Console.WriteLine("EditFolioFactVenta: " + EditFolioFactVenta);
+                Console.WriteLine("EditClienteFactVenta: " + EditClienteFactVenta);
+                Console.WriteLine("EditDirDespachoFactVenta: " + EditDirDespachoFactVenta);
+                Console.WriteLine("EditMonedaFactVenta: " + EditMonedaFactVenta);
+                Console.WriteLine("EditFechaFactVenta: " + EditFechaFactVenta);
 
-            if (await _factVentaService.UpdateFactVentaAsync((FacturaVentaModel)NewFacturaVenta))
+                var folio = EditFolioFactVenta;
+                var cliente = EditClienteFactVenta;
+                var dirDespacho = EditDirDespachoFactVenta;
+                var moneda = EditMonedaFactVenta;
+                var fecha = EditFechaFactVenta;
+
+                NewFacturaVenta = new FacturaVentaModel(folio, cliente, dirDespacho, moneda, fecha)
+                {
+                    Folio = folio,
+                    Cliente = cliente,
+                    Direccion_Despacho = dirDespacho,
+                    Moneda = moneda,
+                    Fecha = fecha
+                };
+
+                if (await _factVentaService.UpdateFactVentaAsync((FacturaVentaModel)NewFacturaVenta))
+                {
+                    //Remove Old
+                    facturaVentaModels.Remove(AntiguoFactVentas);
+
+                    //Add new
+                    facturaVentaModels.Add((FacturaVentaModel)NewFacturaVenta);
+                }
+            }
+            catch(Exception Ex)
             {
-                //Remove Old
-                facturaVentaModels.Remove(AntiguoFactVentas);
-
-                //Add new
-                facturaVentaModels.Add((FacturaVentaModel)NewFacturaVenta);
+                Console.WriteLine("Error ActualizarFactVentas FacturaVentaViewModel: " + Ex.Message);
             }
         }
         #endregion

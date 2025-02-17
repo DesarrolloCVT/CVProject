@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Inicio"
              xmlns:local="clr-namespace:DesktopAplicationCV.Views"
+             NavigationPage.HasBackButton="False"
              Title="Inicio">
     <ScrollView>
         <StackLayout>

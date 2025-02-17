@@ -51,12 +51,12 @@ namespace DesktopAplicationCV.ViewModel
         #endregion
 
         #region Inicializadores
+
         public ObservableCollection<IngresoDetalleModel> IngresoDetalleInfoCollection
         {
             get { return IngresoDetalleModels; }
             set { IngresoDetalleModels = value; }
         }
-        #endregion
 
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
@@ -141,7 +141,10 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        #endregion
+
         #region Constructores
+
         public IngresoDetalleViewsModel(INavigationService navigationService)
         {
             _ingresoDetalleService = new IngresoDetalleService();
@@ -152,6 +155,7 @@ namespace DesktopAplicationCV.ViewModel
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
+
         #endregion
 
         [RelayCommand]
@@ -178,11 +182,18 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is IngresoDetalleModel ingreso)
+            try
             {
-                FolioCeldaSeleccionada = ingreso.Folio_FacturaVenta;
-                MontoIngresoDetalleCeldaSeleccionada = ingreso.Monto;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is IngresoDetalleModel ingreso)
+                {
+                    FolioCeldaSeleccionada = ingreso.Folio_FacturaVenta;
+                    MontoIngresoDetalleCeldaSeleccionada = ingreso.Monto;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine("Error CeldaTocada IngresoDetalleViewsModel: " + ex.Message);
             }
         }
 
@@ -213,9 +224,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Console.WriteLine("Error Eliminar IngresoDetalleViewsModel: " + Ex.Message);
             }
         }
 
@@ -229,113 +241,162 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Console.WriteLine("Error Agregar IngresoDetalleViewsModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarIngresoDetalle()
         {
-            if (FolioIngresoDetalleIngresado != 0 && MontoIngresoDetalleIngresado != 0)
+            try
             {
-                AgregarIngresoDetalle(new IngresoDetalleModel(FolioIngresoDetalleIngresado, MontoIngresoDetalleIngresado));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                if (FolioIngresoDetalleIngresado != 0 && MontoIngresoDetalleIngresado != 0)
+                {
+                    AgregarIngresoDetalle(new IngresoDetalleModel(FolioIngresoDetalleIngresado, MontoIngresoDetalleIngresado));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                }
             }
-            else
+            catch (Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                Console.WriteLine("Error InsertarIngresoDetalle IngresoDetalleViewsModel: " + Ex.Message);
             }
+            
         }
 
         [RelayCommand]
         private async void Editar()
         {
-            if (selectedIndex >= 0)
+            try
             {
-                try
+                if (selectedIndex >= 0)
                 {
-                    OldIngresoDetalle = new IngresoDetalleModel(FolioCeldaSeleccionada, MontoIngresoDetalleCeldaSeleccionada)
+                    try
                     {
-                        Folio_FacturaVenta = FolioCeldaSeleccionada,
-                        Monto = MontoIngresoDetalleCeldaSeleccionada
-                    };
+                        OldIngresoDetalle = new IngresoDetalleModel(FolioCeldaSeleccionada, MontoIngresoDetalleCeldaSeleccionada)
+                        {
+                            Folio_FacturaVenta = FolioCeldaSeleccionada,
+                            Monto = MontoIngresoDetalleCeldaSeleccionada
+                        };
 
-                    await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Ingresos_Detalle", OldIngresoDetalle);
+                        await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Ingresos_Detalle", OldIngresoDetalle);
+                    }
+                    catch (Exception Ex)
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    }
                 }
-                catch (Exception Ex)
+                else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                Console.WriteLine("Error Editar IngresoDetalleViewsModel: " + Ex.Message);
             }
-
-
         }
 
         private async Task CargarIngresoDetalles()
         {
-            var ingresoDetalle = await _ingresoDetalleService.GetIngresoDetalleAsync();
-            IngresoDetalleModels.Clear();
-            foreach (var ingreso in ingresoDetalle)
+            try
             {
-                IngresoDetalleModels.Add(ingreso);
+                var ingresoDetalle = await _ingresoDetalleService.GetIngresoDetalleAsync();
+                IngresoDetalleModels.Clear();
+                foreach (var ingreso in ingresoDetalle)
+                {
+                    IngresoDetalleModels.Add(ingreso);
+                }
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error CargarIngresoDetalles IngresoDetalleViewsModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarIngresoDetalle(IngresoDetalleModel ingresoDetalle)
         {
-            if (await _ingresoDetalleService.AddIngresoDetalleAsync(ingresoDetalle))
+            try
             {
-                IngresoDetalleModels.Add(ingresoDetalle);
+                if (await _ingresoDetalleService.AddIngresoDetalleAsync(ingresoDetalle))
+                {
+                    IngresoDetalleModels.Add(ingresoDetalle);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarIngresoDetalle IngresoDetalleViewsModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarIngresoDetalle(int folio)
         {
-            if (await _ingresoDetalleService.DeleteIngresoDetalleAsync(folio))
+            try
             {
-                var ingreso = IngresoDetalleModels.FirstOrDefault(p => p.Folio_FacturaVenta == folio);
-                if (ingreso != null)
+                if (await _ingresoDetalleService.DeleteIngresoDetalleAsync(folio))
                 {
-                    IngresoDetalleModels.Remove(ingreso);
+                    var ingreso = IngresoDetalleModels.FirstOrDefault(p => p.Folio_FacturaVenta == folio);
+                    if (ingreso != null)
+                    {
+                        IngresoDetalleModels.Remove(ingreso);
+                    }
                 }
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error EliminarIngresoDetalle IngresoDetalleViewsModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarIngresoDetalle((IngresoDetalleModel)OldIngresoDetalle);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarIngresoDetalle((IngresoDetalleModel)OldIngresoDetalle);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error Update IngresoDetalleViewsModel: " + Ex.Message);
+            }
         }
 
 
         private async Task ActualizarIngresoDetalle(IngresoDetalleModel AntiguoIngresoDetalle)
         {
-            Console.WriteLine("EditFolioIngresoDetalle: " + EditFolioIngresoDetalle);
-            Console.WriteLine("EditMontoIngresoDetalle: " + EditMontoIngresoDetalle);
-
-            var folio = EditFolioIngresoDetalle;
-            var monto = EditMontoIngresoDetalle;
-
-            NewIngresoDetalle = new IngresoDetalleModel(folio, monto)
+            try
             {
-                Folio_FacturaVenta = folio,
-                Monto = monto
-            };
+                Console.WriteLine("EditFolioIngresoDetalle: " + EditFolioIngresoDetalle);
+                Console.WriteLine("EditMontoIngresoDetalle: " + EditMontoIngresoDetalle);
 
-            if (await _ingresoDetalleService.UpdateIngresoDetalleAsync((IngresoDetalleModel)NewIngresoDetalle))
+                var folio = EditFolioIngresoDetalle;
+                var monto = EditMontoIngresoDetalle;
+
+                NewIngresoDetalle = new IngresoDetalleModel(folio, monto)
+                {
+                    Folio_FacturaVenta = folio,
+                    Monto = monto
+                };
+
+                if (await _ingresoDetalleService.UpdateIngresoDetalleAsync((IngresoDetalleModel)NewIngresoDetalle))
+                {
+                    //Remove Old
+                    IngresoDetalleModels.Remove(AntiguoIngresoDetalle);
+
+                    //Add new
+                    IngresoDetalleModels.Add((IngresoDetalleModel)NewIngresoDetalle);
+
+                }
+            }
+            catch (Exception Ex) 
             {
-                //Remove Old
-                IngresoDetalleModels.Remove(AntiguoIngresoDetalle);
-
-                //Add new
-                IngresoDetalleModels.Add((IngresoDetalleModel)NewIngresoDetalle);
-
+                Console.WriteLine("Error ActualizarIngresoDetalle IngresoDetalleViewsModel: " + Ex.Message);
             }
         }
     }

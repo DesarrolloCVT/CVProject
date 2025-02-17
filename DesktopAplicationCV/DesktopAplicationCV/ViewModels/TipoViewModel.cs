@@ -67,13 +67,12 @@ namespace DesktopAplicationCV.ViewModel
         #endregion
 
         #region Inicializadores
+
         public ObservableCollection<TipoModel> TipoInfoCollection
         {
             get { return Tipos; }
             set { Tipos = value; }
         }
-        #endregion
-
 
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
@@ -287,7 +286,7 @@ namespace DesktopAplicationCV.ViewModel
                 }
             }
         }
-        
+
         public int GastoComercializacionTipoIngresado
         {
             get => _gastoComercializacionTipoIngresadoText;
@@ -300,7 +299,7 @@ namespace DesktopAplicationCV.ViewModel
                 }
             }
         }
-        
+
         public int ComisionesTipoIngresado
         {
             get => _comisionesTipoIngresadoText;
@@ -313,7 +312,7 @@ namespace DesktopAplicationCV.ViewModel
                 }
             }
         }
-        
+
         public int GastoFinancieroTipoIngresado
         {
             get => _gastoFinancieroTipoIngresadoText;
@@ -326,7 +325,7 @@ namespace DesktopAplicationCV.ViewModel
                 }
             }
         }
-        
+
         public int AnticipoTipoIngresado
         {
             get => _anticipoTipoIngresadoText;
@@ -339,6 +338,8 @@ namespace DesktopAplicationCV.ViewModel
                 }
             }
         }
+
+        #endregion
 
         #region Constructores
 
@@ -386,18 +387,25 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is TipoModel tipos)
+            try
             {
-                CodigoCeldaSeleccionada = tipos.Codigo;
-                NombreTipoCeldaSeleccionada = tipos.Nombre;
-                TipoCeldaSeleccionada = tipos.Tipo_Dato;
-                CuentaTipoCeldaSeleccionada = tipos.Cuenta;
-                PagoFacturaTipoCeldaSeleccionada = tipos.Pago_Factura;
-                GastoComercializacionTipoCeldaSeleccionada = tipos.Gasto_Comercializacion;
-                ComisionesTipoCeldaSeleccionada = tipos.Comisiones;
-                GastoFinancieroTipoCeldaSeleccionada = tipos.Gasto_Financiero;
-                AnticipoTipoCeldaSeleccionada = tipos.Anticipo;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is TipoModel tipos)
+                {
+                    CodigoCeldaSeleccionada = tipos.Codigo;
+                    NombreTipoCeldaSeleccionada = tipos.Nombre;
+                    TipoCeldaSeleccionada = tipos.Tipo_Dato;
+                    CuentaTipoCeldaSeleccionada = tipos.Cuenta;
+                    PagoFacturaTipoCeldaSeleccionada = tipos.Pago_Factura;
+                    GastoComercializacionTipoCeldaSeleccionada = tipos.Gasto_Comercializacion;
+                    ComisionesTipoCeldaSeleccionada = tipos.Comisiones;
+                    GastoFinancieroTipoCeldaSeleccionada = tipos.Gasto_Financiero;
+                    AnticipoTipoCeldaSeleccionada = tipos.Anticipo;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine("Error CeldaTocada TipoViewModel: " + ex.Message);
             }
         }
 
@@ -429,9 +437,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Console.WriteLine("Error Eliminar TipoViewModel: " + Ex.Message);
             }
         }
 
@@ -445,145 +454,193 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Console.WriteLine("Error Agregar TipoViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarTipo()
         {
-            if (CodigoTipoIngresado != 0 && !string.IsNullOrEmpty(NombreTipoIngresado) 
-                && !string.IsNullOrEmpty(TipoIngresado) && !string.IsNullOrEmpty(CuentaTipoIngresado) 
-                && PagoFacturaTipoIngresado != 0 && GastoComercializacionTipoIngresado != 0 
+            try
+            {
+                if (CodigoTipoIngresado != 0 && !string.IsNullOrEmpty(NombreTipoIngresado)
+                && !string.IsNullOrEmpty(TipoIngresado) && !string.IsNullOrEmpty(CuentaTipoIngresado)
+                && PagoFacturaTipoIngresado != 0 && GastoComercializacionTipoIngresado != 0
                 && ComisionesTipoIngresado != 0 && GastoFinancieroTipoIngresado != 0 && AnticipoTipoIngresado != 0)
-            {
-                AgregarTipo(new TipoModel(CodigoTipoIngresado, NombreTipoIngresado, TipoIngresado, 
-                    CuentaTipoIngresado, PagoFacturaTipoIngresado, GastoComercializacionTipoIngresado, ComisionesTipoIngresado
-                    , GastoFinancieroTipoIngresado, AnticipoTipoIngresado));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                {
+                    AgregarTipo(new TipoModel(CodigoTipoIngresado, NombreTipoIngresado, TipoIngresado,
+                        CuentaTipoIngresado, PagoFacturaTipoIngresado, GastoComercializacionTipoIngresado, ComisionesTipoIngresado
+                        , GastoFinancieroTipoIngresado, AnticipoTipoIngresado));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                Console.WriteLine("Error InsertarTipo TipoViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         private async void Editar()
         {
-            if (selectedIndex >= 0)
+            try
             {
-                try
+                if (selectedIndex >= 0)
                 {
-                    OldType = new TipoModel(CodigoCeldaSeleccionada, NombreTipoCeldaSeleccionada,
-                        TipoCeldaSeleccionada, CuentaTipoCeldaSeleccionada, PagoFacturaTipoCeldaSeleccionada
-                        , GastoComercializacionTipoCeldaSeleccionada, ComisionesTipoCeldaSeleccionada, GastoFinancieroTipoCeldaSeleccionada
-                        ,AnticipoTipoCeldaSeleccionada)
+                    try
                     {
-                        Codigo = CodigoCeldaSeleccionada,
-                        Nombre = NombreTipoCeldaSeleccionada,
-                        Tipo_Dato = TipoCeldaSeleccionada,
-                        Cuenta = CuentaTipoCeldaSeleccionada,
-                        Pago_Factura = PagoFacturaTipoCeldaSeleccionada,
-                        Gasto_Comercializacion = GastoComercializacionTipoCeldaSeleccionada,
-                        Comisiones = ComisionesTipoCeldaSeleccionada,
-                        Gasto_Financiero = GastoFinancieroTipoCeldaSeleccionada,
-                        Anticipo = AnticipoTipoCeldaSeleccionada
-                    };
+                        OldType = new TipoModel(CodigoCeldaSeleccionada, NombreTipoCeldaSeleccionada,
+                            TipoCeldaSeleccionada, CuentaTipoCeldaSeleccionada, PagoFacturaTipoCeldaSeleccionada
+                            , GastoComercializacionTipoCeldaSeleccionada, ComisionesTipoCeldaSeleccionada, GastoFinancieroTipoCeldaSeleccionada
+                            , AnticipoTipoCeldaSeleccionada)
+                        {
+                            Codigo = CodigoCeldaSeleccionada,
+                            Nombre = NombreTipoCeldaSeleccionada,
+                            Tipo_Dato = TipoCeldaSeleccionada,
+                            Cuenta = CuentaTipoCeldaSeleccionada,
+                            Pago_Factura = PagoFacturaTipoCeldaSeleccionada,
+                            Gasto_Comercializacion = GastoComercializacionTipoCeldaSeleccionada,
+                            Comisiones = ComisionesTipoCeldaSeleccionada,
+                            Gasto_Financiero = GastoFinancieroTipoCeldaSeleccionada,
+                            Anticipo = AnticipoTipoCeldaSeleccionada
+                        };
 
-                    await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Tipo", OldType);
+                        await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Tipo", OldType);
+                    }
+                    catch (Exception Ex)
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    }
                 }
-                catch (Exception Ex)
+                else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                Console.WriteLine("Error Editar TipoViewModel: " + Ex.Message);
             }
-
-
         }
 
         private async Task CargarTipos()
         {
-            var tipos = await _tipoService.GetTipoAsync();
-            Tipos.Clear();
-            foreach (var tipo in tipos)
+            try
             {
-                Tipos.Add(tipo);
+                var tipos = await _tipoService.GetTipoAsync();
+                Tipos.Clear();
+                foreach (var tipo in tipos)
+                {
+                    Tipos.Add(tipo);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error CargarTipos TipoViewModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarTipo(TipoModel tipo)
         {
-            if (await _tipoService.AddTipoAsync(tipo))
+            try
             {
-                Tipos.Add(tipo);
+                if (await _tipoService.AddTipoAsync(tipo))
+                {
+                    Tipos.Add(tipo);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarTipo TipoViewModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarTipo(int codigo)
         {
-            if (await _tipoService.DeleteTipoAsync(codigo))
+            try
             {
-                var tipo = Tipos.FirstOrDefault(p => p.Codigo == codigo);
-                if (tipo != null)
+                if (await _tipoService.DeleteTipoAsync(codigo))
                 {
-                    Tipos.Remove(tipo);
+                    var tipo = Tipos.FirstOrDefault(p => p.Codigo == codigo);
+                    if (tipo != null)
+                    {
+                        Tipos.Remove(tipo);
+                    }
                 }
             }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error EliminarTipo TipoViewModel: " + Ex.Message);
+            }
+            
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarTipo((TipoModel)OldType);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarTipo((TipoModel)OldType);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error Update TipoViewModel: " + Ex.Message);
+            }
         }
-
 
         private async Task ActualizarTipo(TipoModel AntiguoProducto)
         {
-            Console.WriteLine("EditCodigoTipo: " + EditCodigoTipo);
-            Console.WriteLine("EditNombreTipo: " + EditNombreTipo);
-            Console.WriteLine("EditTipo: " + EditTipo);
-            Console.WriteLine("EditCuentaTipo: " + EditCuentaTipo);
-
-            var cod = EditCodigoTipo;
-            var name = EditNombreTipo;
-            var type = EditTipo;
-            var account = EditCuentaTipo;
-            var pagoFactura = EditPagoFacturaTipo;
-            var gastoComercializacion = EditGastoComercializacionTipo;
-            var comisiones = EditComisionesTipo;
-            var gastoFinanciero = EditGastoFinancieroTipo;
-            var anticipo = EditAnticipoTipo;
-
-
-            NewType = new TipoModel(cod, name, type, account, pagoFactura, gastoComercializacion, comisiones, gastoFinanciero, anticipo)
+            try
             {
-                Codigo = cod,
-                Nombre = name,
-                Tipo_Dato = type,
-                Cuenta = account,
-                Pago_Factura = pagoFactura,
-                Gasto_Comercializacion = gastoComercializacion,
-                Comisiones = comisiones,
-                Gasto_Financiero = gastoFinanciero,
-                Anticipo = anticipo
-            };
+                Console.WriteLine("EditCodigoTipo: " + EditCodigoTipo);
+                Console.WriteLine("EditNombreTipo: " + EditNombreTipo);
+                Console.WriteLine("EditTipo: " + EditTipo);
+                Console.WriteLine("EditCuentaTipo: " + EditCuentaTipo);
 
-            if (await _tipoService.UpdateTipoAsync((TipoModel)NewType))
+                var cod = EditCodigoTipo;
+                var name = EditNombreTipo;
+                var type = EditTipo;
+                var account = EditCuentaTipo;
+                var pagoFactura = EditPagoFacturaTipo;
+                var gastoComercializacion = EditGastoComercializacionTipo;
+                var comisiones = EditComisionesTipo;
+                var gastoFinanciero = EditGastoFinancieroTipo;
+                var anticipo = EditAnticipoTipo;
+
+
+                NewType = new TipoModel(cod, name, type, account, pagoFactura, gastoComercializacion, comisiones, gastoFinanciero, anticipo)
+                {
+                    Codigo = cod,
+                    Nombre = name,
+                    Tipo_Dato = type,
+                    Cuenta = account,
+                    Pago_Factura = pagoFactura,
+                    Gasto_Comercializacion = gastoComercializacion,
+                    Comisiones = comisiones,
+                    Gasto_Financiero = gastoFinanciero,
+                    Anticipo = anticipo
+                };
+
+                if (await _tipoService.UpdateTipoAsync((TipoModel)NewType))
+                {
+                    //Remove Old Product
+                    Tipos.Remove(AntiguoProducto);
+
+                    //Add new product
+                    Tipos.Add((TipoModel)NewType);
+
+                }
+            }
+            catch (Exception Ex) 
             {
-                //Remove Old Product
-                Tipos.Remove(AntiguoProducto);
-
-                //Add new product
-                Tipos.Add((TipoModel)NewType);
-
+                Console.WriteLine("Error ActualizarTipo TipoViewModel: " + Ex.Message);
             }
         }
     }

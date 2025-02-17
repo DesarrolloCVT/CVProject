@@ -44,12 +44,12 @@ namespace DesktopAplicationCV.ViewModel
         #endregion
 
         #region Inicializadores
+
         public ObservableCollection<ProductosModel> ProdInfoCollection
         {
             get { return Productos; }
             set { Productos = value; }
         }
-        #endregion
 
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
@@ -100,7 +100,7 @@ namespace DesktopAplicationCV.ViewModel
             get => _editNombreProducto;
             set
             {
-               if (_editNombreProducto != value)
+                if (_editNombreProducto != value)
                 {
                     _editNombreProducto = value;
                     OnPropertyChanged(nameof(EditNombreProducto));
@@ -134,10 +134,10 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-
-        
+        #endregion
 
         #region Constructores
+
         public ProductosViewModel(INavigationService navigationService)
         {
             _productoService = new ProductoService();
@@ -148,6 +148,7 @@ namespace DesktopAplicationCV.ViewModel
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
+
         #endregion
 
         [RelayCommand]
@@ -174,11 +175,18 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is ProductosModel productos)
+            try
             {
-                CodigoCeldaSeleccionada = productos.Codigo;
-                NombreProductoCeldaSeleccionada = productos.Producto;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is ProductosModel productos)
+                {
+                    CodigoCeldaSeleccionada = productos.Codigo;
+                    NombreProductoCeldaSeleccionada = productos.Producto;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error CeldaTocada ProductosViewModel: " + Ex.Message);
             }
         }
 
@@ -209,9 +217,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Console.WriteLine("Error Eliminar ProductosViewModel: " + Ex.Message);
             }
         }
 
@@ -225,113 +234,160 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Console.WriteLine("Error Agregar ProductosViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarProducto()
         {
-            if(CodigoProductoIngresado != 0 && !string.IsNullOrEmpty(NombreProductoIngresado))
+            try
             {
-                AgregarProducto(new ProductosModel(CodigoProductoIngresado, NombreProductoIngresado));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                if (CodigoProductoIngresado != 0 && !string.IsNullOrEmpty(NombreProductoIngresado))
+                {
+                    AgregarProducto(new ProductosModel(CodigoProductoIngresado, NombreProductoIngresado));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                Console.WriteLine("Error InsertarProducto ProductosViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         private async void Editar()
         {
-            if (selectedIndex >= 0)
+            try
             {
-                try
+                if (selectedIndex >= 0)
                 {
-                    OldProduct = new ProductosModel(CodigoCeldaSeleccionada, NombreProductoCeldaSeleccionada)
+                    try
                     {
-                        Codigo = CodigoCeldaSeleccionada,
-                        Producto = NombreProductoCeldaSeleccionada
-                    };
+                        OldProduct = new ProductosModel(CodigoCeldaSeleccionada, NombreProductoCeldaSeleccionada)
+                        {
+                            Codigo = CodigoCeldaSeleccionada,
+                            Producto = NombreProductoCeldaSeleccionada
+                        };
 
-                    await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Productos", OldProduct);
+                        await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Productos", OldProduct);
+                    }
+                    catch (Exception Ex)
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    }
                 }
-                catch (Exception Ex)
+                else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                Console.WriteLine("Error Editar ProductosViewModel: " + Ex.Message);
             }
-
-            
         }
 
         private async Task CargarProductos()
         {
-            var productos = await _productoService.GetProductosAsync();
-            Productos.Clear();
-            foreach (var producto in productos)
+            try
             {
-                Productos.Add(producto);
+                var productos = await _productoService.GetProductosAsync();
+                Productos.Clear();
+                foreach (var producto in productos)
+                {
+                    Productos.Add(producto);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error CargarProductos ProductosViewModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarProducto(ProductosModel producto)
         {
-            if (await _productoService.AddProductoAsync(producto))
+            try
             {
-                Productos.Add(producto);
+                if (await _productoService.AddProductoAsync(producto))
+                {
+                    Productos.Add(producto);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarProducto ProductosViewModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarProducto(int codigo)
         {
-            if (await _productoService.DeleteProductoAsync(codigo))
+            try
             {
-                var producto = Productos.FirstOrDefault(p => p.Codigo == codigo);
-                if (producto != null)
+                if (await _productoService.DeleteProductoAsync(codigo))
                 {
-                    Productos.Remove(producto);
+                    var producto = Productos.FirstOrDefault(p => p.Codigo == codigo);
+                    if (producto != null)
+                    {
+                        Productos.Remove(producto);
+                    }
                 }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error EliminarProducto ProductosViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarProducto((ProductosModel)OldProduct);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarProducto((ProductosModel)OldProduct);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) {
+                Console.WriteLine("Error Update ProductosViewModel: " + Ex.Message);
+            }
+            
         }
-
 
         private async Task ActualizarProducto(ProductosModel AntiguoProducto)
         {
-            Console.WriteLine("EditCodigoProducto: " + EditCodigoProducto);
-            Console.WriteLine("EditNombreProducto: " + EditNombreProducto);
-
-            var cod = EditCodigoProducto;
-            var prod = EditNombreProducto;
-
-            NewProduct = new ProductosModel(cod, prod)
+            try
             {
-                Codigo = cod,
-                Producto = prod
-            };
+                Console.WriteLine("EditCodigoProducto: " + EditCodigoProducto);
+                Console.WriteLine("EditNombreProducto: " + EditNombreProducto);
 
-            if (await _productoService.UpdateProductoAsync((ProductosModel)NewProduct))
+                var cod = EditCodigoProducto;
+                var prod = EditNombreProducto;
+
+                NewProduct = new ProductosModel(cod, prod)
+                {
+                    Codigo = cod,
+                    Producto = prod
+                };
+
+                if (await _productoService.UpdateProductoAsync((ProductosModel)NewProduct))
+                {
+                    //Remove Old Product
+                    Productos.Remove(AntiguoProducto);
+
+                    //Add new product
+                    Productos.Add((ProductosModel)NewProduct);
+
+                }
+            }
+            catch (Exception Ex) 
             {
-                //Remove Old Product
-                Productos.Remove(AntiguoProducto);
-
-                //Add new product
-                Productos.Add((ProductosModel)NewProduct);
-
+                Console.WriteLine("Error ActualizarProducto ProductosViewModel: " + Ex.Message);
             }
         }
     }

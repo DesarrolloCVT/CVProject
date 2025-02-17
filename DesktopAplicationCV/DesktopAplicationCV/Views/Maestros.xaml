@@ -2,34 +2,32 @@
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Maestros"
-             xmlns:local="clr-namespace:DesktopAplicationCV.Views"
-             Title="Maestros">
+             xmlns:local="clr-namespace:DesktopAplicationCV.Views">
 
     <TabBar>
-        <Tab Title="Socio de Negocio">
+        <Tab Title="{Binding TxtSocioNegocio}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Socio_Negocio}" />
         </Tab>
-        <Tab Title="Productos">
+        <Tab Title="{Binding TxtProductos}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Productos}" />
         </Tab>
-        <Tab Title="Banco">
+        <Tab Title="{Binding TxtBanco}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Banco}" />
         </Tab>
-        <Tab Title="Tipo">
+        <Tab Title="{Binding TxtTipo}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Tipo}" />
         </Tab>
-        <Tab Title="Banco Detalle">
+        <Tab Title="{Binding TxtBancoDetalle}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Banco_Detalle}" />
         </Tab>
-        <Tab Title="Cuentas">
+        <Tab Title="{Binding TxtCuentas}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Cuentas}" />
         </Tab>
     </TabBar>
-
 </Shell>

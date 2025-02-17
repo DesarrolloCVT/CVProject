@@ -56,12 +56,12 @@ namespace DesktopAplicationCV.ViewModel
         #endregion
 
         #region Inicializadores
+
         public ObservableCollection<FacturaCompraDetalleModel> FacturaCompraDetalleInfoCollection
         {
             get { return FacturaCompraDetalleModels; }
             set { FacturaCompraDetalleModels = value; }
         }
-        #endregion
 
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
@@ -198,7 +198,10 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        #endregion
+
         #region Constructores
+
         public FacturaCompraDetalleViewModel(INavigationService navigationService)
         {
             _factComprDetalleService = new FacturaCompraDetalleService();
@@ -209,6 +212,7 @@ namespace DesktopAplicationCV.ViewModel
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
+
         #endregion
 
         [RelayCommand]
@@ -237,13 +241,20 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is FacturaCompraDetalleModel facturaCompraModel)
+            try
             {
-                FolioFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Folio;
-                CodigoProdFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Codigo_Producto;
-                CantidadFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Cantidad;
-                PrecioFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Precio;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is FacturaCompraDetalleModel facturaCompraModel)
+                {
+                    FolioFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Folio;
+                    CodigoProdFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Codigo_Producto;
+                    CantidadFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Cantidad;
+                    PrecioFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Precio;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error CeldaTocada FacturaCompraDetalleViewModel: " + Ex.Message);
             }
         }
 
@@ -274,9 +285,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Console.WriteLine("Error Eliminar FacturaCompraDetalleViewModel: " + Ex.Message);
             }
         }
 
@@ -290,23 +302,31 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Console.WriteLine("Error Agregar FacturaCompraDetalleViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarFactCompraDetalle()
         {
-            if (FolioFactCompraDetalleIngresado != 0 && !string.IsNullOrEmpty(CodigoProdFactCompraDetalleIngresado)
+            try
+            {
+                if (FolioFactCompraDetalleIngresado != 0 && !string.IsNullOrEmpty(CodigoProdFactCompraDetalleIngresado)
                 && CantidadFactCompraDetalleIngresado != 0 && PrecioFactCompraDetalleIngresado != 0)
-            {
-                AgregarFactCompraDetalle(new FacturaCompraDetalleModel(FolioFactCompraDetalleIngresado, CodigoProdFactCompraDetalleIngresado, 
-                    CantidadFactCompraDetalleIngresado, PrecioFactCompraDetalleIngresado));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                {
+                    AgregarFactCompraDetalle(new FacturaCompraDetalleModel(FolioFactCompraDetalleIngresado, CodigoProdFactCompraDetalleIngresado,
+                        CantidadFactCompraDetalleIngresado, PrecioFactCompraDetalleIngresado));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                }
             }
-            else
+            catch (Exception Ex) 
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                Console.WriteLine("Error InsertarFactCompraDetalle FacturaCompraDetalleViewModel: " + Ex.Message);
             }
         }
 
@@ -331,6 +351,7 @@ namespace DesktopAplicationCV.ViewModel
                 catch (Exception Ex)
                 {
                     Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Console.WriteLine("Error Editar FacturaCompraDetalleViewModel: " + Ex.Message);
                 }
             }
             else
@@ -343,71 +364,105 @@ namespace DesktopAplicationCV.ViewModel
 
         private async Task CargarFactCompraDetalles()
         {
-            var factCompraDetalles = await _factComprDetalleService.GetFactCompraDetallesAsync();
-            FacturaCompraDetalleModels.Clear();
-            foreach (var factCompraDetalle in factCompraDetalles)
+            try
             {
-                FacturaCompraDetalleModels.Add(factCompraDetalle);
+                var factCompraDetalles = await _factComprDetalleService.GetFactCompraDetallesAsync();
+                FacturaCompraDetalleModels.Clear();
+                foreach (var factCompraDetalle in factCompraDetalles)
+                {
+                    FacturaCompraDetalleModels.Add(factCompraDetalle);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error CargarFactCompraDetalles FacturaCompraDetalleViewModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarFactCompraDetalle(FacturaCompraDetalleModel facturaCompraDetalleModel)
         {
-            if (await _factComprDetalleService.AddFactCompraDetalleAsync(facturaCompraDetalleModel))
+            try
             {
-                FacturaCompraDetalleModels.Add(facturaCompraDetalleModel);
+                if (await _factComprDetalleService.AddFactCompraDetalleAsync(facturaCompraDetalleModel))
+                {
+                    FacturaCompraDetalleModels.Add(facturaCompraDetalleModel);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarFactCompraDetalle FacturaCompraDetalleViewModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarFactCompraDetalle(int folio)
         {
-            if (await _factComprDetalleService.DeleteFactCompraDetalleAsync(folio))
+            try
             {
-                var producto = FacturaCompraDetalleModels.FirstOrDefault(p => p.Folio == folio);
-                if (producto != null)
+                if (await _factComprDetalleService.DeleteFactCompraDetalleAsync(folio))
                 {
-                    FacturaCompraDetalleModels.Remove(producto);
+                    var producto = FacturaCompraDetalleModels.FirstOrDefault(p => p.Folio == folio);
+                    if (producto != null)
+                    {
+                        FacturaCompraDetalleModels.Remove(producto);
+                    }
                 }
+            }
+            catch (Exception Ex) {
+                Console.WriteLine("Error EliminarFactCompraDetalle FacturaCompraDetalleViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarFactCompraDetalle((FacturaCompraDetalleModel)OldFacturaCompraDetalle);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarFactCompraDetalle((FacturaCompraDetalleModel)OldFacturaCompraDetalle);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error Update FacturaCompraDetalleViewModel: " + Ex.Message);
+            }
         }
 
 
         private async Task ActualizarFactCompraDetalle(FacturaCompraDetalleModel AntiguaFactCompraDetalle)
         {
-            Console.WriteLine("EditFolioFactCompraDetalle: " + EditFolioFactCompraDetalle);
-            Console.WriteLine("EditCodigoProdFactCompraDetalle: " + EditCodigoProdFactCompraDetalle);
-            Console.WriteLine("EditCantidadFactCompraDetalle: " + EditCantidadFactCompraDetalle);
-            Console.WriteLine("EditPrecioFactCompraDetalle: " + EditPrecioFactCompraDetalle);
-
-            var folio = EditFolioFactCompraDetalle;
-            var codigo = EditCodigoProdFactCompraDetalle;
-            var cantidad = EditCantidadFactCompraDetalle;
-            var precio = EditPrecioFactCompraDetalle;
-
-            NewFacturaCompraDetalle = new FacturaCompraDetalleModel(folio, codigo, cantidad, precio)
+            try
             {
-                Folio = folio,
-                Codigo_Producto = codigo,
-                Cantidad = cantidad,
-                Precio = precio
-            };
+                Console.WriteLine("EditFolioFactCompraDetalle: " + EditFolioFactCompraDetalle);
+                Console.WriteLine("EditCodigoProdFactCompraDetalle: " + EditCodigoProdFactCompraDetalle);
+                Console.WriteLine("EditCantidadFactCompraDetalle: " + EditCantidadFactCompraDetalle);
+                Console.WriteLine("EditPrecioFactCompraDetalle: " + EditPrecioFactCompraDetalle);
 
-            if (await _factComprDetalleService.UpdateFactCompraDetalleAsync((FacturaCompraDetalleModel)NewFacturaCompraDetalle))
+                var folio = EditFolioFactCompraDetalle;
+                var codigo = EditCodigoProdFactCompraDetalle;
+                var cantidad = EditCantidadFactCompraDetalle;
+                var precio = EditPrecioFactCompraDetalle;
+
+                NewFacturaCompraDetalle = new FacturaCompraDetalleModel(folio, codigo, cantidad, precio)
+                {
+                    Folio = folio,
+                    Codigo_Producto = codigo,
+                    Cantidad = cantidad,
+                    Precio = precio
+                };
+
+                if (await _factComprDetalleService.UpdateFactCompraDetalleAsync((FacturaCompraDetalleModel)NewFacturaCompraDetalle))
+                {
+                    //Remove Old Product
+                    FacturaCompraDetalleModels.Remove(AntiguaFactCompraDetalle);
+
+                    //Add new product
+                    FacturaCompraDetalleModels.Add((FacturaCompraDetalleModel)NewFacturaCompraDetalle);
+
+                }
+            }
+            catch (Exception Ex) 
             {
-                //Remove Old Product
-                FacturaCompraDetalleModels.Remove(AntiguaFactCompraDetalle);
-
-                //Add new product
-                FacturaCompraDetalleModels.Add((FacturaCompraDetalleModel)NewFacturaCompraDetalle);
-
+                Console.WriteLine("Error ActualizarFactCompraDetalle FacturaCompraDetalleViewModel: " + Ex.Message);
             }
         }
     }

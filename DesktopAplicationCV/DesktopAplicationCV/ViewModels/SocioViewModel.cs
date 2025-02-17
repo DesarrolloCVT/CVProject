@@ -51,13 +51,13 @@ namespace DesktopAplicationCV.ViewModel
 
 
         #region Inicializadores
+
         public ObservableCollection<SocioNegocioModel> SocioInfoCollection
         {
             get { return Socios; }
             set { Socios = value; }
         }
-        #endregion
-        
+
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
         {
@@ -193,6 +193,8 @@ namespace DesktopAplicationCV.ViewModel
         // Acción para establecer la lógica del filtro
         public Action ApplyFilterAction { get; set; }
 
+        #endregion
+
         #region Constructores
 
         public SocioViewModel(INavigationService navigationService)
@@ -228,14 +230,22 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is SocioNegocioModel socios)
+            try
             {
-                CodigoCeldaSeleccionada = socios.Codigo;
-                NombreSocioCeldaSeleccionada = socios.Nombre;
-                TipoSocioCeldaSeleccionada = socios.Tipo;
-                SaldoSocioCeldaSeleccionada = socios.Saldo;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is SocioNegocioModel socios)
+                {
+                    CodigoCeldaSeleccionada = socios.Codigo;
+                    NombreSocioCeldaSeleccionada = socios.Nombre;
+                    TipoSocioCeldaSeleccionada = socios.Tipo;
+                    SaldoSocioCeldaSeleccionada = socios.Saldo;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
             }
+            catch (Exception ex) 
+            {
+                Console.WriteLine("Error CeldaTocada SocioViewModel: " + ex.Message);
+            }
+            
         }
 
         #region Binding Methods 
@@ -273,9 +283,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Console.WriteLine("Error Eliminar SocioViewModel: " + Ex.Message);
             }
         }
 
@@ -289,118 +300,168 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Console.WriteLine("Error Agregar SocioViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarSocio()
         {
-            if (CodigoSocioIngresado != 0 && !string.IsNullOrEmpty(NombreSocioIngresado) && !string.IsNullOrEmpty(TipoSocioIngresado))
+            try
             {
-                AgregarSocio(new SocioNegocioModel(CodigoSocioIngresado, NombreSocioIngresado, TipoSocioIngresado, SaldoSocioIngresado));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                if (CodigoSocioIngresado != 0 && !string.IsNullOrEmpty(NombreSocioIngresado) && !string.IsNullOrEmpty(TipoSocioIngresado))
+                {
+                    AgregarSocio(new SocioNegocioModel(CodigoSocioIngresado, NombreSocioIngresado, TipoSocioIngresado, SaldoSocioIngresado));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                Console.WriteLine("Error InsertarSocio SocioViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         private async void Editar()
         {
-            if (selectedIndex >= 0)
+            try
             {
-                try
+                if (selectedIndex >= 0)
                 {
-                    OldSocio = new SocioNegocioModel(CodigoCeldaSeleccionada, NombreSocioCeldaSeleccionada, TipoSocioCeldaSeleccionada, SaldoSocioCeldaSeleccionada)
+                    try
                     {
-                        Codigo = CodigoCeldaSeleccionada,
-                        Nombre = NombreSocioCeldaSeleccionada,
-                        Tipo = TipoSocioCeldaSeleccionada,
-                        Saldo = SaldoSocioCeldaSeleccionada
-                    };
+                        OldSocio = new SocioNegocioModel(CodigoCeldaSeleccionada, NombreSocioCeldaSeleccionada, TipoSocioCeldaSeleccionada, SaldoSocioCeldaSeleccionada)
+                        {
+                            Codigo = CodigoCeldaSeleccionada,
+                            Nombre = NombreSocioCeldaSeleccionada,
+                            Tipo = TipoSocioCeldaSeleccionada,
+                            Saldo = SaldoSocioCeldaSeleccionada
+                        };
 
-                    await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Socio_Negocio", OldSocio);
+                        await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Socio_Negocio", OldSocio);
+                    }
+                    catch (Exception Ex)
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    }
                 }
-                catch (Exception Ex)
+                else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                Console.WriteLine("Error Editar SocioViewModel: " + Ex.Message);
             }
         }
 
         private async Task CargarSocios()
         {
-            var socios = await _socioNegocioService.GetSociosAsync();
-            Socios.Clear();
-            foreach (var socio in socios)
+            try
             {
-                Socios.Add(socio);
+                var socios = await _socioNegocioService.GetSociosAsync();
+                Socios.Clear();
+                foreach (var socio in socios)
+                {
+                    Socios.Add(socio);
+                }
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error CargarSocios SocioViewModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarSocio(SocioNegocioModel socio)
         {
-            if (await _socioNegocioService.AddSocioAsync(socio))
+            try
             {
-                Socios.Add(socio);
+                if (await _socioNegocioService.AddSocioAsync(socio))
+                {
+                    Socios.Add(socio);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarSocio SocioViewModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarSocio(int codigo)
         {
-            if (await _socioNegocioService.DeleteSocioAsync(codigo))
+            try
             {
-                var socio = Socios.FirstOrDefault(p => p.Codigo == codigo);
-                if (socio != null)
+                if (await _socioNegocioService.DeleteSocioAsync(codigo))
                 {
-                    Socios.Remove(socio);
+                    var socio = Socios.FirstOrDefault(p => p.Codigo == codigo);
+                    if (socio != null)
+                    {
+                        Socios.Remove(socio);
+                    }
                 }
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error EliminarSocio SocioViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarSocio((SocioNegocioModel)OldSocio);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarSocio((SocioNegocioModel)OldSocio);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error Update SocioViewModel: " + Ex.Message);
+            }
         }
         #endregion
 
         private async Task ActualizarSocio(SocioNegocioModel AntiguoSocio)
         {
-            Console.WriteLine("EditCodigoSocio: " + EditCodigoSocio);
-            Console.WriteLine("EditNombreSocio: " + EditNombreSocio);
-            Console.WriteLine("EditTipoSocio: " + EditTipoSocio);
-
-            var cod = EditCodigoSocio;
-            var nombre = EditNombreSocio;
-            var tipo = EditTipoSocio;
-            var saldo = SaldoSocioCeldaSeleccionada;
-
-            NewSocio = new SocioNegocioModel(cod, nombre, tipo, saldo)
+            try
             {
-                Codigo = cod,
-                Nombre = nombre,
-                Tipo = tipo,
-                Saldo = saldo
-            };
+                Console.WriteLine("EditCodigoSocio: " + EditCodigoSocio);
+                Console.WriteLine("EditNombreSocio: " + EditNombreSocio);
+                Console.WriteLine("EditTipoSocio: " + EditTipoSocio);
 
-            if (await _socioNegocioService.UpdateSocioAsync((SocioNegocioModel)OldSocio,(SocioNegocioModel)NewSocio))
+                var cod = EditCodigoSocio;
+                var nombre = EditNombreSocio;
+                var tipo = EditTipoSocio;
+                var saldo = SaldoSocioCeldaSeleccionada;
+
+                NewSocio = new SocioNegocioModel(cod, nombre, tipo, saldo)
+                {
+                    Codigo = cod,
+                    Nombre = nombre,
+                    Tipo = tipo,
+                    Saldo = saldo
+                };
+
+                if (await _socioNegocioService.UpdateSocioAsync((SocioNegocioModel)OldSocio, (SocioNegocioModel)NewSocio))
+                {
+                    //Remove Old Socio
+                    Socios.Remove((SocioNegocioModel)OldSocio);
+
+                    //Add new Socio
+                    Socios.Add((SocioNegocioModel)NewSocio);
+
+                }
+            }
+            catch(Exception Ex)
             {
-                //Remove Old Socio
-                Socios.Remove((SocioNegocioModel)OldSocio);
-
-                //Add new Socio
-                Socios.Add((SocioNegocioModel)NewSocio);
-
+                Console.WriteLine("Error ActualizarSocio SocioViewModel: " + Ex.Message);
             }
         }
     }

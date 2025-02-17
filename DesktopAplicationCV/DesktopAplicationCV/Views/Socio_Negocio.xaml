@@ -4,8 +4,8 @@
              xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="DesktopAplicationCV.Views.Socio_Negocio"
-             Title="Socios de Negocio">
+             x:Class="DesktopAplicationCV.Views.Socio_Negocio">
+    
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -22,7 +22,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- * Botones de accion * -->
-            
+
             <Button Text="{Binding Agregar}"
                     WidthRequest="150"
                     Grid.Column="0"

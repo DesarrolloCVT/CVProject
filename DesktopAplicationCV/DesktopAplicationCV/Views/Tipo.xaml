@@ -4,8 +4,8 @@
              xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="DesktopAplicationCV.Views.Tipo"
-             Title="Tipos">
+             x:Class="DesktopAplicationCV.Views.Tipo">
+    
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -96,7 +96,7 @@
                     <syncfusion:DataGridTextColumn MappingName="Tipo_Dato" HeaderText="Tipo"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Cuenta" HeaderText="Cuenta"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Pago_Factura" HeaderText="Pago de Facturas"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Gastos_Comercializacion" HeaderText="Gastos Comercializacion"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Gasto_Comercializacion" HeaderText="Gastos de Comercializacion"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Comisiones" HeaderText="Comisiones"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Gasto_Financiero" HeaderText="Gasto Financiero"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Anticipo" HeaderText="Anticipo"></syncfusion:DataGridTextColumn>

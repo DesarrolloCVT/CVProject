@@ -71,12 +71,12 @@ namespace DesktopAplicationCV.ViewModel
         #endregion
 
         #region Inicializadores
+
         public ObservableCollection<IngresosModel> IngresosInfoCollection
         {
             get { return Ingresos; }
             set { Ingresos = value; }
         }
-        #endregion
 
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
@@ -327,8 +327,10 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        #endregion
 
         #region Constructores
+
         public IngresosViewModel(INavigationService navigationService)
         {
             _ingresoService = new IngresosService();
@@ -338,14 +340,6 @@ namespace DesktopAplicationCV.ViewModel
             CargarIngresos();
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
-        }
-        #endregion
-
-        #region Titulo
-
-        public void CambiarTitulo()
-        {
-            TituloPagina = "Ingresos";
         }
 
         #endregion
@@ -380,17 +374,24 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is IngresosModel ingresos)
+            try
             {
-                FolioIngresoCeldaSeleccionada = ingresos.Folio;
-                TipoIngresoCeldaSeleccionada = ingresos.Tipo;
-                MonedaIngresoCeldaSeleccionada = ingresos.Moneda;
-                FechaIngresoCeldaSeleccionada = ingresos.Fecha;
-                ClienteIngresoCeldaSeleccionada = ingresos.Cliente;
-                MetodoPagoIngresoCeldaSeleccionada = ingresos.Metodo_Pago;
-                BancoIngresoCeldaSeleccionada = ingresos.Banco;
-                CuentaIngresoCeldaSeleccionada = ingresos.Cuenta;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is IngresosModel ingresos)
+                {
+                    FolioIngresoCeldaSeleccionada = ingresos.Folio;
+                    TipoIngresoCeldaSeleccionada = ingresos.Tipo;
+                    MonedaIngresoCeldaSeleccionada = ingresos.Moneda;
+                    FechaIngresoCeldaSeleccionada = ingresos.Fecha;
+                    ClienteIngresoCeldaSeleccionada = ingresos.Cliente;
+                    MetodoPagoIngresoCeldaSeleccionada = ingresos.Metodo_Pago;
+                    BancoIngresoCeldaSeleccionada = ingresos.Banco;
+                    CuentaIngresoCeldaSeleccionada = ingresos.Cuenta;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine("Error CeldaTocada IngresosViewModel: " + ex.Message);
             }
         }
 
@@ -421,9 +422,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Console.WriteLine("Error Eliminar IngresosViewModel: " + Ex.Message);
             }
         }
 
@@ -437,147 +439,196 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Console.WriteLine("Error Agregar IngresosViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarIngresos()
         {
-            if (FolioIngresosIngresadoText != 0 && !string.IsNullOrEmpty(TipoIngresosIngresadoText) && !string.IsNullOrEmpty(MonedaIngresosIngresadoText)
-                && !string.IsNullOrEmpty(ClienteIngresosIngresadoText) && !string.IsNullOrEmpty(MetodoPagoIngresosIngresadoText) 
+            try
+            {
+                if (FolioIngresosIngresadoText != 0 && !string.IsNullOrEmpty(TipoIngresosIngresadoText) && !string.IsNullOrEmpty(MonedaIngresosIngresadoText)
+                && !string.IsNullOrEmpty(ClienteIngresosIngresadoText) && !string.IsNullOrEmpty(MetodoPagoIngresosIngresadoText)
                 && !string.IsNullOrEmpty(BancoIngresosIngresadoText) && !string.IsNullOrEmpty(CuentaIngresosIngresadoText))
-            {
-                AgregarIngresos(new IngresosModel(FolioIngresosIngresadoText, TipoIngresosIngresadoText, MonedaIngresosIngresadoText,
-                    FechaIngresosIngresadoText, ClienteIngresosIngresadoText, MetodoPagoIngresosIngresadoText, BancoIngresosIngresadoText,
-                    CuentaIngresosIngresadoText));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                {
+                    AgregarIngresos(new IngresosModel(FolioIngresosIngresadoText, TipoIngresosIngresadoText, MonedaIngresosIngresadoText,
+                        FechaIngresosIngresadoText, ClienteIngresosIngresadoText, MetodoPagoIngresosIngresadoText, BancoIngresosIngresadoText,
+                        CuentaIngresosIngresadoText));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                Console.WriteLine("Error InsertarIngresos IngresosViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         private async void Editar()
         {
-            if (selectedIndex >= 0)
+            try
             {
-                try
+                if (selectedIndex >= 0)
                 {
-                    OldIngreso = new IngresosModel(FolioIngresoCeldaSeleccionada, TipoIngresoCeldaSeleccionada, MonedaIngresoCeldaSeleccionada,
-                        FechaIngresoCeldaSeleccionada, ClienteIngresoCeldaSeleccionada, MetodoPagoIngresoCeldaSeleccionada, BancoIngresoCeldaSeleccionada,
-                        CuentaIngresoCeldaSeleccionada)
+                    try
                     {
-                        Folio = FolioIngresoCeldaSeleccionada,
-                        Tipo = TipoIngresoCeldaSeleccionada,
-                        Moneda = MonedaIngresoCeldaSeleccionada,
-                        Fecha = FechaIngresoCeldaSeleccionada,
-                        Cliente = ClienteIngresoCeldaSeleccionada,
-                        Metodo_Pago = MetodoPagoIngresoCeldaSeleccionada,
-                        Banco = BancoIngresoCeldaSeleccionada,
-                        Cuenta = CuentaIngresoCeldaSeleccionada
-                    };
+                        OldIngreso = new IngresosModel(FolioIngresoCeldaSeleccionada, TipoIngresoCeldaSeleccionada, MonedaIngresoCeldaSeleccionada,
+                            FechaIngresoCeldaSeleccionada, ClienteIngresoCeldaSeleccionada, MetodoPagoIngresoCeldaSeleccionada, BancoIngresoCeldaSeleccionada,
+                            CuentaIngresoCeldaSeleccionada)
+                        {
+                            Folio = FolioIngresoCeldaSeleccionada,
+                            Tipo = TipoIngresoCeldaSeleccionada,
+                            Moneda = MonedaIngresoCeldaSeleccionada,
+                            Fecha = FechaIngresoCeldaSeleccionada,
+                            Cliente = ClienteIngresoCeldaSeleccionada,
+                            Metodo_Pago = MetodoPagoIngresoCeldaSeleccionada,
+                            Banco = BancoIngresoCeldaSeleccionada,
+                            Cuenta = CuentaIngresoCeldaSeleccionada
+                        };
 
-                    await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Ingresos", OldIngreso);
+                        await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Ingresos", OldIngreso);
+                    }
+                    catch (Exception Ex)
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    }
                 }
-                catch (Exception Ex)
+                else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                Console.WriteLine("Error Editar IngresosViewModel: " + Ex.Message);
             }
-
-
         }
 
         private async Task CargarIngresos()
         {
-            var ingresos = await _ingresoService.GetIngresosAsync();
-            Ingresos.Clear();
-            foreach (var ingreso in ingresos)
+            try
             {
-                Ingresos.Add(ingreso);
+                var ingresos = await _ingresoService.GetIngresosAsync();
+                Ingresos.Clear();
+                foreach (var ingreso in ingresos)
+                {
+                    Ingresos.Add(ingreso);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error CargarIngresos IngresosViewModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarIngresos(IngresosModel ingreso)
         {
-            if (await _ingresoService.AddIngresoAsync(ingreso))
+            try
             {
-                Ingresos.Add(ingreso);
+                if (await _ingresoService.AddIngresoAsync(ingreso))
+                {
+                    Ingresos.Add(ingreso);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarIngresos IngresosViewModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarIngresos(int folio)
         {
-            if (await _ingresoService.DeleteIngresoAsync(folio))
+            try
             {
-                var ingreso = Ingresos.FirstOrDefault(p => p.Folio == folio);
-                if (ingreso != null)
+                if (await _ingresoService.DeleteIngresoAsync(folio))
                 {
-                    Ingresos.Remove(ingreso);
+                    var ingreso = Ingresos.FirstOrDefault(p => p.Folio == folio);
+                    if (ingreso != null)
+                    {
+                        Ingresos.Remove(ingreso);
+                    }
                 }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error EliminarIngresos IngresosViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarIngresos((IngresosModel)OldIngreso);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarIngresos((IngresosModel)OldIngreso);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error Update IngresosViewModel: " + Ex.Message);
+            }
+            
         }
 
 
         private async Task ActualizarIngresos(IngresosModel AntiguoIngreso)
         {
-            Console.WriteLine("EditFolioIngresos: " + EditFolioIngresos);
-            Console.WriteLine("EditTipoIngresos: " + EditTipoIngresos);
-            Console.WriteLine("EditMonedaIngresos: " + EditMonedaIngresos);
-            Console.WriteLine("EditFechaIngresos: " + EditFechaIngresos);
-            Console.WriteLine("EditClienteIngresos: " + EditClienteIngresos);
-            Console.WriteLine("EditMetodoPagoIngresos: " + EditMetodoPagoIngresos);
-            Console.WriteLine("EditBancoIngresos: " + EditBancoIngresos);
-            Console.WriteLine("EditCuentaIngresos: " + EditCuentaIngresos);
-
-            var folio = EditFolioIngresos;
-            var tipo = EditTipoIngresos;
-            var moneda = EditMonedaIngresos;
-            DateTime fecha = EditFechaIngresos;
-            var cliente = EditClienteIngresos;
-            var metodoPago = EditMetodoPagoIngresos;
-            var banco = EditBancoIngresos;
-            var cuenta = EditCuentaIngresos;
-
-            /*var date = fecha.ToString("yyyy-MM-dd",CultureInfo.InvariantCulture);
-            var NewDate = Convert.ToDateTime(date);*/
-
-
-            NewIngreso = new IngresosModel(folio, tipo, moneda, fecha, cliente, metodoPago, banco, cuenta)
+            try
             {
-                Folio = folio,
-                Tipo = tipo,
-                Moneda = moneda,
-                Fecha = fecha,
-                Cliente = cliente,
-                Metodo_Pago = metodoPago,
-                Banco = banco,
-                Cuenta = cuenta
-            };
+                Console.WriteLine("EditFolioIngresos: " + EditFolioIngresos);
+                Console.WriteLine("EditTipoIngresos: " + EditTipoIngresos);
+                Console.WriteLine("EditMonedaIngresos: " + EditMonedaIngresos);
+                Console.WriteLine("EditFechaIngresos: " + EditFechaIngresos);
+                Console.WriteLine("EditClienteIngresos: " + EditClienteIngresos);
+                Console.WriteLine("EditMetodoPagoIngresos: " + EditMetodoPagoIngresos);
+                Console.WriteLine("EditBancoIngresos: " + EditBancoIngresos);
+                Console.WriteLine("EditCuentaIngresos: " + EditCuentaIngresos);
 
-            if (await _ingresoService.UpdateIngresoAsync((IngresosModel)NewIngreso))
+                var folio = EditFolioIngresos;
+                var tipo = EditTipoIngresos;
+                var moneda = EditMonedaIngresos;
+                DateTime fecha = EditFechaIngresos;
+                var cliente = EditClienteIngresos;
+                var metodoPago = EditMetodoPagoIngresos;
+                var banco = EditBancoIngresos;
+                var cuenta = EditCuentaIngresos;
+
+                /*var date = fecha.ToString("yyyy-MM-dd",CultureInfo.InvariantCulture);
+                var NewDate = Convert.ToDateTime(date);*/
+
+
+                NewIngreso = new IngresosModel(folio, tipo, moneda, fecha, cliente, metodoPago, banco, cuenta)
+                {
+                    Folio = folio,
+                    Tipo = tipo,
+                    Moneda = moneda,
+                    Fecha = fecha,
+                    Cliente = cliente,
+                    Metodo_Pago = metodoPago,
+                    Banco = banco,
+                    Cuenta = cuenta
+                };
+
+                if (await _ingresoService.UpdateIngresoAsync((IngresosModel)NewIngreso))
+                {
+                    //Remove Old Product
+                    Ingresos.Remove(AntiguoIngreso);
+
+                    //Add new product
+                    Ingresos.Add((IngresosModel)NewIngreso);
+
+                }
+            }
+            catch (Exception Ex) 
             {
-                //Remove Old Product
-                Ingresos.Remove(AntiguoIngreso);
-
-                //Add new product
-                Ingresos.Add((IngresosModel)NewIngreso);
-
+                Console.WriteLine("Error ActualizarIngresos IngresosViewModel: " + Ex.Message);
             }
         }
     }

@@ -7,11 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DesktopAplicationCV.ViewModel
 {
@@ -56,7 +58,6 @@ namespace DesktopAplicationCV.ViewModel
             get { return bancoDetalles; }
             set { bancoDetalles = value; }
         }
-        #endregion
 
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
@@ -73,7 +74,6 @@ namespace DesktopAplicationCV.ViewModel
                 }
             }
         }
-
         // Acción para establecer la lógica del filtro
         public Action ApplyFilterAction { get; set; }
 
@@ -141,6 +141,8 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        #endregion
+
         #region Constructores
         public BancoDetalleViewModel(INavigationService navigationService)
         {
@@ -178,12 +180,20 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is BancoDetalleModel bancoDetalleModel)
+            try
             {
-                CodigoBancoCeldaSeleccionada = bancoDetalleModel.Codigo_Banco;
-                NumeroBancoDetalleCeldaSeleccionada = bancoDetalleModel.Numero;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is BancoDetalleModel bancoDetalleModel)
+                {
+                    CodigoBancoCeldaSeleccionada = bancoDetalleModel.Codigo_Banco;
+                    NumeroBancoDetalleCeldaSeleccionada = bancoDetalleModel.Numero;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
             }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error CeldaTocada BancoDetalleViewModel: " + Ex.Message);
+            }
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -213,9 +223,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso de eliminar item", "Ok");
+                Console.WriteLine("Error Eliminar BancoDetalleViewModel: " + Ex.Message);
             }
         }
 
@@ -228,23 +239,32 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch (Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso de agregar item. ", "Ok");
+                Console.WriteLine("Error Agregar BancoDetalleViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarBancoDetalle()
         {
-            if (CodigoBancoDetalleIngresado != 0 && NumerobancoDetallesIngresado != 0)
+            try
             {
-                AgregarBancoDetalle(new BancoDetalleModel(CodigoBancoDetalleIngresado, NumerobancoDetallesIngresado));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                if (CodigoBancoDetalleIngresado != 0 && NumerobancoDetallesIngresado != 0)
+                {
+                    AgregarBancoDetalle(new BancoDetalleModel(CodigoBancoDetalleIngresado, NumerobancoDetallesIngresado));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion. ", "Ok");
+                }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                Console.WriteLine("Error InsertarBancoDetalle BancoDetalleViewModel: " + Ex.Message);
             }
+            
         }
 
         [RelayCommand]
@@ -264,76 +284,111 @@ namespace DesktopAplicationCV.ViewModel
                 }
                 catch (Exception Ex)
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso de edicion. ", "Ok");
+                    Console.WriteLine("Error Editar BancoDetalleViewModel: " + Ex.Message);
                 }
             }
             else
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida. ", "Ok");
             }
         }
 
         private async Task CargarBancoDetalles()
         {
-            var bancoDetalle = await _bancoDetalleService.GetBancoDetallesAsync();
-            bancoDetalles.Clear();
-            foreach (var bancoDetail in bancoDetalle)
+            try
             {
-                bancoDetalles.Add(bancoDetail);
+                var bancoDetalle = await _bancoDetalleService.GetBancoDetallesAsync();
+                bancoDetalles.Clear();
+                foreach (var bancoDetail in bancoDetalle)
+                {
+                    bancoDetalles.Add(bancoDetail);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error CargarBancoDetalles BancoDetalleViewModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarBancoDetalle(BancoDetalleModel bancoDetalleModel)
         {
-            if (await _bancoDetalleService.AddBancoDetalleAsync(bancoDetalleModel))
+            try
             {
-                bancoDetalles.Add(bancoDetalleModel);
+                if (await _bancoDetalleService.AddBancoDetalleAsync(bancoDetalleModel))
+                {
+                    bancoDetalles.Add(bancoDetalleModel);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarBancoDetalle BancoDetalleViewModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarBancoDatlles(int codigo)
         {
-            if (await _bancoDetalleService.DeleteBancoDetalleAsync(codigo))
+            try
             {
-                var bancoDetalle = bancoDetalles.FirstOrDefault(p => p.Codigo_Banco == codigo);
-                if (bancoDetalle != null)
+                if (await _bancoDetalleService.DeleteBancoDetalleAsync(codigo))
                 {
-                    bancoDetalles.Remove(bancoDetalle);
+                    var bancoDetalle = bancoDetalles.FirstOrDefault(p => p.Codigo_Banco == codigo);
+                    if (bancoDetalle != null)
+                    {
+                        bancoDetalles.Remove(bancoDetalle);
+                    }
                 }
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error EliminarBancoDatlles BancoDetalleViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarProducto((BancoDetalleModel)OldbankDetail);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarProducto((BancoDetalleModel)OldbankDetail);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error Update BancoDetalleViewModel: " + Ex.Message);
+            }
         }
-
 
         private async Task ActualizarProducto(BancoDetalleModel AntiguoBancoDetalle)
         {
-            Console.WriteLine("EditCodigoBancoDetalles: " + EditCodigoBancoDetalles);
-            Console.WriteLine("EditNumeroBancoDetalles: " + EditNumeroBancoDetalles);
-
-            var codigo = EditCodigoBancoDetalles;
-            var numero = EditNumeroBancoDetalles;
-
-            NewbankDetail = new BancoDetalleModel(codigo, numero)
+            try
             {
-                Codigo_Banco = codigo,
-                Numero = numero
-            };
+                Console.WriteLine("EditCodigoBancoDetalles: " + EditCodigoBancoDetalles);
+                Console.WriteLine("EditNumeroBancoDetalles: " + EditNumeroBancoDetalles);
 
-            if (await _bancoDetalleService.UpdateBancoDetalleAsync((BancoDetalleModel)NewbankDetail))
+                var codigo = EditCodigoBancoDetalles;
+                var numero = EditNumeroBancoDetalles;
+
+                NewbankDetail = new BancoDetalleModel(codigo, numero)
+                {
+                    Codigo_Banco = codigo,
+                    Numero = numero
+                };
+
+                if (await _bancoDetalleService.UpdateBancoDetalleAsync((BancoDetalleModel)NewbankDetail))
+                {
+                    //Remove Old Product
+                    bancoDetalles.Remove(AntiguoBancoDetalle);
+
+                    //Add new product
+                    bancoDetalles.Add((BancoDetalleModel)NewbankDetail);
+
+                }
+            }
+            catch(Exception Ex)
             {
-                //Remove Old Product
-                bancoDetalles.Remove(AntiguoBancoDetalle);
-
-                //Add new product
-                bancoDetalles.Add((BancoDetalleModel)NewbankDetail);
-
+                Console.WriteLine("Error ActualizarProducto BancoDetalleViewModel: " + Ex.Message);
             }
         }
     }

@@ -4,8 +4,7 @@
              xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="DesktopAplicationCV.Views.Factura_Compra"
-             Title="Factura de Compra">
+             x:Class="DesktopAplicationCV.Views.Factura_Compra">
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>

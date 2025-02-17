@@ -2,15 +2,14 @@
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Operaciones_Bancarias"
-             xmlns:local="clr-namespace:DesktopAplicationCV.Views"
-             Title="Operaciones Bancarias">
+             xmlns:local="clr-namespace:DesktopAplicationCV.Views">
 
     <TabBar>
-        <Tab Title="Ingresos">
+        <Tab Title="{Binding TxtIngresos}">
             <ShellContent
                       ContentTemplate="{DataTemplate local:Ingresos}" />
         </Tab>
-        <Tab Title="Ingresos Detalles">
+        <Tab Title="{Binding TxtIngresosDetalles}">
             <ShellContent
               ContentTemplate="{DataTemplate local:Ingresos_Detalle}" />
         </Tab>

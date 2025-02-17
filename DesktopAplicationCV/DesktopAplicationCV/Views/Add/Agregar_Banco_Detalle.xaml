@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DesktopAplicationCV.Views.Agregar_Banco_Detalle"
-             Title="Agregar Banco Detalle">
-    <ScrollView>
+             x:Class="DesktopAplicationCV.Views.Agregar_Banco_Detalle">
+    <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
@@ -19,18 +18,26 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <Label Text="Agregar Detalles del Banco"
+                   Margin="20,0,0,0"
+                   FontSize="Medium"
+                   TextColor="Silver"
+                   FontAttributes="Bold, Italic"
+                   Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="1"/>
+
             <Label Text="Codigo Banco"
                    FontSize="Small"
-                   Grid.Row="0" Grid.Column="1"/>
+                   Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Codigo Banco"
                     Text="{Binding CodigoBancoDetalleIngresado}"
-                    Grid.Row="0" Grid.Column="2"/>
+                    Grid.Row="1" Grid.Column="2"/>
             <Label Text="Numero"
                    FontSize="Small"
-                   Grid.Row="1" Grid.Column="1"/>
+                   Grid.Row="2" Grid.Column="1"/>
             <Editor Placeholder="Numero"
                     Text="{Binding NumerobancoDetallesIngresado}"
-                    Grid.Row="1" Grid.Column="2"/>
+                    Grid.Row="2" Grid.Column="2"/>
             <Button Text="Insertar"
                     TextColor="White"
                     WidthRequest="200"

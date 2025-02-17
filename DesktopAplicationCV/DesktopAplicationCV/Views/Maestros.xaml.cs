@@ -1,3 +1,5 @@
+using DesktopAplicationCV.ViewModels;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Maestros : Shell
@@ -5,8 +7,8 @@ public partial class Maestros : Shell
 	public Maestros()
 	{
 		InitializeComponent();
-
-        this.Navigated += OnTabChanged;
+        BindingContext = new MaestrosViewModel();
+        //this.Navigated += OnTabChanged;
     }
 
     private void OnTabChanged(object? sender, ShellNavigatedEventArgs e)

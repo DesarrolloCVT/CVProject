@@ -4,8 +4,7 @@
             xmlns:local="clr-namespace:DesktopAplicationCV.Views"
             x:Class="DesktopAplicationCV.Views.MenuPrincipal"
             SelectedTabColor="White"
-            UnselectedTabColor="Gray"
-            Title="MenuPrincipal">
+            UnselectedTabColor="Gray">
 
     <TabbedPage.Children>
         <local:Inicio Title="Inicio">

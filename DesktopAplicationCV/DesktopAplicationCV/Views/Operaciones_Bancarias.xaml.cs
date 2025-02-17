@@ -1,3 +1,5 @@
+using DesktopAplicationCV.ViewModels;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class Operaciones_Bancarias : Shell
@@ -5,8 +7,8 @@ public partial class Operaciones_Bancarias : Shell
 	public Operaciones_Bancarias()
 	{
         InitializeComponent();
-
-        this.Navigated += OnTabChanged;
+        BindingContext = new OperacionesBancariasViewModel();
+        //this.Navigated += OnTabChanged;
     }
 
     private void OnTabChanged(object? sender, ShellNavigatedEventArgs e)

@@ -25,12 +25,10 @@ public partial class Ingresos : ContentPage
                 dataGrid.View.RefreshFilter();
             };
         }
-        viewModel.CambiarTitulo();
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        viewModel.CambiarTitulo();
     }
 }

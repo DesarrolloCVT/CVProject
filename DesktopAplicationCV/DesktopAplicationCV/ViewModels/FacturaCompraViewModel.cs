@@ -56,12 +56,12 @@ namespace DesktopAplicationCV.ViewModel
         #endregion
 
         #region Inicializadores
+
         public ObservableCollection<FacturaCompraModel> FacturaCompraInfoCollection
         {
             get { return facturaCompra; }
             set { facturaCompra = value; }
         }
-        #endregion
 
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
@@ -198,7 +198,10 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        #endregion
+
         #region Constructores
+
         public FacturaCompraViewModel(INavigationService navigationService)
         {
             _facturaCompraService = new FacturaCompraService();
@@ -209,6 +212,7 @@ namespace DesktopAplicationCV.ViewModel
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
+
         #endregion
 
         [RelayCommand]
@@ -237,13 +241,20 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is FacturaCompraModel facturaCompraModel)
+            try
             {
-                FolioCeldaSeleccionada = facturaCompraModel.Folio;
-                ProveedorFactCompraCeldaSeleccionada = facturaCompraModel.Proveedor;
-                FechaFactCompraCeldaSeleccionada = facturaCompraModel.Fecha;
-                MonedaFactCompraCeldaSeleccionada = facturaCompraModel.Moneda;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is FacturaCompraModel facturaCompraModel)
+                {
+                    FolioCeldaSeleccionada = facturaCompraModel.Folio;
+                    ProveedorFactCompraCeldaSeleccionada = facturaCompraModel.Proveedor;
+                    FechaFactCompraCeldaSeleccionada = facturaCompraModel.Fecha;
+                    MonedaFactCompraCeldaSeleccionada = facturaCompraModel.Moneda;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine("Error CeldaTocada FacturaCompraViewModel: " + ex.Message);
             }
         }
 
@@ -274,9 +285,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Console.WriteLine("Error Eliminar FacturaCompraViewModel: " + Ex.Message);
             }
         }
 
@@ -290,21 +302,29 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Console.WriteLine("Error Agregar FacturaCompraViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarFacturaCompra()
         {
-            if (FolioFactCompraIngresado != 0 && !string.IsNullOrEmpty(ProveedorFactCompraIngresado) && !string.IsNullOrEmpty(MonedaFactCompraIngresado))
+            try
             {
-                AgregarFacturaCompra(new FacturaCompraModel(FolioFactCompraIngresado, ProveedorFactCompraIngresado, FechaFactCompraIngresado, MonedaFactCompraIngresado));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                if (FolioFactCompraIngresado != 0 && !string.IsNullOrEmpty(ProveedorFactCompraIngresado) && !string.IsNullOrEmpty(MonedaFactCompraIngresado))
+                {
+                    AgregarFacturaCompra(new FacturaCompraModel(FolioFactCompraIngresado, ProveedorFactCompraIngresado, FechaFactCompraIngresado, MonedaFactCompraIngresado));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                Console.WriteLine("Error InsertarFacturaCompra FacturaCompraViewModel: " + Ex.Message);
             }
         }
 
@@ -329,6 +349,7 @@ namespace DesktopAplicationCV.ViewModel
                 catch (Exception Ex)
                 {
                     Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Console.WriteLine("Error Editar FacturaCompraViewModel: " + Ex.Message);
                 }
             }
             else
@@ -341,71 +362,104 @@ namespace DesktopAplicationCV.ViewModel
 
         private async Task CargarFacturaCompra()
         {
-            var factCompras = await _facturaCompraService.GetFacturaCompraAsync();
-            facturaCompra.Clear();
-            foreach (var factura in factCompras)
+            try
             {
-                facturaCompra.Add(factura);
+                var factCompras = await _facturaCompraService.GetFacturaCompraAsync();
+                facturaCompra.Clear();
+                foreach (var factura in factCompras)
+                {
+                    facturaCompra.Add(factura);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error CargarFacturaCompra FacturaCompraViewModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarFacturaCompra(FacturaCompraModel facturaCompraModel)
         {
-            if (await _facturaCompraService.AddFacturaCompraAsync(facturaCompraModel))
+            try
             {
-                facturaCompra.Add(facturaCompraModel);
+                if (await _facturaCompraService.AddFacturaCompraAsync(facturaCompraModel))
+                {
+                    facturaCompra.Add(facturaCompraModel);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarFacturaCompra FacturaCompraViewModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarFacturaCompra(int folio)
         {
-            if (await _facturaCompraService.DeleteFacturaCompraAsync(folio))
+            try
             {
-                var factCompra = facturaCompra.FirstOrDefault(p => p.Folio == folio);
-                if (factCompra != null)
+                if (await _facturaCompraService.DeleteFacturaCompraAsync(folio))
                 {
-                    facturaCompra.Remove(factCompra);
+                    var factCompra = facturaCompra.FirstOrDefault(p => p.Folio == folio);
+                    if (factCompra != null)
+                    {
+                        facturaCompra.Remove(factCompra);
+                    }
                 }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error EliminarFacturaCompra FacturaCompraViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarFacturaCompra((FacturaCompraModel)OldFacturaCompra);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarFacturaCompra((FacturaCompraModel)OldFacturaCompra);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error Update FacturaCompraViewModel: " + Ex.Message);
+            }
         }
 
 
         private async Task ActualizarFacturaCompra(FacturaCompraModel AntiguoFacturaCompra)
         {
-            Console.WriteLine("EditFolioFactCompra: " + EditFolioFactCompra);
-            Console.WriteLine("EditProveedorFactCompra: " + EditProveedorFactCompra);
-            Console.WriteLine("EditFechaFactCompra: " + EditFechaFactCompra);
-            Console.WriteLine("EditMonedaFactCompra: " + EditMonedaFactCompra);
-
-            var folio = EditFolioFactCompra;
-            var proveedor = EditProveedorFactCompra;
-            var fecha = EditFechaFactCompra;
-            var moneda = EditMonedaFactCompra;
-
-            NewFacturaCompra = new FacturaCompraModel(folio, proveedor, fecha, moneda)
+            try
             {
-                Folio = folio,
-                Proveedor = proveedor,
-                Fecha = fecha,
-                Moneda = moneda
-            };
+                Console.WriteLine("EditFolioFactCompra: " + EditFolioFactCompra);
+                Console.WriteLine("EditProveedorFactCompra: " + EditProveedorFactCompra);
+                Console.WriteLine("EditFechaFactCompra: " + EditFechaFactCompra);
+                Console.WriteLine("EditMonedaFactCompra: " + EditMonedaFactCompra);
 
-            if (await _facturaCompraService.UpdateFacturaCompraAsync((FacturaCompraModel)NewFacturaCompra))
-            {
-                //Remove Old Product
-                facturaCompra.Remove(AntiguoFacturaCompra);
+                var folio = EditFolioFactCompra;
+                var proveedor = EditProveedorFactCompra;
+                var fecha = EditFechaFactCompra;
+                var moneda = EditMonedaFactCompra;
 
-                //Add new product
-                facturaCompra.Add((FacturaCompraModel)NewFacturaCompra);
+                NewFacturaCompra = new FacturaCompraModel(folio, proveedor, fecha, moneda)
+                {
+                    Folio = folio,
+                    Proveedor = proveedor,
+                    Fecha = fecha,
+                    Moneda = moneda
+                };
 
+                if (await _facturaCompraService.UpdateFacturaCompraAsync((FacturaCompraModel)NewFacturaCompra))
+                {
+                    //Remove Old Product
+                    facturaCompra.Remove(AntiguoFacturaCompra);
+
+                    //Add new product
+                    facturaCompra.Add((FacturaCompraModel)NewFacturaCompra);
+                }
+            }
+            catch (Exception Ex) {
+                Console.WriteLine("Error ActualizarFacturaCompra FacturaCompraViewModel: " + Ex.Message);
             }
         }
     }

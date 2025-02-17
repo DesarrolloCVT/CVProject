@@ -53,12 +53,12 @@ namespace DesktopAplicationCV.ViewModel
         #endregion
 
         #region Inicializadores
+
         public ObservableCollection<CuentasModel> CuentasInfoCollection
         {
             get { return Cuentas; }
             set { Cuentas = value; }
         }
-        #endregion
 
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
@@ -169,6 +169,8 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        #endregion
+
         #region Constructores
         public CuentasViewModel(INavigationService navigationService)
         {
@@ -207,13 +209,21 @@ namespace DesktopAplicationCV.ViewModel
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
-            if (e.RowData is CuentasModel cuentas)
+            try
             {
-                CodigoCeldaSeleccionada = cuentas.Codigo;
-                NombreCuentaCeldaSeleccionada = cuentas.Nombre;
-                TipoCuentaCeldaSeleccionada = cuentas.Tipo;
-                // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                if (e.RowData is CuentasModel cuentas)
+                {
+                    CodigoCeldaSeleccionada = cuentas.Codigo;
+                    NombreCuentaCeldaSeleccionada = cuentas.Nombre;
+                    TipoCuentaCeldaSeleccionada = cuentas.Tipo;
+                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
+                }
             }
+            catch (Exception ex) 
+            {
+                Console.WriteLine("Error CeldaTocada CuentasViewModel: " + ex.Message);
+            }
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -243,9 +253,10 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error en la seleccion de la fila a eliminar ", "Ok");
                 }
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante el proceso", "Ok");
+                Console.WriteLine("Error Eliminar CuentasViewModel: " + Ex.Message);
             }
         }
 
@@ -259,117 +270,166 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                Console.WriteLine("Error Agregar CuentasViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public async void InsertarCuenta()
         {
-            if (CodigoCuentaIngresado != 0 && !string.IsNullOrEmpty(NombreCuentaIngresado) && !string.IsNullOrEmpty(TipoCuentaIngresado))
+            try
             {
-                AgregarCuenta(new CuentasModel(CodigoCuentaIngresado, NombreCuentaIngresado, TipoCuentaIngresado));
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
-                _navigationService.GoBackAsync();
+                if (CodigoCuentaIngresado != 0 && !string.IsNullOrEmpty(NombreCuentaIngresado) && !string.IsNullOrEmpty(TipoCuentaIngresado))
+                {
+                    AgregarCuenta(new CuentasModel(CodigoCuentaIngresado, NombreCuentaIngresado, TipoCuentaIngresado));
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    _navigationService.GoBackAsync();
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                }
             }
-            else
+            catch (Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+                Console.WriteLine("Error InsertarCuenta CuentasViewModel: " + Ex.Message);
             }
+            
         }
 
         [RelayCommand]
         private async void Editar()
         {
-            if (selectedIndex >= 0)
+            try
             {
-                try
+                if (selectedIndex >= 0)
                 {
-                    OldAccount = new CuentasModel(CodigoCeldaSeleccionada, NombreCuentaCeldaSeleccionada, TipoCuentaCeldaSeleccionada)
+                    try
                     {
-                        Codigo = CodigoCeldaSeleccionada,
-                        Nombre = NombreCuentaCeldaSeleccionada,
-                        Tipo = TipoCuentaCeldaSeleccionada
-                    };
+                        OldAccount = new CuentasModel(CodigoCeldaSeleccionada, NombreCuentaCeldaSeleccionada, TipoCuentaCeldaSeleccionada)
+                        {
+                            Codigo = CodigoCeldaSeleccionada,
+                            Nombre = NombreCuentaCeldaSeleccionada,
+                            Tipo = TipoCuentaCeldaSeleccionada
+                        };
 
-                    await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Cuentas", OldAccount);
+                        await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Cuentas", OldAccount);
+                    }
+                    catch (Exception Ex)
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    }
                 }
-                catch (Exception Ex)
+                else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Error: " + Ex.Message, "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            else
+            catch(Exception Ex)
             {
-                Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                Console.WriteLine("Error InsertarCuenta CuentasViewModel: " + Ex.Message);
             }
-
-
         }
 
         private async Task CargarCuentas()
         {
-            var cuentas = await _cuentaService.GetCuentasAsync();
-            Cuentas.Clear();
-            foreach (var cuenta in cuentas)
+            try
             {
-                Cuentas.Add(cuenta);
+                var cuentas = await _cuentaService.GetCuentasAsync();
+                Cuentas.Clear();
+                foreach (var cuenta in cuentas)
+                {
+                    Cuentas.Add(cuenta);
+                }
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error InsertarCuenta CuentasViewModel: " + Ex.Message);
             }
         }
 
         private async Task AgregarCuenta(CuentasModel cuenta)
         {
-            if (await _cuentaService.AddCuentaAsync(cuenta))
+            try
             {
-                Cuentas.Add(cuenta);
+                if (await _cuentaService.AddCuentaAsync(cuenta))
+                {
+                    Cuentas.Add(cuenta);
+                }
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error AgregarCuenta CuentasViewModel: " + Ex.Message);
             }
         }
 
         private async Task EliminarCuentas(int codigo)
         {
-            if (await _cuentaService.DeleteCuentaAsync(codigo))
+            try
             {
-                var cuenta = Cuentas.FirstOrDefault(p => p.Codigo == codigo);
-                if (cuenta != null)
+                if (await _cuentaService.DeleteCuentaAsync(codigo))
                 {
-                    Cuentas.Remove(cuenta);
+                    var cuenta = Cuentas.FirstOrDefault(p => p.Codigo == codigo);
+                    if (cuenta != null)
+                    {
+                        Cuentas.Remove(cuenta);
+                    }
                 }
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error EliminarCuentas CuentasViewModel: " + Ex.Message);
             }
         }
 
         [RelayCommand]
         public void Update()
         {
-            ActualizarCuenta((CuentasModel)OldAccount);
-            Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-            _navigationService.GoBackAsync();
+            try
+            {
+                ActualizarCuenta((CuentasModel)OldAccount);
+                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex) 
+            {
+                Console.WriteLine("Error Update CuentasViewModel: " + Ex.Message);
+            }
         }
 
 
         private async Task ActualizarCuenta(CuentasModel AntiguaCuenta)
         {
-            Console.WriteLine("EditCodigoCuenta: " + EditCodigoCuenta);
-            Console.WriteLine("EditNombreCuenta: " + EditNombreCuenta);
-            Console.WriteLine("EditTipoCuenta: " + EditTipoCuenta);
-
-            var cod = EditCodigoCuenta;
-            var name = EditNombreCuenta;
-            var type = EditTipoCuenta;
-
-            NewAccount = new CuentasModel(cod, name, type)
+            try
             {
-                Codigo = cod,
-                Nombre = name,
-                Tipo = type
-            };
+                Console.WriteLine("EditCodigoCuenta: " + EditCodigoCuenta);
+                Console.WriteLine("EditNombreCuenta: " + EditNombreCuenta);
+                Console.WriteLine("EditTipoCuenta: " + EditTipoCuenta);
 
-            if (await _cuentaService.UpdateCuentaAsync((CuentasModel)NewAccount))
+                var cod = EditCodigoCuenta;
+                var name = EditNombreCuenta;
+                var type = EditTipoCuenta;
+
+                NewAccount = new CuentasModel(cod, name, type)
+                {
+                    Codigo = cod,
+                    Nombre = name,
+                    Tipo = type
+                };
+
+                if (await _cuentaService.UpdateCuentaAsync((CuentasModel)NewAccount))
+                {
+                    //Remove Old
+                    Cuentas.Remove(AntiguaCuenta);
+
+                    //Add new
+                    Cuentas.Add((CuentasModel)NewAccount);
+
+                }
+            }
+            catch (Exception Ex) 
             {
-                //Remove Old
-                Cuentas.Remove(AntiguaCuenta);
-
-                //Add new
-                Cuentas.Add((CuentasModel)NewAccount);
-
+                Console.WriteLine("Error ActualizarCuenta CuentasViewModel: " + Ex.Message);
             }
         }
     }
