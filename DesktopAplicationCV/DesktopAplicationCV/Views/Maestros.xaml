@@ -2,30 +2,35 @@
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Maestros"
-             xmlns:local="clr-namespace:DesktopAplicationCV.Views">
+             xmlns:local="clr-namespace:DesktopAplicationCV.Views"
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
+
+    <!--Shell.ToolbarItems>
+        <ToolbarItem Text="{Binding CerrarSesion}" Command="{Binding LogoutCommand}"/>
+    </Shell.ToolbarItems-->
 
     <TabBar>
-        <Tab Title="{Binding TxtSocioNegocio}">
+        <Tab Title="{x:Static recursos:AppResources.SocioNegocio}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Socio_Negocio}" />
         </Tab>
-        <Tab Title="{Binding TxtProductos}">
+        <Tab Title="{x:Static recursos:AppResources.Productos}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Productos}" />
         </Tab>
-        <Tab Title="{Binding TxtBanco}">
+        <Tab Title="{x:Static recursos:AppResources.Banco}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Banco}" />
         </Tab>
-        <Tab Title="{Binding TxtTipo}">
+        <Tab Title="{x:Static recursos:AppResources.Tipo}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Tipo}" />
         </Tab>
-        <Tab Title="{Binding TxtBancoDetalle}">
+        <Tab Title="{x:Static recursos:AppResources.BancoDetalle}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Banco_Detalle}" />
         </Tab>
-        <Tab Title="{Binding TxtCuentas}">
+        <Tab Title="{x:Static recursos:AppResources.Cuentas}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Cuentas}" />
         </Tab>

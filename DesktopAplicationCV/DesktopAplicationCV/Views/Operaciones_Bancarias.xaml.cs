@@ -4,17 +4,16 @@ namespace DesktopAplicationCV.Views;
 
 public partial class Operaciones_Bancarias : Shell
 {
-	public Operaciones_Bancarias()
+    public Operaciones_Bancarias(LoginViewModel loginViewModel)
 	{
         InitializeComponent();
-        BindingContext = new OperacionesBancariasViewModel();
+        BindingContext = loginViewModel;
         //this.Navigated += OnTabChanged;
     }
 
-    private void OnTabChanged(object? sender, ShellNavigatedEventArgs e)
+    /*private void OnTabChanged(object? sender, ShellNavigatedEventArgs e)
     {
         string NombrePagina = CurrentPage.Title;
         Console.WriteLine($"Pestaña cambiada a: {NombrePagina}");
-    }
-
+    }*/
 }

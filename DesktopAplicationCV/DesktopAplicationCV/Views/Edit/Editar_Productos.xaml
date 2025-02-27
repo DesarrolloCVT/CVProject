@@ -5,9 +5,10 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <Grid>
-        <ScrollView>
+        <ScrollView Margin="0,100,0,0">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="100"/>
@@ -20,19 +21,27 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <Label Text="Editar Productos"
+                       Margin="20,0,0,0"
+                       FontSize="Medium"
+                       TextColor="Silver"
+                       FontAttributes="Bold, Italic"
+                       Grid.Row="0" Grid.Column="0"
+                       Grid.ColumnSpan="1"/>
+
                 <Label Text="Codigo"
                        FontSize="Small"
-                       Grid.Row="0" Grid.Column="1"/>
+                       Grid.Row="1" Grid.Column="1"/>
                 <Editor Placeholder="Codigo"
                         Text="{Binding EditCodigoProducto}"
-                        Grid.Row="0" Grid.Column="2"
+                        Grid.Row="1" Grid.Column="2"
                         x:Name="EditCodigo"
                         IsReadOnly="True"/>
                 <Label Text="Producto"
                        FontSize="Small"
-                       Grid.Row="1" Grid.Column="1"/>
+                       Grid.Row="2" Grid.Column="1"/>
                 <Editor Placeholder="Producto"
-                        Grid.Row="1" Grid.Column="2"
+                        Grid.Row="2" Grid.Column="2"
                         Text="{Binding EditNombreProducto}"
                         x:Name="EditProducto"/>
                 <Button Text="Modificar"
@@ -40,7 +49,7 @@
                         WidthRequest="200"
                         FontAttributes="Bold"
                         BackgroundColor="ForestGreen"
-                        Grid.Row="3" Grid.Column="1"
+                        Grid.Row="4" Grid.Column="1"
                         Grid.ColumnSpan="1"
                         Command="{Binding UpdateCommand}"/>
                 <Button 
@@ -49,7 +58,7 @@
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
-                    Grid.Row="3" Grid.Column="2"
+                    Grid.Row="4" Grid.Column="2"
                     Grid.ColumnSpan="1"
                     Command="{Binding CancelarCommand}"/>
             </Grid>

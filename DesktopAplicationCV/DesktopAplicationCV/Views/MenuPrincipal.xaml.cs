@@ -1,12 +1,15 @@
+using DesktopAplicationCV.ViewModels;
+
 namespace DesktopAplicationCV.Views;
 
 public partial class MenuPrincipal : TabbedPage
 {
-	public MenuPrincipal()
-	{
+    public MenuPrincipal(MenuPrincipalViewModel viewModel, LoginViewModel loginViewModel)
+    {
         InitializeComponent();
-
-        this.CurrentPageChanged += MainTabbedPage_CurrentPageChanged;
+        BindingContext = viewModel;
+        viewModel.AgregarTabs(this, loginViewModel); // Agregar pestañas desde el ViewModel
+        //this.CurrentPageChanged += MainTabbedPage_CurrentPageChanged;
     }
 
     private void MainTabbedPage_CurrentPageChanged(object sender, EventArgs e)

@@ -1,18 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using DesktopAplicationCV.Services;
+using DesktopAplicationCV.ViewModels;
+using DesktopAplicationCV.Views;
 
 namespace DesktopAplicationCV.ViewModel
 {
     public partial class BaseViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private string agregar = "Agregar";
-
-        [ObservableProperty]
-        private string eliminar = "Eliminar";
-
-        [ObservableProperty]
-        private string editar = "Editar";
-
         public virtual Task InitializeAsync(object parameter)
         {
             return Task.CompletedTask;

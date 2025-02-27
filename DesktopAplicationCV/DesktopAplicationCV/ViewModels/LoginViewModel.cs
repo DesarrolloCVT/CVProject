@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using Azure;
+using CommunityToolkit.Mvvm.Input;
+using DesktopAplicationCV.Resources.Languages;
 using DesktopAplicationCV.Services;
 using DesktopAplicationCV.ViewModel;
 using DesktopAplicationCV.Views;
@@ -11,12 +13,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace DesktopAplicationCV.ViewModels
-{
-    public class LoginViewModel : BaseViewModel
+{   
+    public partial class LoginViewModel : BaseViewModel
     {
         #region Variables
+        private readonly SecureStorageService _secureStorageService;
         private readonly AuthService _authService;
         private readonly INavigationService _navigationService;
+        private readonly MenuPrincipalViewModel _menuPrincipalViewModel;
         private string _usuario;
         private string _password;
         #endregion
@@ -31,27 +35,45 @@ namespace DesktopAplicationCV.ViewModels
         public string Password
         {
             get => _password;
+
+
             set => SetProperty(ref _password, value);
         }
-
-        public ICommand LoginCommand => new AsyncRelayCommand(LoginAsync);
-
         #endregion
 
-        //public ICommand LoginCommand { get; }
-
         #region Constructor
-        public LoginViewModel(AuthService authService, INavigationService navigationService)
+        public LoginViewModel(AuthService authService, INavigationService navigationService, MenuPrincipalViewModel menuPrincipalViewModel, SecureStorageService secureStorageService)
         {
             _navigationService = navigationService;
             _authService = authService;
-            //LoginCommand = new Command(async () => await LoginAsync());
+            _menuPrincipalViewModel = menuPrincipalViewModel;
+            _secureStorageService = secureStorageService;
+            CleanLogin();
         }
+
+        public ICommand LogoutCommand => new AsyncRelayCommand(LogoutAsync);
+        public ICommand LoginCommand => new AsyncRelayCommand(LoginAsync);
+        
 
         #endregion
 
+        #region Start
+        public void CleanLogin()
+        {
+            Usuario = string.Empty;
+            Password = string.Empty;
+        }
+        #endregion
+
+        #region Login
         private async Task LoginAsync()
         {
+
+            /* Codigo Hash 
+             * */
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(Password);
+            Console.WriteLine("hashedPassword: " + hashedPassword);
+
             try
             {
                 bool isConnected = Connectivity.Current.NetworkAccess == NetworkAccess.Internet;
@@ -64,27 +86,40 @@ namespace DesktopAplicationCV.ViewModels
 
                     if (token != null)
                     {
-                        // Guardar el token para futuras peticiones
-                        Preferences.Set("AuthToken", token);
-                        //await App.Current.MainPage.DisplayAlert("Éxito", "Inicio de sesión exitoso", "OK");
-                        _navigationService.NavigationAsync(new MenuPrincipal());
+                        _navigationService.NavigationAsync(new MenuPrincipal(_menuPrincipalViewModel, this));
                     }
                     else
                     {
-                        await App.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, las credenciales son incorrectas. ", "OK");
+                        await App.Current.MainPage.DisplayAlert("Alerta", AppResources.ErrorCredenciales, "OK");
                     }
                 }
                 else
                 {
                     Console.WriteLine("No hay conexión a Internet.");
-                    await App.Current.MainPage.DisplayAlert("Alerta", "Verificar conexión. ", "OK");
+                    await App.Current.MainPage.DisplayAlert("Alerta", AppResources.SinConexion, "OK");
                 }
             }
             catch (Exception Ex) 
             {
-                await App.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la autenticacion, verificar conexion. ", "OK");
+                await App.Current.MainPage.DisplayAlert("Alerta", AppResources.ErrorAPI, "OK");
                 Console.WriteLine("Error LoginAsync LoginViewModel: " + Ex.Message);
             }
         }
+        #endregion
+
+        #region Logout
+        private async Task LogoutAsync()
+        {
+            
+            bool isLoggedOut = await _authService.LogoutAsync();
+            if (isLoggedOut)
+            {
+                //_secureStorageService.RemoveToken();
+                //Preferences.Remove("AuthToken");
+                Application.Current.MainPage = new NavigationPage(new Login(this));
+                //_navigationService.NavigationAsync(new Login(this));
+            }
+        }
+        #endregion
     }
 }

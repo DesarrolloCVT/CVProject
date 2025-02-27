@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Factura_Ventas"
              Title="Agregar Factura de Ventas">
+    
     <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
@@ -22,14 +23,14 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Agregar Facturas de Ventas"
+            <Label Text="Agregar Factura de Ventas"
                    Margin="20,0,0,0"
                    FontSize="Medium"
                    TextColor="Silver"
                    FontAttributes="Bold, Italic"
                    Grid.Row="0" Grid.Column="0"
                    Grid.ColumnSpan="1"/>
-            
+
             <Label Text="Folio"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>

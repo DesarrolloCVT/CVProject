@@ -4,16 +4,16 @@ namespace DesktopAplicationCV.Views;
 
 public partial class Maestros : Shell
 {
-	public Maestros()
+	public Maestros(LoginViewModel loginViewModel)
 	{
 		InitializeComponent();
-        BindingContext = new MaestrosViewModel();
+        BindingContext = loginViewModel;
         //this.Navigated += OnTabChanged;
     }
 
-    private void OnTabChanged(object? sender, ShellNavigatedEventArgs e)
+    /*private void OnTabChanged(object? sender, ShellNavigatedEventArgs e)
     {
         string NombrePagina = CurrentPage.Title;
         Console.WriteLine($"Pestaña cambiada a: {NombrePagina}");
-    }
+    }*/
 }

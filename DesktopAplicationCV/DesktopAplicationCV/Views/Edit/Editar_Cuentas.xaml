@@ -5,9 +5,10 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              NavigationPage.HasBackButton="True"
              Title="Modificar Cuentas">
-    <ScrollView>
+    <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
@@ -21,28 +22,36 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <Label Text="Editar Cuentas"
+                   Margin="20,0,0,0"
+                   FontSize="Medium"
+                   TextColor="Silver"
+                   FontAttributes="Bold, Italic"
+                   Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="1"/>
+
             <Label Text="Codigo"
                    FontSize="Small"
-                   Grid.Row="0" Grid.Column="1"/>
+                   Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Codigo"
                     x:Name="EditCodigo"
                     Text="{Binding EditCodigoCuenta}"
-                    Grid.Row="0" Grid.Column="2"
+                    Grid.Row="1" Grid.Column="2"
                     IsReadOnly="True"/>
             <Label Text="Nombre"
                    FontSize="Small"
-                   Grid.Row="1" Grid.Column="1"/>
+                   Grid.Row="2" Grid.Column="1"/>
             <Editor Placeholder="Nombre"
                     x:Name="EditNombre"
                     Text="{Binding EditNombreCuenta}"
-                    Grid.Row="1" Grid.Column="2"/>
+                    Grid.Row="2" Grid.Column="2"/>
             <Label Text="Tipo"
                    FontSize="Small"
-                   Grid.Row="2" Grid.Column="1"
+                   Grid.Row="3" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Picker x:Name="PkrTipo"
                     SelectedItem="{Binding EditTipoCuenta}"
-                    Grid.Row="2" Grid.Column="2">
+                    Grid.Row="3" Grid.Column="2">
                 <Picker.Items>
                     <x:String>Corriente</x:String>
                     <x:String>Vista</x:String>
@@ -53,7 +62,7 @@
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
-                    Grid.Row="4" Grid.Column="1"
+                    Grid.Row="5" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding UpdateCommand}"/>
             <Button Text="Cancelar"
@@ -61,7 +70,7 @@
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="ForestGreen"
-                    Grid.Row="4" Grid.Column="2"
+                    Grid.Row="5" Grid.Column="2"
                     Grid.ColumnSpan="1"
                     Command="{Binding CancelarCommand}"/>
         </Grid>

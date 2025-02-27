@@ -2,15 +2,45 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Inicio"
-             xmlns:local="clr-namespace:DesktopAplicationCV.Views"
+             xmlns:local="clr-namespace:DesktopAplicationCV.Resources.Languages"
              NavigationPage.HasBackButton="False"
              Title="Inicio">
+
+    <!--ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding CerrarSesion}" Command="{Binding LogoutCommand}"/>
+    </ContentPage.ToolbarItems-->
+    
     <ScrollView>
-        <StackLayout>
-            <Label Text="Seleccione el módulo con el que desea operar"
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center"
-                   FontSize="Large"/>
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label 
+                Text="{x:Static local:AppResources.Bienvenida}"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontSize="Large"
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"/>
+            <Button 
+                Text="{x:Static local:AppResources.CerrarSesion}"
+                Margin="20"
+                BackgroundColor="Green"
+                WidthRequest="200"
+                CornerRadius="5"
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Command="{Binding LogoutCommand}"/>
+        </Grid>
     </ScrollView>
 </ContentPage>

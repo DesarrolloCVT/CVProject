@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:local="clr-namespace:DesktopAplicationCV.Views"
+            xmlns:vm="clr-namespace:DesktopAplicationCV.ViewModels"
             x:Class="DesktopAplicationCV.Views.MenuPrincipal"
             SelectedTabColor="White"
-            UnselectedTabColor="Gray">
+            UnselectedTabColor="Gray"
+            x:DataType="vm:MenuPrincipalViewModel">
 
-    <TabbedPage.Children>
+    <!--TabbedPage.Children>
         <local:Inicio Title="Inicio">
         </local:Inicio>
 
@@ -18,5 +19,5 @@
         
         <local:Compra_Venta Title="Compra y Venta">
         </local:Compra_Venta>
-    </TabbedPage.Children>
+    </TabbedPage.Children-->
 </TabbedPage>

@@ -2,21 +2,27 @@
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Compra_Venta"
-             xmlns:local="clr-namespace:DesktopAplicationCV.Views">
+             xmlns:local="clr-namespace:DesktopAplicationCV.Views"
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
+
+    <!--Shell.ToolbarItems>
+        <ToolbarItem Text="{Binding CerrarSesion}" Command="{Binding LogoutCommand}"/>
+    </Shell.ToolbarItems-->
+
     <TabBar>
-        <Tab Title="{Binding TxtFacturaVenta}">
+        <Tab Title="{x:Static recursos:AppResources.FacturaVentas}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Factura_Venta}" />
         </Tab>
-        <Tab Title="{Binding TxtFacturaVentaDetalle}">
+        <Tab Title="{x:Static recursos:AppResources.FacturaVentasDetalle}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Factura_Venta_Detalle}" />
         </Tab>
-        <Tab Title="{Binding TxtFacturaCompra}">
+        <Tab Title="{x:Static recursos:AppResources.FacturaCompra}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Factura_Compra}" />
         </Tab>
-        <Tab Title="{Binding TxtFacturaCompraDetalle}">
+        <Tab Title="{x:Static recursos:AppResources.FacturaCompraDetalle}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Factura_Compra_detalle}" />
         </Tab>

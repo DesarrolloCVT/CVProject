@@ -5,13 +5,13 @@
              x:Class="DesktopAplicationCV.Views.Editar_Socio_Negocio"
              NavigationPage.HasBackButton="True"
              Title="Socio de Negocio">
-    <ScrollView>
+    <ScrollView Margin="0,100,0,0">
         <Grid Padding="45,45,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="80"/>
                 <RowDefinition Height="50"/>
+                <RowDefinition Height="80"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
@@ -21,9 +21,18 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+
+            <Label Text="Editar Socio de Negocios"
+                   Margin="20,0,0,0"
+                   FontSize="Medium"
+                   TextColor="Silver"
+                   FontAttributes="Bold, Italic"
+                   Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="1"/>
+
             <Label Text="Codigo"
                FontSize="Small"
-               Grid.Row="0" Grid.Column="1"
+               Grid.Row="1" Grid.Column="1"
                FontAttributes="Bold"/>
             <Editor 
                 x:Name="EditCodigo"
@@ -32,31 +41,31 @@
                 WidthRequest="300"
                 Keyboard="Numeric"
                 Placeholder="Codigo"
-                Grid.Row="0" Grid.Column="2"/>
+                Grid.Row="1" Grid.Column="2"/>
 
 
             <Label Text="Nombre"
                FontSize="Small"
-               Grid.Row="1" Grid.Column="1"
+               Grid.Row="2" Grid.Column="1"
                FontAttributes="Bold"/>
             <Editor 
                 x:Name="EditNombre"
                 Text="{Binding EditNombreSocio}"
                 WidthRequest="300"
                 Placeholder="Nombre"
-                Grid.Row="1" Grid.Column="2"/>
+                Grid.Row="2" Grid.Column="2"/>
 
 
             <Label Text="Tipo"
                FontSize="Small"
-               Grid.Row="2" Grid.Column="1"
+               Grid.Row="3" Grid.Column="1"
                FontAttributes="Bold"/>
             <Picker 
                 x:Name="pkrTipo"
                 SelectedItem="{Binding EditTipoSocio}"
                 Title="Seleccione Tipo de Socio"
                 WidthRequest="300"
-                Grid.Row="2" Grid.Column="2">
+                Grid.Row="3" Grid.Column="2">
             <Picker.Items>
                 <x:String>Cliente</x:String>
                 <x:String>Proveedor</x:String>

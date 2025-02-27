@@ -11,4 +11,14 @@ public partial class Login : ContentPage
         BindingContext = loginView;
         //var viewModel = BindingContext as LoginViewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        var viewModel = BindingContext as LoginViewModel;
+        if (viewModel != null) 
+        {
+            viewModel.CleanLogin();
+        }
+    }
 }

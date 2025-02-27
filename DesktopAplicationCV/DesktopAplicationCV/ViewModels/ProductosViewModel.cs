@@ -387,7 +387,7 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch (Exception Ex) 
             {
-                Console.WriteLine("Error ActualizarProducto ProductosViewModel: " + Ex.Message);
+                Console.WriteLine("Error ActualizarBancoDetalle ProductosViewModel: " + Ex.Message);
             }
         }
     }

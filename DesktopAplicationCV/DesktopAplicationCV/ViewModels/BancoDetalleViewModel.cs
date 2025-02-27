@@ -186,7 +186,6 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     CodigoBancoCeldaSeleccionada = bancoDetalleModel.Codigo_Banco;
                     NumeroBancoDetalleCeldaSeleccionada = bancoDetalleModel.Numero;
-                    // Aquí puedes manejar la lógica de negocio sin tocar la vista
                 }
             }
             catch(Exception Ex)
@@ -350,7 +349,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                ActualizarProducto((BancoDetalleModel)OldbankDetail);
+                ActualizarBancoDetalle((BancoDetalleModel)OldbankDetail);
                 Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
@@ -360,7 +359,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task ActualizarProducto(BancoDetalleModel AntiguoBancoDetalle)
+        private async Task ActualizarBancoDetalle(BancoDetalleModel AntiguoBancoDetalle)
         {
             try
             {
@@ -388,7 +387,7 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch(Exception Ex)
             {
-                Console.WriteLine("Error ActualizarProducto BancoDetalleViewModel: " + Ex.Message);
+                Console.WriteLine("Error ActualizarBancoDetalle BancoDetalleViewModel: " + Ex.Message);
             }
         }
     }

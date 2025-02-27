@@ -49,9 +49,7 @@ namespace DesktopAplicationCV
             builder.Services.AddSingleton<TipoViewModel>();
             builder.Services.AddTransient<LoginViewModel>();
 
-            builder.Services.AddSingleton<CompraVentaViewModel>();
-            builder.Services.AddSingleton<OperacionesBancariasViewModel>();
-            builder.Services.AddSingleton<MaestrosViewModel>();
+            builder.Services.AddSingleton<LoginViewModel>();
 
 
             // Registrar Páginas
@@ -67,12 +65,11 @@ namespace DesktopAplicationCV
             // Registrar servicios
             builder.Services.AddSingleton<INavigationService, NavigationService>();
             builder.Services.AddSingleton<AuthService>();
-
-
-            //builder.Services.AddSingleton<AuthService>();
-            //builder.Services.AddTransient<LoginViewModel>();
-            //builder.Services.AddTransient<Login>();
+            builder.Services.AddSingleton<SecureStorageService>();
             builder.Services.AddSingleton<App>();
+
+            builder.Services.AddSingleton<MenuPrincipalViewModel>();
+            builder.Services.AddSingleton<MenuPrincipal>();
 
             var app = builder.Build();
             Services = app.Services;

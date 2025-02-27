@@ -2,14 +2,20 @@
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Operaciones_Bancarias"
-             xmlns:local="clr-namespace:DesktopAplicationCV.Views">
+             xmlns:local="clr-namespace:DesktopAplicationCV.Views"
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
+    
+
+    <!--Shell.ToolbarItems>
+        <ToolbarItem Text="{Binding CerrarSesion}" Command="{Binding LogoutCommand}"/>
+    </Shell.ToolbarItems-->
 
     <TabBar>
-        <Tab Title="{Binding TxtIngresos}">
+        <Tab Title="{x:Static recursos:AppResources.Ingresos}">
             <ShellContent
                       ContentTemplate="{DataTemplate local:Ingresos}" />
         </Tab>
-        <Tab Title="{Binding TxtIngresosDetalles}">
+        <Tab Title="{x:Static recursos:AppResources.IngresosDetalle}">
             <ShellContent
               ContentTemplate="{DataTemplate local:Ingresos_Detalle}" />
         </Tab>

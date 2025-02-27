@@ -8,6 +8,7 @@ namespace DesktopAplicationCV
         {
             InitializeComponent();
             Routing.RegisterRoute("MenuPrincipal", typeof(MenuPrincipal));
+            Routing.RegisterRoute("LoginPage", typeof(Login));
             Routing.RegisterRoute("Banco", typeof(Banco));
             Routing.RegisterRoute("Banco_Detalle", typeof(Banco_Detalle));
             Routing.RegisterRoute("Compra_Venta", typeof(Compra_Venta));

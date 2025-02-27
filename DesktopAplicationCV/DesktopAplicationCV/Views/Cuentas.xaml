@@ -4,7 +4,9 @@
              xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="DesktopAplicationCV.Views.Cuentas">
+             x:Class="DesktopAplicationCV.Views.Cuentas"
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
+
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
@@ -22,7 +24,7 @@
 
             <!-- * Botones de accion * -->
 
-            <Button Text="{Binding Agregar}"
+            <Button Text="{x:Static recursos:AppResources.Agregar}"
                 WidthRequest="150"
                 Grid.Column="0"
                 Grid.Row="0"
@@ -33,7 +35,7 @@
                 TextColor="White"
                 Command="{Binding AgregarCommand}"/>
 
-            <Button Text="{Binding Eliminar}"
+            <Button Text="{x:Static recursos:AppResources.Eliminar}"
                 WidthRequest="150"
                 Grid.Column="1"
                 Grid.Row="0"
@@ -44,7 +46,7 @@
                 TextColor="White"
                 Command="{Binding EliminarCommand}"/>
 
-            <Button Text="{Binding Editar}"
+            <Button Text="{x:Static recursos:AppResources.Editar}"
                 WidthRequest="150"
                 Grid.Column="2"
                 Grid.Row="0"
@@ -58,7 +60,7 @@
             <!-- * Busqueda * -->
 
             <Editor x:Name="txtBusqueda"
-                Placeholder="Busqueda"
+                Placeholder="{x:Static recursos:AppResources.PlaceHoldBuscar}"
                 HorizontalTextAlignment="Center"
                 WidthRequest="350"
                 Text="{Binding FilterText}"
@@ -70,19 +72,19 @@
                 HeightRequest="10"/>
 
             <syncfusion:SfDataGrid x:Name="dataGrid"
-                               SelectionMode="Single"
-                               SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
-                               NavigationMode="Row"
-                               AutoGenerateColumnsMode="None"
-                               ItemsSource="{Binding CuentasInfoCollection}"
-                               DefaultColumnWidth="130"
-                               GridLinesVisibility="Both"
-                               HeaderGridLinesVisibility="Both"
-                               BackgroundColor="LightGreen"
-                               Grid.Row="1"
-                               Grid.ColumnSpan="6"
-                               ColumnWidthMode="Fill"
-                               CellTappedCommand="{Binding CeldaTocadaCommand}">
+                                   SelectionMode="Single"
+                                   SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
+                                   NavigationMode="Row"
+                                   AutoGenerateColumnsMode="None"
+                                   ItemsSource="{Binding CuentasInfoCollection}"
+                                   DefaultColumnWidth="130"
+                                   GridLinesVisibility="Both"
+                                   HeaderGridLinesVisibility="Both"
+                                   BackgroundColor="White"
+                                   Grid.Row="1"
+                                   Grid.ColumnSpan="6"
+                                   ColumnWidthMode="Fill"
+                                   CellTappedCommand="{Binding CeldaTocadaCommand}">
                 <syncfusion:SfDataGrid.Behaviors>
                     <toolkit:EventToCommandBehavior EventName="Loaded"
                                 Command="{Binding GridCargadoCommand}" />

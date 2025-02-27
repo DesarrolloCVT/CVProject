@@ -18,7 +18,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Agregar Detalles del Banco"
+            <Label Text="Agregar Detalle Bancario"
                    Margin="20,0,0,0"
                    FontSize="Medium"
                    TextColor="Silver"

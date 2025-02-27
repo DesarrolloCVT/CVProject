@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Editar_Factura_Ventas"
              Title="Editar Factura de Ventas">
-    <ScrollView>
+    <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
@@ -22,38 +22,46 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <Label Text="Editar Factura de Ventas"
+                   Margin="20,0,0,0"
+                   FontSize="Medium"
+                   TextColor="Silver"
+                   FontAttributes="Bold, Italic"
+                   Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="1"/>
+
             <Label Text="Folio"
                    FontSize="Small"
-                   Grid.Row="0" Grid.Column="1"/>
+                   Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Folio"
                     Text="{Binding EditFolioFactVenta}"
                     x:Name="EditFolio"
-                    Grid.Row="0" Grid.Column="2"/>
+                    Grid.Row="1" Grid.Column="2"/>
             <Label Text="Cliente"
                    FontSize="Small"
-                   Grid.Row="1" Grid.Column="1"/>
+                   Grid.Row="2" Grid.Column="1"/>
             <Editor Placeholder="Cliente"
                     Text="{Binding EditClienteFactVenta}"
                     x:Name="EditCliente"
-                    Grid.Row="1" Grid.Column="2"/>
+                    Grid.Row="2" Grid.Column="2"/>
             <Label Text="Direccion de Despacho"
                    FontSize="Small"
-                   Grid.Row="2" Grid.Column="1"/>
+                   Grid.Row="3" Grid.Column="1"/>
             <Editor Placeholder="Direccion de Despacho"
                     Text="{Binding EditDirDespachoFactVenta}"
                     x:Name="EditDirDespacho"
-                    Grid.Row="2" Grid.Column="2"/>
+                    Grid.Row="3" Grid.Column="2"/>
             <Label Text="Moneda"
                    FontSize="Small"
-                   Grid.Row="3" Grid.Column="1"/>
+                   Grid.Row="4" Grid.Column="1"/>
             <Editor Placeholder="Moneda"
                     Text="{Binding EditMonedaFactVenta}"
                     x:Name="EditMoneda"
-                    Grid.Row="3" Grid.Column="2"/>
+                    Grid.Row="4" Grid.Column="2"/>
             <Label Text="Fecha"
                    FontSize="Small"
-                   Grid.Row="4" Grid.Column="1"/>
-            <DatePicker Grid.Row="4" Grid.Column="2"
+                   Grid.Row="5" Grid.Column="1"/>
+            <DatePicker Grid.Row="5" Grid.Column="2"
                         Date="{Binding EditFechaFactVenta}"
                         x:Name="PkrFecha"
                         Format="dd-mm-yyyy"/>

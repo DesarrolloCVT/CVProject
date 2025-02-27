@@ -5,11 +5,7 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="DesktopAplicationCV.Views.Socio_Negocio"
-             Title="Socios de Negocio">
-
-    <NavigationPage.TitleView>
-        <Label Text="Socios de Negocio" HorizontalTextAlignment="Center"/>
-    </NavigationPage.TitleView>
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
 
     <ScrollView>
         <Grid>
@@ -28,7 +24,7 @@
 
             <!-- * Botones de accion * -->
 
-            <Button Text="{Binding Agregar}"
+            <Button Text="{x:Static recursos:AppResources.Agregar}"
                     WidthRequest="150"
                     Grid.Column="0"
                     Grid.Row="0"
@@ -38,8 +34,8 @@
                     VerticalOptions="Center"
                     TextColor="White"
                     Command="{Binding AgregarCommand}"/>
-            
-            <Button Text="{Binding Eliminar}"
+
+            <Button Text="{x:Static recursos:AppResources.Eliminar}"
                     WidthRequest="150"
                     Grid.Column="1"
                     Grid.Row="0"
@@ -49,8 +45,8 @@
                     VerticalOptions="Center"
                     TextColor="White"
                     Command="{Binding EliminarCommand}"/>
-            
-            <Button Text="{Binding Editar}"
+
+            <Button Text="{x:Static recursos:AppResources.Editar}"
                     WidthRequest="150"
                     Grid.Column="2"
                     Grid.Row="0"
@@ -64,7 +60,7 @@
             <!-- * Busqueda * -->
             
             <Editor x:Name="txtBusqueda"
-                    Placeholder="Busqueda"
+                    Placeholder="{x:Static recursos:AppResources.PlaceHoldBuscar}"
                     HorizontalTextAlignment="Center"
                     WidthRequest="350"
                     Text="{Binding FilterText}"
@@ -84,7 +80,7 @@
                                    DefaultColumnWidth="130"
                                    GridLinesVisibility="Both"
                                    HeaderGridLinesVisibility="Both"
-                                   BackgroundColor="LightGreen"
+                                   BackgroundColor="White"
                                    Grid.Row="1"
                                    Grid.ColumnSpan="6"
                                    ColumnWidthMode="Fill"
