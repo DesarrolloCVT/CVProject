@@ -1,5 +1,7 @@
 ﻿using Azure;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Resources.Languages;
 using DesktopAplicationCV.Services;
 using DesktopAplicationCV.ViewModel;
@@ -19,17 +21,31 @@ namespace DesktopAplicationCV.ViewModels
         #region Variables
         private readonly SecureStorageService _secureStorageService;
         private readonly AuthService _authService;
+        private readonly UsuarioService _usuarioService;
         private readonly INavigationService _navigationService;
         private readonly MenuPrincipalViewModel _menuPrincipalViewModel;
         private string _usuario;
+        private string _nombreUsuario;
         private string _password;
+
+        
+        private Usuarios? user;
+
         #endregion
+
+
 
         #region Inicializadores
         public string Usuario
         {
             get => _usuario;
             set => SetProperty(ref _usuario, value);
+        }
+
+        public string NombreUsuario
+        {
+            get => _nombreUsuario;
+            set => SetProperty(ref _nombreUsuario, value);
         }
 
         public string Password
@@ -42,12 +58,15 @@ namespace DesktopAplicationCV.ViewModels
         #endregion
 
         #region Constructor
-        public LoginViewModel(AuthService authService, INavigationService navigationService, MenuPrincipalViewModel menuPrincipalViewModel, SecureStorageService secureStorageService)
+        public LoginViewModel(AuthService authService, INavigationService navigationService, 
+            MenuPrincipalViewModel menuPrincipalViewModel,
+            SecureStorageService secureStorageService, UsuarioService usuarioService)
         {
             _navigationService = navigationService;
             _authService = authService;
             _menuPrincipalViewModel = menuPrincipalViewModel;
             _secureStorageService = secureStorageService;
+            _usuarioService = usuarioService;
             CleanLogin();
         }
 
@@ -92,6 +111,9 @@ namespace DesktopAplicationCV.ViewModels
                     {
                         await App.Current.MainPage.DisplayAlert("Alerta", AppResources.ErrorCredenciales, "OK");
                     }
+
+                    var userName = Usuario.ToLower().Trim();
+                    CargarUsuario(userName);
                 }
                 else
                 {
@@ -120,6 +142,17 @@ namespace DesktopAplicationCV.ViewModels
                 //_navigationService.NavigationAsync(new Login(this));
             }
         }
+        #endregion
+
+        #region Usuarios 
+
+        [RelayCommand]
+        public async Task CargarUsuario(string name)
+        {
+            user = await _usuarioService.GetByNameAsync(name);
+            NombreUsuario = user.NombreUsuario;
+        }
+
         #endregion
     }
 }

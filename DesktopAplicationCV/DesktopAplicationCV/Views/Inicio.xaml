@@ -31,6 +31,13 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"/>
+            <Label
+                Text="{Binding NombreUsuario, StringFormat='Bienvenido: {0}'}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="Medium"
+                Grid.Row="1"
+                Grid.Column="0"/>
             <Button 
                 Text="{x:Static local:AppResources.CerrarSesion}"
                 Margin="20"

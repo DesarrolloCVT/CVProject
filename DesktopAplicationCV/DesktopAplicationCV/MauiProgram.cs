@@ -67,6 +67,7 @@ namespace DesktopAplicationCV
             builder.Services.AddSingleton<AuthService>();
             builder.Services.AddSingleton<SecureStorageService>();
             builder.Services.AddSingleton<App>();
+            builder.Services.AddSingleton<UsuarioService>();
 
             builder.Services.AddSingleton<MenuPrincipalViewModel>();
             builder.Services.AddSingleton<MenuPrincipal>();
