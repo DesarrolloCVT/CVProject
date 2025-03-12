@@ -17,7 +17,8 @@ namespace DesktopAplicationCV.Services
         {
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://localhost:44374/api/")
+                //BaseAddress = new Uri("https://localhost:44374/api/")
+                BaseAddress = new Uri("https://localhost:8443/api/") 
             };
 
             _jsonOptions = new JsonSerializerOptions

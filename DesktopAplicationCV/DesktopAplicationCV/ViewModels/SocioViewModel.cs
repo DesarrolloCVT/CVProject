@@ -49,8 +49,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
-
-        #region Inicializadores
+        #region Encapsulado
 
         public ObservableCollection<SocioNegocioModel> SocioInfoCollection
         {
@@ -312,7 +311,6 @@ namespace DesktopAplicationCV.ViewModel
                 if (CodigoSocioIngresado != 0 && !string.IsNullOrEmpty(NombreSocioIngresado) && !string.IsNullOrEmpty(TipoSocioIngresado))
                 {
                     AgregarSocio(new SocioNegocioModel(CodigoSocioIngresado, NombreSocioIngresado, TipoSocioIngresado, SaldoSocioIngresado));
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -385,6 +383,11 @@ namespace DesktopAplicationCV.ViewModel
                 if (await _socioNegocioService.AddSocioAsync(socio))
                 {
                     Socios.Add(socio);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
                 }
             }
             catch (Exception Ex) 

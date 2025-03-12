@@ -35,6 +35,7 @@
                 Text="{Binding NombreUsuario, StringFormat='Bienvenido: {0}'}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
+                
                 FontSize="Medium"
                 Grid.Row="1"
                 Grid.Column="0"/>

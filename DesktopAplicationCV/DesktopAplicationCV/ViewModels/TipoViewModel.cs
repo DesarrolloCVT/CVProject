@@ -66,7 +66,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
-        #region Inicializadores
+        #region Encapsulado
 
         public ObservableCollection<TipoModel> TipoInfoCollection
         {
@@ -471,7 +471,6 @@ namespace DesktopAplicationCV.ViewModel
                     AgregarTipo(new TipoModel(CodigoTipoIngresado, NombreTipoIngresado, TipoIngresado,
                         CuentaTipoIngresado, PagoFacturaTipoIngresado, GastoComercializacionTipoIngresado, ComisionesTipoIngresado
                         , GastoFinancieroTipoIngresado, AnticipoTipoIngresado));
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -552,6 +551,11 @@ namespace DesktopAplicationCV.ViewModel
                 if (await _tipoService.AddTipoAsync(tipo))
                 {
                     Tipos.Add(tipo);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
                 }
             }
             catch (Exception Ex) 

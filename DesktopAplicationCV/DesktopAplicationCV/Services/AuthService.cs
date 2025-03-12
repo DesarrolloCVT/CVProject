@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using DesktopAplicationCV.Models;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DesktopAplicationCV.Services
@@ -28,7 +30,20 @@ namespace DesktopAplicationCV.Services
         public async Task<string?> LoginAsync(string usuario, string password)
         {
             var loginRequest = new LoginRequest { Usuario = usuario, Password = password };
-            var response = await _httpClient.PostAsJsonAsync("auth/login", loginRequest);
+            var json = JsonConvert.SerializeObject(loginRequest);
+            var content = new StringContent(json, Encoding.UTF8, "application/json"); // Fuerza el Content-Type
+
+            // Asegurar que el HttpClient tenga Accept como JSON (opcional pero recomendado)
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //var response = await _httpClient.PostAsJsonAsync("auth/login", loginRequest);
+            //var response = await _httpClient.PostAsJsonAsync("auth/login", content);
+
+            var response = await _httpClient.PostAsync("auth/login", content); // Usar PostAsync en lugar de PostAsJsonAsync
+
+            //var loginRequest = new LoginRequest { Usuario = usuario, Password = password };
+            //var response = await _httpClient.PostAsJsonAsync("auth/login", loginRequest);
 
             if (response.IsSuccessStatusCode)
             {

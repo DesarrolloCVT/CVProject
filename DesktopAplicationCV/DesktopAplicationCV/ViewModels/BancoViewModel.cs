@@ -47,7 +47,7 @@ namespace DesktopAplicationCV.ViewModel
         public ICommand CeldaTocadaCommand { get; }
         #endregion
 
-        #region Inicializadores
+        #region Encapsulado
 
         public ObservableCollection<BancoModel> BancoInfoCollection
         {
@@ -251,7 +251,6 @@ namespace DesktopAplicationCV.ViewModel
                 if (CodigoBancoIngresado != 0 && !string.IsNullOrEmpty(NombreBancoIngresado))
                 {
                     AgregarBanco(new BancoModel(CodigoBancoIngresado, NombreBancoIngresado));
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -322,6 +321,11 @@ namespace DesktopAplicationCV.ViewModel
                 if (await _bancoService.AddBancoAsync(banco))
                 {
                     Bancos.Add(banco);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
                 }
             }
             catch (Exception Ex) 

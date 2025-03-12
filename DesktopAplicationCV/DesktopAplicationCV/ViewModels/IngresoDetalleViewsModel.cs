@@ -50,7 +50,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
-        #region Inicializadores
+        #region Encapsulado
 
         public ObservableCollection<IngresoDetalleModel> IngresoDetalleInfoCollection
         {
@@ -253,7 +253,6 @@ namespace DesktopAplicationCV.ViewModel
                 if (FolioIngresoDetalleIngresado != 0 && MontoIngresoDetalleIngresado != 0)
                 {
                     AgregarIngresoDetalle(new IngresoDetalleModel(FolioIngresoDetalleIngresado, MontoIngresoDetalleIngresado));
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -326,6 +325,10 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     IngresoDetalleModels.Add(ingresoDetalle);
                 }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
+                }
             }
             catch (Exception Ex) 
             {
@@ -366,7 +369,6 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("Error Update IngresoDetalleViewsModel: " + Ex.Message);
             }
         }
-
 
         private async Task ActualizarIngresoDetalle(IngresoDetalleModel AntiguoIngresoDetalle)
         {

@@ -59,7 +59,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
-        #region Inicializadores
+        #region Encapsulado
 
         public ObservableCollection<FacturaVentaModel> FacturaVentaInfoCollection
         {
@@ -290,6 +290,7 @@ namespace DesktopAplicationCV.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -349,7 +350,6 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     AgregarFactVentas(new FacturaVentaModel(FolioFactVentaIngresado, ClienteFactVentaIngresado, DirDespachoFactVentaIngresado
                         , MonedaFactVentaIngresado, FechaFactVentaIngresado));
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -425,6 +425,11 @@ namespace DesktopAplicationCV.ViewModel
                 if (await _factVentaService.AddFactVentaAsync(facturaVentaModel))
                 {
                     facturaVentaModels.Add(facturaVentaModel);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
                 }
             }
             catch (Exception Ex) 

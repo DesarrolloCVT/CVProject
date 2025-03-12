@@ -55,7 +55,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
-        #region Inicializadores
+        #region Encapsulado
 
         public ObservableCollection<FacturaCompraModel> FacturaCompraInfoCollection
         {
@@ -259,6 +259,7 @@ namespace DesktopAplicationCV.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -314,7 +315,6 @@ namespace DesktopAplicationCV.ViewModel
                 if (FolioFactCompraIngresado != 0 && !string.IsNullOrEmpty(ProveedorFactCompraIngresado) && !string.IsNullOrEmpty(MonedaFactCompraIngresado))
                 {
                     AgregarFacturaCompra(new FacturaCompraModel(FolioFactCompraIngresado, ProveedorFactCompraIngresado, FechaFactCompraIngresado, MonedaFactCompraIngresado));
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -384,6 +384,11 @@ namespace DesktopAplicationCV.ViewModel
                 if (await _facturaCompraService.AddFacturaCompraAsync(facturaCompraModel))
                 {
                     facturaCompra.Add(facturaCompraModel);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
                 }
             }
             catch (Exception Ex) 
@@ -425,7 +430,6 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("Error Update FacturaCompraViewModel: " + Ex.Message);
             }
         }
-
 
         private async Task ActualizarFacturaCompra(FacturaCompraModel AntiguoFacturaCompra)
         {

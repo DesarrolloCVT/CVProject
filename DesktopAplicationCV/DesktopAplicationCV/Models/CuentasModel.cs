@@ -13,8 +13,6 @@ namespace DesktopAplicationCV.Models
         private string nombre;
         private string tipo;
 
-        private ICommand buttonCommand;
-
         public int Codigo
         {
             get { return this.codigo; }

@@ -12,8 +12,6 @@ namespace DesktopAplicationCV.Models
         private int codigo_banco;
         private int numero;
 
-        private ICommand buttonCommand;
-
         public int Codigo_Banco
         {
             get { return this.codigo_banco; }

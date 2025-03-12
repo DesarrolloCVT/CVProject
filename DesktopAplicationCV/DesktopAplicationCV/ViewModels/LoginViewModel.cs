@@ -33,9 +33,7 @@ namespace DesktopAplicationCV.ViewModels
 
         #endregion
 
-
-
-        #region Inicializadores
+        #region Encapsulado
         public string Usuario
         {
             get => _usuario;
@@ -150,7 +148,14 @@ namespace DesktopAplicationCV.ViewModels
         public async Task CargarUsuario(string name)
         {
             user = await _usuarioService.GetByNameAsync(name);
-            NombreUsuario = user.NombreUsuario;
+            if (user != null)
+            {   
+                NombreUsuario = user.NombreUsuario;
+            }
+            else
+            {
+                NombreUsuario = string.Empty;
+            }
         }
 
         #endregion

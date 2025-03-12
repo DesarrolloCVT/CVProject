@@ -52,7 +52,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
-        #region Inicializadores
+        #region Encapsulado
 
         public ObservableCollection<CuentasModel> CuentasInfoCollection
         {
@@ -227,6 +227,7 @@ namespace DesktopAplicationCV.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -282,7 +283,6 @@ namespace DesktopAplicationCV.ViewModel
                 if (CodigoCuentaIngresado != 0 && !string.IsNullOrEmpty(NombreCuentaIngresado) && !string.IsNullOrEmpty(TipoCuentaIngresado))
                 {
                     AgregarCuenta(new CuentasModel(CodigoCuentaIngresado, NombreCuentaIngresado, TipoCuentaIngresado));
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -355,6 +355,11 @@ namespace DesktopAplicationCV.ViewModel
                 if (await _cuentaService.AddCuentaAsync(cuenta))
                 {
                     Cuentas.Add(cuenta);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
                 }
             }
             catch (Exception Ex) 
@@ -396,7 +401,6 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("Error Update CuentasViewModel: " + Ex.Message);
             }
         }
-
 
         private async Task ActualizarCuenta(CuentasModel AntiguaCuenta)
         {

@@ -55,7 +55,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
-        #region Inicializadores
+        #region Encapsulado
 
         public ObservableCollection<FacturaCompraDetalleModel> FacturaCompraDetalleInfoCollection
         {
@@ -259,6 +259,7 @@ namespace DesktopAplicationCV.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -316,7 +317,6 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     AgregarFactCompraDetalle(new FacturaCompraDetalleModel(FolioFactCompraDetalleIngresado, CodigoProdFactCompraDetalleIngresado,
                         CantidadFactCompraDetalleIngresado, PrecioFactCompraDetalleIngresado));
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -386,6 +386,11 @@ namespace DesktopAplicationCV.ViewModel
                 if (await _factComprDetalleService.AddFactCompraDetalleAsync(facturaCompraDetalleModel))
                 {
                     FacturaCompraDetalleModels.Add(facturaCompraDetalleModel);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
                 }
             }
             catch (Exception Ex) 
@@ -426,7 +431,6 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("Error Update FacturaCompraDetalleViewModel: " + Ex.Message);
             }
         }
-
 
         private async Task ActualizarFactCompraDetalle(FacturaCompraDetalleModel AntiguaFactCompraDetalle)
         {

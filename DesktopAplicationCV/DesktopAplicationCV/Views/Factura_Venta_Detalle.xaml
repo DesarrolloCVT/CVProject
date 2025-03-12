@@ -93,7 +93,7 @@
 
                 <syncfusion:SfDataGrid.Columns>
                     <syncfusion:DataGridTextColumn MappingName="Folio" HeaderText="Folio"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Codigo_Producto" HeaderText="Codigo_Producto"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Codigo_Producto" HeaderText="Codigo de Producto"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Cantidad" HeaderText="Cantidad"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Precio" HeaderText="Precio"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>

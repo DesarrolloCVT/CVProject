@@ -52,7 +52,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
-        #region Inicializadores
+        #region Encapsulado
         public ObservableCollection<BancoDetalleModel> BancoDetalleInfoCollection
         {
             get { return bancoDetalles; }
@@ -196,6 +196,7 @@ namespace DesktopAplicationCV.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -251,7 +252,6 @@ namespace DesktopAplicationCV.ViewModel
                 if (CodigoBancoDetalleIngresado != 0 && NumerobancoDetallesIngresado != 0)
                 {
                     AgregarBancoDetalle(new BancoDetalleModel(CodigoBancoDetalleIngresado, NumerobancoDetallesIngresado));
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -317,6 +317,11 @@ namespace DesktopAplicationCV.ViewModel
                 if (await _bancoDetalleService.AddBancoDetalleAsync(bancoDetalleModel))
                 {
                     bancoDetalles.Add(bancoDetalleModel);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
                 }
             }
             catch (Exception Ex) 

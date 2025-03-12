@@ -9,8 +9,6 @@ namespace DesktopAplicationCV.Models
         private string tipo;
         private int saldo;
 
-        private ICommand buttonCommand;
-
         public int Codigo
         {
             get { return this.codigo; }
