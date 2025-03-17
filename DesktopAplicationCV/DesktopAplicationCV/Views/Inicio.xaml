@@ -4,6 +4,7 @@
              x:Class="DesktopAplicationCV.Views.Inicio"
              xmlns:local="clr-namespace:DesktopAplicationCV.Resources.Languages"
              NavigationPage.HasBackButton="False"
+             BackgroundColor="DarkSlateGray"
              Title="Inicio">
 
     <!--ContentPage.ToolbarItems>
@@ -41,8 +42,10 @@
                 Grid.Column="0"/>
             <Button 
                 Text="{x:Static local:AppResources.CerrarSesion}"
+                TextColor="White"
+                FontAttributes="Bold"
                 Margin="20"
-                BackgroundColor="Green"
+                BackgroundColor="#0288D1"
                 WidthRequest="200"
                 CornerRadius="5"
                 Grid.Row="2"

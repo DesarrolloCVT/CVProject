@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Tipo"
+             BackgroundColor="DarkSlateGray"
              Title="Agregar Tipo">
     <ScrollView Margin="0,100,0,0">
         <Grid>
@@ -98,7 +99,7 @@
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
-                    BackgroundColor="ForestGreen"
+                    BackgroundColor="#0288D1"
                     Grid.Row="11" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding InsertarTipoCommand}"/>
@@ -106,7 +107,7 @@
                         TextColor="White"
                         WidthRequest="200"
                         FontAttributes="Bold"
-                        BackgroundColor="ForestGreen"
+                        BackgroundColor="#0288D1"
                         Grid.Row="11" Grid.Column="2"
                         Grid.ColumnSpan="1"
                         Command="{Binding CancelarCommand}"/>

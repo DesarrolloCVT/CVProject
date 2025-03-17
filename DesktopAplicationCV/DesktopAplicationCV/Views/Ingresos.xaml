@@ -5,6 +5,7 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="DesktopAplicationCV.Views.Ingresos"
+             BackgroundColor="DarkSlateGray"
              xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
 
     <ScrollView>
@@ -25,51 +26,55 @@
             <!-- * Botones de accion * -->
 
             <Button Text="{x:Static recursos:AppResources.Agregar}"
-                WidthRequest="150"
-                Grid.Column="0"
-                Grid.Row="0"
-                BackgroundColor="Green"
-                CornerRadius="10"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                TextColor="White"
-                Command="{Binding AgregarCommand}"/>
+                    FontAttributes="Bold"
+                    WidthRequest="150"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    BackgroundColor="#0288D1"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding AgregarCommand}"/>
 
             <Button Text="{x:Static recursos:AppResources.Eliminar}"
-                WidthRequest="150"
-                Grid.Column="1"
-                Grid.Row="0"
-                BackgroundColor="Green"
-                CornerRadius="10"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                TextColor="White"
-                Command="{Binding EliminarCommand}"/>
-
+                    FontAttributes="Bold"
+                    WidthRequest="150"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    BackgroundColor="#0288D1"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding EliminarCommand}"/>
+            
             <Button Text="{x:Static recursos:AppResources.Editar}"
-                WidthRequest="150"
-                Grid.Column="2"
-                Grid.Row="0"
-                BackgroundColor="Green"
-                CornerRadius="10"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                TextColor="White"
-                Command="{Binding EditarCommand}"/>
+                    FontAttributes="Bold"
+                    WidthRequest="150"
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    BackgroundColor="#0288D1"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding EditarCommand}"/>
 
             <!-- * Busqueda * -->
 
             <Editor x:Name="txtBusqueda"
-                Placeholder="{x:Static recursos:AppResources.PlaceHoldBuscar}"
-                HorizontalTextAlignment="Center"
-                WidthRequest="350"
-                Text="{Binding FilterText}"
-                AutoSize="Disabled"
-                Keyboard="Numeric"
-                Grid.Row="0"
-                Grid.Column="3"
-                Grid.ColumnSpan="3"
-                HeightRequest="10"/>
+                    Placeholder="{x:Static recursos:AppResources.PlaceHoldBuscar}"
+                    HorizontalTextAlignment="Center"
+                    WidthRequest="350"
+                    PlaceholderColor="White"
+                    Text="{Binding FilterText}"
+                    AutoSize="Disabled"
+                    Keyboard="Numeric"
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="3"
+                    HeightRequest="10"/>
 
             <syncfusion:SfDataGrid x:Name="dataGrid"
                                SelectionMode="Single"
@@ -80,7 +85,7 @@
                                DefaultColumnWidth="130"
                                GridLinesVisibility="Both"
                                HeaderGridLinesVisibility="Both"
-                               BackgroundColor="White"
+                               BackgroundColor="DarkSlateGray"
                                Grid.Row="1"
                                Grid.ColumnSpan="6"
                                ColumnWidthMode="Fill"
@@ -91,15 +96,26 @@
                                 Command="{Binding GridCargadoCommand}" />
                 </syncfusion:SfDataGrid.Behaviors>
 
+                <syncfusion:SfDataGrid.Resources>
+                    <Style TargetType="Label" x:Key="CustomTextStyle">
+                        <Setter Property="TextColor" Value="White"/>
+                    </Style>
+
+                    <Style TargetType="syncfusion:DataGridHeaderCell" x:Key="HeaderStyle">
+                        <Setter Property="TextColor" Value="White"/>
+                        <Setter Property="FontAttributes" Value="Bold"/>
+                    </Style>
+                </syncfusion:SfDataGrid.Resources>
+
                 <syncfusion:SfDataGrid.Columns>
-                    <syncfusion:DataGridTextColumn MappingName="Folio" HeaderText="Folio"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Tipo" HeaderText="Tipo"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Moneda" HeaderText="Moneda"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Fecha" HeaderText="Fecha"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Cliente" HeaderText="Cliente"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Metodo_Pago" HeaderText="Metodo de Pago"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Banco" HeaderText="Banco"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Cuenta" HeaderText="Cuenta"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Folio" HeaderText="Folio" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Tipo" HeaderText="Tipo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Moneda" HeaderText="Moneda" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Fecha" HeaderText="Fecha" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Cliente" HeaderText="Cliente" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Metodo_Pago" HeaderText="Metodo de Pago" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Banco" HeaderText="Banco" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Cuenta" HeaderText="Cuenta" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>
             </syncfusion:SfDataGrid>
         </Grid>

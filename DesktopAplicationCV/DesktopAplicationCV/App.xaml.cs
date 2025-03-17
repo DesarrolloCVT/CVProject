@@ -20,7 +20,8 @@ namespace DesktopAplicationCV
             MainPage = new NavigationPage(MauiProgram.Services.GetService<Login>());
             //MainPage = new NavigationPage(new Productos());
 
-            SyncfusionLicenseProvider.RegisterLicense("MzcxNTUxM0AzMjM4MmUzMDJlMzBFSUg5a1YySWxWdXBKVlpDMkRFTjdkMUtDRWF0UkE1N2psQ2prd2R3cGVFPQ==");
+            //SyncfusionLicenseProvider.RegisterLicense("MzcxNTUxM0AzMjM4MmUzMDJlMzBFSUg5a1YySWxWdXBKVlpDMkRFTjdkMUtDRWF0UkE1N2psQ2prd2R3cGVFPQ==");
+            SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NMaF5cXmBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXxfc3RdRGdfVUx2WEY=");
         }
     }
 }

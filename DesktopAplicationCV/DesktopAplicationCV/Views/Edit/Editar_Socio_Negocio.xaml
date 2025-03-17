@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:DesktopAplicationCV.ViewModel"
              x:Class="DesktopAplicationCV.Views.Editar_Socio_Negocio"
              NavigationPage.HasBackButton="True"
+             BackgroundColor="DarkSlateGray"
              Title="Socio de Negocio">
     <ScrollView Margin="0,100,0,0">
         <Grid Padding="45,45,0,0">
@@ -77,7 +78,7 @@
                 TextColor="White"
                 WidthRequest="200"
                 FontAttributes="Bold"
-                BackgroundColor="ForestGreen"
+                BackgroundColor="#0288D1"
                 Grid.Row="5" Grid.Column="1"
                 Grid.ColumnSpan="1"
                 Command="{Binding UpdateCommand}"/>
@@ -86,7 +87,7 @@
                 TextColor="White"
                 WidthRequest="200"
                 FontAttributes="Bold"
-                BackgroundColor="ForestGreen"
+                BackgroundColor="#0288D1"
                 Grid.Row="5" Grid.Column="2"
                 Grid.ColumnSpan="1"
                 Command="{Binding CancelarCommand}"/>

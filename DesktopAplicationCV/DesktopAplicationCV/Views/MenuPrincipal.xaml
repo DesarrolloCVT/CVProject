@@ -3,8 +3,11 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:vm="clr-namespace:DesktopAplicationCV.ViewModels"
             x:Class="DesktopAplicationCV.Views.MenuPrincipal"
+            BarBackgroundColor="DarkSlateGray"
+            BarTextColor="White"
             SelectedTabColor="White"
             UnselectedTabColor="Gray"
+            BackgroundColor="DarkSlateGray"
             x:DataType="vm:MenuPrincipalViewModel">
 
     <!--TabbedPage.Children>

@@ -4,6 +4,7 @@
              x:Class="DesktopAplicationCV.Views.Editar_Cuentas"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              NavigationPage.HasBackButton="True"
+             BackgroundColor="DarkSlateGray"
              Title="Modificar Cuentas">
     <ScrollView Margin="0,100,0,0">
         <Grid>
@@ -61,7 +62,7 @@
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
-                    BackgroundColor="ForestGreen"
+                    BackgroundColor="#0288D1"
                     Grid.Row="5" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding UpdateCommand}"/>
@@ -69,7 +70,7 @@
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
-                    BackgroundColor="ForestGreen"
+                    BackgroundColor="#0288D1"
                     Grid.Row="5" Grid.Column="2"
                     Grid.ColumnSpan="1"
                     Command="{Binding CancelarCommand}"/>

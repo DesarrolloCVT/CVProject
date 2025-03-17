@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DesktopAplicationCV.Views.Compra_Venta"
-             xmlns:local="clr-namespace:DesktopAplicationCV.Views"
-             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="DesktopAplicationCV.Views.Compra_Venta"
+       xmlns:local="clr-namespace:DesktopAplicationCV.Views"
+       Shell.TabBarBackgroundColor="DarkSlateGray"
+       xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
 
     <!--Shell.ToolbarItems>
         <ToolbarItem Text="{Binding CerrarSesion}" Command="{Binding LogoutCommand}"/>

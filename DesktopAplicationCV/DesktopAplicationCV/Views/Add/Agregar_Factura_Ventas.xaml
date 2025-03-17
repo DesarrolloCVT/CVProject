@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Factura_Ventas"
+             BackgroundColor="DarkSlateGray"
              Title="Agregar Factura de Ventas">
     
     <ScrollView Margin="0,100,0,0">
@@ -66,7 +67,7 @@
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
-                    BackgroundColor="ForestGreen"
+                    BackgroundColor="#0288D1"
                     Grid.Row="7" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding InsertarFactVentaCommand}"/>
@@ -74,7 +75,7 @@
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
-                    BackgroundColor="ForestGreen"
+                    BackgroundColor="#0288D1"
                     Grid.Row="7" Grid.Column="2"
                     Grid.ColumnSpan="1"
                     Command="{Binding CancelarCommand}"/>

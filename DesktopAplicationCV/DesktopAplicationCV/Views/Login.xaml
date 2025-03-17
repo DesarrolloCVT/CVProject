@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:DesktopAplicationCV.Resources.Languages"
+             BackgroundColor="DarkSlateGray"
              x:Class="DesktopAplicationCV.Views.Login">
     <ScrollView>
         <Grid>
@@ -61,7 +62,7 @@
             <Button Text="{x:Static local:AppResources.Ingresar}"
                     Margin="0,25,0,0"
                     WidthRequest="150"
-                    BackgroundColor="Green"
+                    BackgroundColor="#0288D1"
                     BorderColor="White"
                     FontAttributes="Bold"
                     Grid.Row="4"
