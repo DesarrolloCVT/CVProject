@@ -33,10 +33,10 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="2"/>
             <Label
-                Text="{Binding NombreUsuario, StringFormat='Bienvenido: {0}'}"
+                Text="{Binding NombreUsuario, StringFormat='Usuario: {0}'}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                
+                FontAttributes="Bold"
                 FontSize="Medium"
                 Grid.Row="1"
                 Grid.Column="0"/>

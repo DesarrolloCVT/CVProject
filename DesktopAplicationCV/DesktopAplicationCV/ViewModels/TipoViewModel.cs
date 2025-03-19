@@ -15,6 +15,8 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        private const int MAX_INT = 2147483647; // Máximo permitido en SQL Server para INT
+
         private static object _oldType;
         private object NewType;
 
@@ -42,21 +44,21 @@ namespace DesktopAplicationCV.ViewModel
         private string _nombreTipoIngresadoText;
         private string _tipoIngresadoText;
         private string _cuentaTipoIngresadoText;
-        private int _pagoFacturaTipoIngresadoText;
-        private int _gastoComercializacionTipoIngresadoText;
-        private int _comisionesTipoIngresadoText;
-        private int _gastoFinancieroTipoIngresadoText;
-        private int _anticipoTipoIngresadoText;
+        private long _pagoFacturaTipoIngresadoText;
+        private long _gastoComercializacionTipoIngresadoText;
+        private long _comisionesTipoIngresadoText;
+        private long _gastoFinancieroTipoIngresadoText;
+        private long _anticipoTipoIngresadoText;
 
         private int _editCodigoTipo;
         private string _editNombreTipo;
         private string _editTipo;
         private string _editCuentaTipo;
-        private int _editPagoFacturaTipo;
-        private int _editGastoComercializacionTipo;
-        private int _editComisionesTipo;
-        private int _editGastoFinancieroTipo;
-        private int _editAnticipoTipo;
+        private long _editPagoFacturaTipo;
+        private long _editGastoComercializacionTipo;
+        private long _editComisionesTipo;
+        private long _editGastoFinancieroTipo;
+        private long _editAnticipoTipo;
 
         public ICommand CargarTiposCommand { get; }
         public ICommand AgregarTipoCommand { get; }
@@ -209,7 +211,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditPagoFacturaTipo
+        public long EditPagoFacturaTipo
         {
             get => _editPagoFacturaTipo;
             set
@@ -222,7 +224,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditGastoComercializacionTipo
+        public long EditGastoComercializacionTipo
         {
             get => _editGastoComercializacionTipo;
             set
@@ -235,7 +237,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditComisionesTipo
+        public long EditComisionesTipo
         {
             get => _editComisionesTipo;
             set
@@ -248,7 +250,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditGastoFinancieroTipo
+        public long EditGastoFinancieroTipo
         {
             get => _editGastoFinancieroTipo;
             set
@@ -261,7 +263,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditAnticipoTipo
+        public long EditAnticipoTipo
         {
             get => _editAnticipoTipo;
             set
@@ -274,7 +276,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int PagoFacturaTipoIngresado
+        public long PagoFacturaTipoIngresado
         {
             get => _pagoFacturaTipoIngresadoText;
             set
@@ -287,7 +289,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int GastoComercializacionTipoIngresado
+        public long GastoComercializacionTipoIngresado
         {
             get => _gastoComercializacionTipoIngresadoText;
             set
@@ -300,7 +302,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int ComisionesTipoIngresado
+        public long ComisionesTipoIngresado
         {
             get => _comisionesTipoIngresadoText;
             set
@@ -313,7 +315,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int GastoFinancieroTipoIngresado
+        public long GastoFinancieroTipoIngresado
         {
             get => _gastoFinancieroTipoIngresadoText;
             set
@@ -326,7 +328,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int AnticipoTipoIngresado
+        public long AnticipoTipoIngresado
         {
             get => _anticipoTipoIngresadoText;
             set
@@ -356,6 +358,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
+        #region Metodos 
         [RelayCommand]
         public void Cancelar()
         {
@@ -403,7 +406,7 @@ namespace DesktopAplicationCV.ViewModel
                     // Aquí puedes manejar la lógica de negocio sin tocar la vista
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine("Error CeldaTocada TipoViewModel: " + ex.Message);
             }
@@ -469,8 +472,8 @@ namespace DesktopAplicationCV.ViewModel
                 && ComisionesTipoIngresado != 0 && GastoFinancieroTipoIngresado != 0 && AnticipoTipoIngresado != 0)
                 {
                     AgregarTipo(new TipoModel(CodigoTipoIngresado, NombreTipoIngresado, TipoIngresado,
-                        CuentaTipoIngresado, PagoFacturaTipoIngresado, GastoComercializacionTipoIngresado, ComisionesTipoIngresado
-                        , GastoFinancieroTipoIngresado, AnticipoTipoIngresado));
+                        CuentaTipoIngresado, (int)PagoFacturaTipoIngresado, (int)GastoComercializacionTipoIngresado, (int)ComisionesTipoIngresado
+                        , (int)GastoFinancieroTipoIngresado, (int)AnticipoTipoIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -478,7 +481,7 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error InsertarTipo TipoViewModel: " + Ex.Message);
             }
@@ -521,7 +524,7 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error Editar TipoViewModel: " + Ex.Message);
             }
@@ -538,7 +541,7 @@ namespace DesktopAplicationCV.ViewModel
                     Tipos.Add(tipo);
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error CargarTipos TipoViewModel: " + Ex.Message);
             }
@@ -548,17 +551,26 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if (await _tipoService.AddTipoAsync(tipo))
+                if (!(PagoFacturaTipoIngresado > MAX_INT) && !(GastoComercializacionTipoIngresado > MAX_INT)
+                    && !(ComisionesTipoIngresado > MAX_INT) && !(GastoFinancieroTipoIngresado > MAX_INT)
+                    && !(AnticipoTipoIngresado > MAX_INT))
                 {
-                    Tipos.Add(tipo);
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                    if (await _tipoService.AddTipoAsync(tipo))
+                    {
+                        Tipos.Add(tipo);
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                    }
+                    else
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
+                    }
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error AgregarTipo TipoViewModel: " + Ex.Message);
             }
@@ -577,11 +589,11 @@ namespace DesktopAplicationCV.ViewModel
                     }
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error EliminarTipo TipoViewModel: " + Ex.Message);
             }
-            
+
         }
 
         [RelayCommand]
@@ -590,10 +602,9 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarTipo((TipoModel)OldType);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error Update TipoViewModel: " + Ex.Message);
             }
@@ -612,11 +623,11 @@ namespace DesktopAplicationCV.ViewModel
                 var name = EditNombreTipo;
                 var type = EditTipo;
                 var account = EditCuentaTipo;
-                var pagoFactura = EditPagoFacturaTipo;
-                var gastoComercializacion = EditGastoComercializacionTipo;
-                var comisiones = EditComisionesTipo;
-                var gastoFinanciero = EditGastoFinancieroTipo;
-                var anticipo = EditAnticipoTipo;
+                var pagoFactura = (int)EditPagoFacturaTipo;
+                var gastoComercializacion = (int)EditGastoComercializacionTipo;
+                var comisiones = (int)EditComisionesTipo;
+                var gastoFinanciero = (int)EditGastoFinancieroTipo;
+                var anticipo = (int)EditAnticipoTipo;
 
 
                 NewType = new TipoModel(cod, name, type, account, pagoFactura, gastoComercializacion, comisiones, gastoFinanciero, anticipo)
@@ -632,20 +643,31 @@ namespace DesktopAplicationCV.ViewModel
                     Anticipo = anticipo
                 };
 
-                if (await _tipoService.UpdateTipoAsync((TipoModel)NewType))
+                if (!(EditPagoFacturaTipo > MAX_INT) && !(EditGastoComercializacionTipo > MAX_INT)
+                    && !(EditComisionesTipo > MAX_INT) && !(EditGastoFinancieroTipo > MAX_INT)
+                    && !(EditAnticipoTipo > MAX_INT))
                 {
-                    //Remove Old Product
-                    Tipos.Remove(AntiguoProducto);
-
-                    //Add new product
-                    Tipos.Add((TipoModel)NewType);
-
+                    if (await _tipoService.UpdateTipoAsync((TipoModel)NewType))
+                    {
+                        //Remove Old Product
+                        Tipos.Remove(AntiguoProducto);
+                        //Add new product
+                        Tipos.Add((TipoModel)NewType);
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                    }
                 }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
+                }
+
+
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error ActualizarTipo TipoViewModel: " + Ex.Message);
             }
         }
+        #endregion
     }
 }

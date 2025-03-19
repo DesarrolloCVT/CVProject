@@ -19,6 +19,8 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        private const int MAX_INT = 2147483647; // Máximo permitido en SQL Server para INT
+
         private static object _oldFacturaCompraDetalle;
         private object NewFacturaCompraDetalle;
 
@@ -40,12 +42,12 @@ namespace DesktopAplicationCV.ViewModel
         private int _folioFactCompraDetalleIngresadoText;
         private string _codigoProdFactCompraDetalleIngresadoText;
         private int _cantidadFactCompraDetalleIngresadoText;
-        private int _precioFactCompraDetalleIngresadoText;
+        private long _precioFactCompraDetalleIngresadoText;
 
         private int _editFolioFactCompraDetalle;
         private string _editCodigoProdFactCompraDetalle;
         private int _editCantidadFactCompraDetalle;
-        private int _editPrecioFactCompraDetalle;
+        private long _editPrecioFactCompraDetalle;
 
         public ICommand CargarFactCompraDetallesCommand { get; }
         public ICommand AgregarFactCompraDetalleCommand { get; }
@@ -172,7 +174,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int PrecioFactCompraDetalleIngresado
+        public long PrecioFactCompraDetalleIngresado
         {
             get => _precioFactCompraDetalleIngresadoText;
             set
@@ -185,7 +187,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditPrecioFactCompraDetalle
+        public long EditPrecioFactCompraDetalle
         {
             get => _editPrecioFactCompraDetalle;
             set
@@ -316,7 +318,7 @@ namespace DesktopAplicationCV.ViewModel
                 && CantidadFactCompraDetalleIngresado != 0 && PrecioFactCompraDetalleIngresado != 0)
                 {
                     AgregarFactCompraDetalle(new FacturaCompraDetalleModel(FolioFactCompraDetalleIngresado, CodigoProdFactCompraDetalleIngresado,
-                        CantidadFactCompraDetalleIngresado, PrecioFactCompraDetalleIngresado));
+                        CantidadFactCompraDetalleIngresado, (int)PrecioFactCompraDetalleIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -383,14 +385,21 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if (await _factComprDetalleService.AddFactCompraDetalleAsync(facturaCompraDetalleModel))
+                if (!(PrecioFactCompraDetalleIngresado > MAX_INT))
                 {
-                    FacturaCompraDetalleModels.Add(facturaCompraDetalleModel);
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    if (await _factComprDetalleService.AddFactCompraDetalleAsync(facturaCompraDetalleModel))
+                    {
+                        FacturaCompraDetalleModels.Add(facturaCompraDetalleModel);
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    }
+                    else
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
+                    }
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
                 }
             }
             catch (Exception Ex) 
@@ -423,7 +432,6 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarFactCompraDetalle((FacturaCompraDetalleModel)OldFacturaCompraDetalle);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex) 
@@ -444,7 +452,7 @@ namespace DesktopAplicationCV.ViewModel
                 var folio = EditFolioFactCompraDetalle;
                 var codigo = EditCodigoProdFactCompraDetalle;
                 var cantidad = EditCantidadFactCompraDetalle;
-                var precio = EditPrecioFactCompraDetalle;
+                var precio = (int)EditPrecioFactCompraDetalle;
 
                 NewFacturaCompraDetalle = new FacturaCompraDetalleModel(folio, codigo, cantidad, precio)
                 {
@@ -454,14 +462,20 @@ namespace DesktopAplicationCV.ViewModel
                     Precio = precio
                 };
 
-                if (await _factComprDetalleService.UpdateFactCompraDetalleAsync((FacturaCompraDetalleModel)NewFacturaCompraDetalle))
+                if (!(EditPrecioFactCompraDetalle > MAX_INT))
                 {
-                    //Remove Old Product
-                    FacturaCompraDetalleModels.Remove(AntiguaFactCompraDetalle);
-
-                    //Add new product
-                    FacturaCompraDetalleModels.Add((FacturaCompraDetalleModel)NewFacturaCompraDetalle);
-
+                    if (await _factComprDetalleService.UpdateFactCompraDetalleAsync((FacturaCompraDetalleModel)NewFacturaCompraDetalle))
+                    {
+                        //Remove Old Product
+                        FacturaCompraDetalleModels.Remove(AntiguaFactCompraDetalle);
+                        //Add new product
+                        FacturaCompraDetalleModels.Add((FacturaCompraDetalleModel)NewFacturaCompraDetalle);
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                    }
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
                 }
             }
             catch (Exception Ex) 

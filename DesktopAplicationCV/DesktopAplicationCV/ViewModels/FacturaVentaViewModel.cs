@@ -244,6 +244,8 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
+        #region Binding Methods 
+
         [RelayCommand]
         public void Cancelar()
         {
@@ -301,8 +303,6 @@ namespace DesktopAplicationCV.ViewModel
         {
             CargarFactVentas();
         }
-
-        #region Binding Methods 
 
         [RelayCommand]
         public void Eliminar()
@@ -463,7 +463,6 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarFactVentas((FacturaVentaModel)OldFacturaVenta);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex) 
@@ -501,9 +500,12 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     //Remove Old
                     facturaVentaModels.Remove(AntiguoFactVentas);
-
                     //Add new
                     facturaVentaModels.Add((FacturaVentaModel)NewFacturaVenta);
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, no ha sido posible realizar la actualizacion.", "Ok");
                 }
             }
             catch(Exception Ex)

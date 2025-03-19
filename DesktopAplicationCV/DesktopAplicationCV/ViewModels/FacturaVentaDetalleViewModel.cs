@@ -19,6 +19,8 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        private const int MAX_INT = 2147483647; // Máximo permitido en SQL Server para INT
+
         private static object _oldFactVentaDetalle;
         private object NewFactVentaDetalle;
 
@@ -41,12 +43,12 @@ namespace DesktopAplicationCV.ViewModel
         private int _folioFactVentaDetalleIngresado;
         private string _codProductoFactVentaDetalleIngresado;
         private int _cantidadFactVentaDetalleIngresado;
-        private int _precioFactVentaDetalleIngresado;
+        private long _precioFactVentaDetalleIngresado;
 
         private int _editfolioFactVentaDetalle;
         private string _editCodProductoFactVentaDetalle;
         private int _editCantidadFactVentaDetalle;
-        private int _editPrecioFactVentaDetalle;
+        private long _editPrecioFactVentaDetalle;
 
         public ICommand CargarFactVentaDetallesCommand { get; }
         public ICommand AgregarFactVentaDetalleCommand { get; }
@@ -134,7 +136,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int PrecioFactVentaDetalleIngresado
+        public long PrecioFactVentaDetalleIngresado
         {
             get => _precioFactVentaDetalleIngresado;
             set
@@ -186,7 +188,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditPrecioFactVentaDetalle
+        public long EditPrecioFactVentaDetalle
         {
             get => _editPrecioFactVentaDetalle;
             set
@@ -216,6 +218,7 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
+        #region Metodos 
         [RelayCommand]
         public void Cancelar()
         {
@@ -253,7 +256,7 @@ namespace DesktopAplicationCV.ViewModel
                     // Aquí puedes manejar la lógica de negocio sin tocar la vista
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine("Error CeldaTocada FacturaVentaDetalleViewModel" + ex.Message);
             }
@@ -317,7 +320,7 @@ namespace DesktopAplicationCV.ViewModel
                 && CantidadFactVentaDetalleIngresado != 0 && PrecioFactVentaDetalleIngresado != 0)
                 {
                     AgregarFactVentaDetalle(new FacturaVentaDetalleModel(FolioFactVentaDetalleIngresado, CodProductoFactVentaDetalleIngresado,
-                        CantidadFactVentaDetalleIngresado, PrecioFactVentaDetalleIngresado));
+                        CantidadFactVentaDetalleIngresado, (int)PrecioFactVentaDetalleIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -326,7 +329,7 @@ namespace DesktopAplicationCV.ViewModel
                 }
 
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error Agregar InsertarFactVentaDetalle: " + Ex.Message);
             }
@@ -362,7 +365,7 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error Editar InsertarFactVentaDetalle: " + Ex.Message);
             }
@@ -379,7 +382,7 @@ namespace DesktopAplicationCV.ViewModel
                     facturaVentaDetalleModels.Add(factVentaDetalle);
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error CargarFactVentaDetalle InsertarFactVentaDetalle: " + Ex.Message);
             }
@@ -389,17 +392,24 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if (await _factVentaDetalleService.AddFactVentaDetalleAsync(facturaVentaDetalleModel))
+                if (!(PrecioFactVentaDetalleIngresado > MAX_INT))
                 {
-                    facturaVentaDetalleModels.Add(facturaVentaDetalleModel);
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    if (await _factVentaDetalleService.AddFactVentaDetalleAsync(facturaVentaDetalleModel))
+                    {
+                        facturaVentaDetalleModels.Add(facturaVentaDetalleModel);
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente", "Ok");
+                    }
+                    else
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
+                    }
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error AgregarFactVentaDetalle InsertarFactVentaDetalle: " + Ex.Message);
             }
@@ -418,7 +428,7 @@ namespace DesktopAplicationCV.ViewModel
                     }
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error EliminarFactVentaDetalle InsertarFactVentaDetalle: " + Ex.Message);
             }
@@ -430,10 +440,9 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarFactVentaDetalle((FacturaVentaDetalleModel)OldFactVentaDetalle);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error Update InsertarFactVentaDetalle: " + Ex.Message);
             }
@@ -451,7 +460,7 @@ namespace DesktopAplicationCV.ViewModel
                 var folio = EditfolioFactVentaDetalle;
                 var codigo = EditCodProductoFactVentaDetalle;
                 var cantidad = EditCantidadFactVentaDetalle;
-                var precio = EditPrecioFactVentaDetalle;
+                var precio = (int)EditPrecioFactVentaDetalle;
 
                 NewFactVentaDetalle = new FacturaVentaDetalleModel(folio, codigo, cantidad, precio)
                 {
@@ -461,20 +470,28 @@ namespace DesktopAplicationCV.ViewModel
                     Precio = precio
                 };
 
-                if (await _factVentaDetalleService.UpdateFactVentaDetalleAsync((FacturaVentaDetalleModel)NewFactVentaDetalle))
+                if (!(EditPrecioFactVentaDetalle > MAX_INT))
                 {
-                    //Remove Old Product
-                    facturaVentaDetalleModels.Remove(AntiguoFactVentaDetalle);
-
-                    //Add new product
-                    facturaVentaDetalleModels.Add((FacturaVentaDetalleModel)NewFactVentaDetalle);
-
+                    if (await _factVentaDetalleService.UpdateFactVentaDetalleAsync((FacturaVentaDetalleModel)NewFactVentaDetalle))
+                    {
+                        //Remove Old Product
+                        facturaVentaDetalleModels.Remove(AntiguoFactVentaDetalle);
+                        //Add new product
+                        facturaVentaDetalleModels.Add((FacturaVentaDetalleModel)NewFactVentaDetalle);
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                    }
                 }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
+                }
+
             }
             catch (Exception Ex)
             {
                 Console.WriteLine("Error ActualizarFactVentaDetalle InsertarFactVentaDetalle: " + Ex.Message);
             }
         }
+        #endregion
     }
 }

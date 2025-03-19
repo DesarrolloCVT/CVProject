@@ -21,6 +21,8 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        private const int MAX_INT = 2147483647; // Máximo permitido en SQL Server para INT
+
         private static object _oldbankDetail;
         private object NewbankDetail;
 
@@ -38,10 +40,10 @@ namespace DesktopAplicationCV.ViewModel
         private string _filterText;
 
         private int _codigoBancoDetallesIngresadoText;
-        private int _numerobancoDetallesIngresadoText;
+        private long _numerobancoDetallesIngresadoText;
 
         private int _editCodigoBancoDetalles;
-        private int _editNumerobancoDetalles;
+        private long _editNumerobancoDetalles;
         
 
         public ICommand CargarBancoDetallesCommand { get; }
@@ -115,7 +117,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int NumerobancoDetallesIngresado
+        public long NumerobancoDetallesIngresado
         {
             get => _numerobancoDetallesIngresadoText;
             set
@@ -128,7 +130,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditNumeroBancoDetalles
+        public long EditNumeroBancoDetalles
         {
             get => _editNumerobancoDetalles;
             set
@@ -156,6 +158,7 @@ namespace DesktopAplicationCV.ViewModel
         }
         #endregion
 
+        #region Metodos 
         [RelayCommand]
         public void Cancelar()
         {
@@ -188,11 +191,11 @@ namespace DesktopAplicationCV.ViewModel
                     NumeroBancoDetalleCeldaSeleccionada = bancoDetalleModel.Numero;
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error CeldaTocada BancoDetalleViewModel: " + Ex.Message);
             }
-            
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -251,7 +254,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (CodigoBancoDetalleIngresado != 0 && NumerobancoDetallesIngresado != 0)
                 {
-                    AgregarBancoDetalle(new BancoDetalleModel(CodigoBancoDetalleIngresado, NumerobancoDetallesIngresado));
+                    AgregarBancoDetalle(new BancoDetalleModel(CodigoBancoDetalleIngresado, (int)NumerobancoDetallesIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -259,11 +262,11 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion. ", "Ok");
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error InsertarBancoDetalle BancoDetalleViewModel: " + Ex.Message);
             }
-            
+
         }
 
         [RelayCommand]
@@ -304,7 +307,7 @@ namespace DesktopAplicationCV.ViewModel
                     bancoDetalles.Add(bancoDetail);
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error CargarBancoDetalles BancoDetalleViewModel: " + Ex.Message);
             }
@@ -314,17 +317,24 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if (await _bancoDetalleService.AddBancoDetalleAsync(bancoDetalleModel))
+                if (!(NumerobancoDetallesIngresado > MAX_INT))
                 {
-                    bancoDetalles.Add(bancoDetalleModel);
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                    if (await _bancoDetalleService.AddBancoDetalleAsync(bancoDetalleModel))
+                    {
+                        bancoDetalles.Add(bancoDetalleModel);
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
+                    }
+                    else
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
+                    }
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error AgregarBancoDetalle BancoDetalleViewModel: " + Ex.Message);
             }
@@ -343,7 +353,7 @@ namespace DesktopAplicationCV.ViewModel
                     }
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error EliminarBancoDatlles BancoDetalleViewModel: " + Ex.Message);
             }
@@ -355,10 +365,9 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarBancoDetalle((BancoDetalleModel)OldbankDetail);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error Update BancoDetalleViewModel: " + Ex.Message);
             }
@@ -372,7 +381,7 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditNumeroBancoDetalles: " + EditNumeroBancoDetalles);
 
                 var codigo = EditCodigoBancoDetalles;
-                var numero = EditNumeroBancoDetalles;
+                var numero = (int)EditNumeroBancoDetalles;
 
                 NewbankDetail = new BancoDetalleModel(codigo, numero)
                 {
@@ -380,20 +389,27 @@ namespace DesktopAplicationCV.ViewModel
                     Numero = numero
                 };
 
-                if (await _bancoDetalleService.UpdateBancoDetalleAsync((BancoDetalleModel)NewbankDetail))
+                if (!(EditNumeroBancoDetalles > MAX_INT))
                 {
-                    //Remove Old Product
-                    bancoDetalles.Remove(AntiguoBancoDetalle);
-
-                    //Add new product
-                    bancoDetalles.Add((BancoDetalleModel)NewbankDetail);
-
+                    if (await _bancoDetalleService.UpdateBancoDetalleAsync((BancoDetalleModel)NewbankDetail))
+                    {
+                        //Remove Old Product
+                        bancoDetalles.Remove(AntiguoBancoDetalle);
+                        //Add new product
+                        bancoDetalles.Add((BancoDetalleModel)NewbankDetail);
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente. ", "Ok");
+                    }
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error ActualizarBancoDetalle BancoDetalleViewModel: " + Ex.Message);
             }
         }
+        #endregion
     }
 }

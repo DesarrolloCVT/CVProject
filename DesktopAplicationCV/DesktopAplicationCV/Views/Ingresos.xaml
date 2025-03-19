@@ -27,6 +27,8 @@
 
             <Button Text="{x:Static recursos:AppResources.Agregar}"
                     FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
                     WidthRequest="150"
                     Grid.Column="0"
                     Grid.Row="0"
@@ -39,6 +41,8 @@
 
             <Button Text="{x:Static recursos:AppResources.Eliminar}"
                     FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
                     WidthRequest="150"
                     Grid.Column="1"
                     Grid.Row="0"
@@ -51,6 +55,8 @@
             
             <Button Text="{x:Static recursos:AppResources.Editar}"
                     FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
                     WidthRequest="150"
                     Grid.Column="2"
                     Grid.Row="0"
@@ -76,34 +82,46 @@
                     Grid.ColumnSpan="3"
                     HeightRequest="10"/>
 
-            <syncfusion:SfDataGrid x:Name="dataGrid"
-                               SelectionMode="Single"
-                               SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
-                               NavigationMode="Row"
-                               AutoGenerateColumnsMode="None"
-                               ItemsSource="{Binding IngresosInfoCollection}"
-                               DefaultColumnWidth="130"
-                               GridLinesVisibility="Both"
-                               HeaderGridLinesVisibility="Both"
-                               BackgroundColor="DarkSlateGray"
-                               Grid.Row="1"
-                               Grid.ColumnSpan="6"
-                               ColumnWidthMode="Fill"
-                               CellTappedCommand="{Binding CeldaTocadaCommand}">
-
+            <syncfusion:SfDataGrid 
+                x:Name="dataGrid"
+                SelectionMode="Single"
+                SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
+                NavigationMode="Row"
+                AutoGenerateColumnsMode="None"
+                ItemsSource="{Binding IngresosInfoCollection}"
+                DefaultColumnWidth="130"
+                GridLinesVisibility="Both"
+                HeaderGridLinesVisibility="Both"
+                BackgroundColor="DarkSlateGray"
+                Grid.Row="1"
+                Grid.ColumnSpan="6"
+                ColumnWidthMode="Fill"
+                CellTappedCommand="{Binding CeldaTocadaCommand}">
+                
                 <syncfusion:SfDataGrid.Behaviors>
-                    <toolkit:EventToCommandBehavior EventName="Loaded"
-                                Command="{Binding GridCargadoCommand}" />
+                    <toolkit:EventToCommandBehavior
+                        EventName="Loaded"
+                        Command="{Binding GridCargadoCommand}" />
                 </syncfusion:SfDataGrid.Behaviors>
 
                 <syncfusion:SfDataGrid.Resources>
-                    <Style TargetType="Label" x:Key="CustomTextStyle">
-                        <Setter Property="TextColor" Value="White"/>
+                    <Style 
+                        TargetType="Label" 
+                        x:Key="CustomTextStyle">
+                        <Setter 
+                            Property="TextColor" 
+                            Value="White"/>
                     </Style>
 
-                    <Style TargetType="syncfusion:DataGridHeaderCell" x:Key="HeaderStyle">
-                        <Setter Property="TextColor" Value="White"/>
-                        <Setter Property="FontAttributes" Value="Bold"/>
+                    <Style 
+                        TargetType="syncfusion:DataGridHeaderCell" 
+                        x:Key="HeaderStyle">
+                        <Setter 
+                            Property="TextColor" 
+                            Value="White"/>
+                        <Setter 
+                            Property="FontAttributes" 
+                            Value="Bold"/>
                     </Style>
                 </syncfusion:SfDataGrid.Resources>
 
@@ -111,7 +129,7 @@
                     <syncfusion:DataGridTextColumn MappingName="Folio" HeaderText="Folio" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Tipo" HeaderText="Tipo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Moneda" HeaderText="Moneda" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Fecha" HeaderText="Fecha" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Fecha" Format="dd-MM-yyyy" HeaderText="Fecha" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}" ></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Cliente" HeaderText="Cliente" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Metodo_Pago" HeaderText="Metodo de Pago" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Banco" HeaderText="Banco" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>

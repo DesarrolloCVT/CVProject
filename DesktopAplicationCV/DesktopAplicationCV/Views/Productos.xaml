@@ -26,6 +26,8 @@
             <Button Text="{x:Static recursos:AppResources.Agregar}"
                     WidthRequest="150"
                     FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
                     Grid.Column="0"
                     Grid.Row="0"
                     BackgroundColor="#0288D1"
@@ -38,6 +40,8 @@
             <Button Text="{x:Static recursos:AppResources.Eliminar}"
                     WidthRequest="150"
                     FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
                     Grid.Column="1"
                     Grid.Row="0"
                     BackgroundColor="#0288D1"
@@ -50,6 +54,8 @@
             <Button Text="{x:Static recursos:AppResources.Editar}"
                     WidthRequest="150"
                     FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
                     Grid.Column="2"
                     Grid.Row="0"
                     BackgroundColor="#0288D1"
@@ -97,11 +103,11 @@
                 <syncfusion:SfDataGrid.Resources>
                     <Style TargetType="Label" x:Key="CustomTextStyle">
                         <Setter Property="TextColor" Value="White"/>
-                        <Setter Property="FontAttributes" Value="Bold"/>
                     </Style>
 
                     <Style TargetType="syncfusion:DataGridHeaderCell" x:Key="HeaderStyle">
                         <Setter Property="TextColor" Value="White"/>
+                        <Setter Property="FontAttributes" Value="Bold"/>
                     </Style>
                 </syncfusion:SfDataGrid.Resources>
 

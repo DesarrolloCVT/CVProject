@@ -184,6 +184,7 @@ namespace DesktopAplicationCV.ViewModel
         }
         #endregion
 
+        #region Metodos 
         [RelayCommand]
         public void Cancelar()
         {
@@ -219,11 +220,11 @@ namespace DesktopAplicationCV.ViewModel
                     // Aquí puedes manejar la lógica de negocio sin tocar la vista
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine("Error CeldaTocada CuentasViewModel: " + ex.Message);
             }
-            
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -294,7 +295,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 Console.WriteLine("Error InsertarCuenta CuentasViewModel: " + Ex.Message);
             }
-            
+
         }
 
         [RelayCommand]
@@ -325,7 +326,7 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error InsertarCuenta CuentasViewModel: " + Ex.Message);
             }
@@ -342,7 +343,7 @@ namespace DesktopAplicationCV.ViewModel
                     Cuentas.Add(cuenta);
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error InsertarCuenta CuentasViewModel: " + Ex.Message);
             }
@@ -362,7 +363,7 @@ namespace DesktopAplicationCV.ViewModel
                     Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error AgregarCuenta CuentasViewModel: " + Ex.Message);
             }
@@ -381,7 +382,7 @@ namespace DesktopAplicationCV.ViewModel
                     }
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error EliminarCuentas CuentasViewModel: " + Ex.Message);
             }
@@ -396,7 +397,7 @@ namespace DesktopAplicationCV.ViewModel
                 Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error Update CuentasViewModel: " + Ex.Message);
             }
@@ -431,10 +432,11 @@ namespace DesktopAplicationCV.ViewModel
 
                 }
             }
-            catch (Exception Ex) 
+            catch (Exception Ex)
             {
                 Console.WriteLine("Error ActualizarCuenta CuentasViewModel: " + Ex.Message);
             }
         }
+        #endregion
     }
 }

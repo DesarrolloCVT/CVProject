@@ -19,6 +19,8 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        private const int MAX_INT = 2147483647; // Máximo permitido en SQL Server para INT
+
         private static object _oldIngresoDetalle;
         private object NewIngresoDetalle;
 
@@ -36,10 +38,10 @@ namespace DesktopAplicationCV.ViewModel
         private string _filterText;
 
         private int _folioIngresoDetalleIngresado;
-        private int _montoIngresoDetalleIngresado;
+        private long _montoIngresoDetalleIngresado;
 
         private int _editFolioIngresoDetalle;
-        private int _editMontoIngresoDetalle;
+        private long _editMontoIngresoDetalle;
         
 
         public ICommand CargarIngresoDetalleCommand { get; }
@@ -115,7 +117,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int MontoIngresoDetalleIngresado
+        public long MontoIngresoDetalleIngresado
         {
             get => _montoIngresoDetalleIngresado;
             set
@@ -128,7 +130,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditMontoIngresoDetalle
+        public long EditMontoIngresoDetalle
         {
             get => _editMontoIngresoDetalle;
             set
@@ -252,7 +254,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (FolioIngresoDetalleIngresado != 0 && MontoIngresoDetalleIngresado != 0)
                 {
-                    AgregarIngresoDetalle(new IngresoDetalleModel(FolioIngresoDetalleIngresado, MontoIngresoDetalleIngresado));
+                    AgregarIngresoDetalle(new IngresoDetalleModel(FolioIngresoDetalleIngresado, (int)MontoIngresoDetalleIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -321,13 +323,20 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if (await _ingresoDetalleService.AddIngresoDetalleAsync(ingresoDetalle))
+                if (!(MontoIngresoDetalleIngresado > MAX_INT))
                 {
-                    IngresoDetalleModels.Add(ingresoDetalle);
+                    if (await _ingresoDetalleService.AddIngresoDetalleAsync(ingresoDetalle))
+                    {
+                        IngresoDetalleModels.Add(ingresoDetalle);
+                    }
+                    else
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
+                    }
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Folio.", "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
                 }
             }
             catch (Exception Ex) 
@@ -361,7 +370,6 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarIngresoDetalle((IngresoDetalleModel)OldIngresoDetalle);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex) 
@@ -378,7 +386,7 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditMontoIngresoDetalle: " + EditMontoIngresoDetalle);
 
                 var folio = EditFolioIngresoDetalle;
-                var monto = EditMontoIngresoDetalle;
+                var monto = (int)EditMontoIngresoDetalle;
 
                 NewIngresoDetalle = new IngresoDetalleModel(folio, monto)
                 {
@@ -386,14 +394,20 @@ namespace DesktopAplicationCV.ViewModel
                     Monto = monto
                 };
 
-                if (await _ingresoDetalleService.UpdateIngresoDetalleAsync((IngresoDetalleModel)NewIngresoDetalle))
+                if (!(EditMontoIngresoDetalle > MAX_INT))
                 {
-                    //Remove Old
-                    IngresoDetalleModels.Remove(AntiguoIngresoDetalle);
-
-                    //Add new
-                    IngresoDetalleModels.Add((IngresoDetalleModel)NewIngresoDetalle);
-
+                    if (await _ingresoDetalleService.UpdateIngresoDetalleAsync((IngresoDetalleModel)NewIngresoDetalle))
+                    {
+                        //Remove Old
+                        IngresoDetalleModels.Remove(AntiguoIngresoDetalle);
+                        //Add new
+                        IngresoDetalleModels.Add((IngresoDetalleModel)NewIngresoDetalle);
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                    }
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
                 }
             }
             catch (Exception Ex) 
