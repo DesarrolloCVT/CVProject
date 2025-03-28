@@ -13,18 +13,32 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Services.Maps;
 
 namespace DesktopAplicationCV.ViewModel
 {
     public partial class IngresosViewModel : BaseViewModel
     {
         #region Variables
+        [ObservableProperty]
+        private List<MonedaModel> _monedas;
+
+        [ObservableProperty]
+        private List<SubtiposModel> _subtipos;
+
+        [ObservableProperty]
+        private List<MetodoPagoModel> _metodopagos;
+
+        [ObservableProperty]
+        private List<BancoModel> _bancos;
 
         private static object _oldIngreso;
         private object NewIngreso;
 
+        private static int IdIngresoCeldaSeleccionada;
         private int FolioIngresoCeldaSeleccionada;
         private string TipoIngresoCeldaSeleccionada;
+        private string SubTipoIngresoCeldaSeleccionada;
         private string MonedaIngresoCeldaSeleccionada;
         private DateTime FechaIngresoCeldaSeleccionada;
         private string ClienteIngresoCeldaSeleccionada;
@@ -33,6 +47,7 @@ namespace DesktopAplicationCV.ViewModel
         private string CuentaIngresoCeldaSeleccionada;
 
         private readonly INavigationService _navigationService;
+        private readonly ApiService _apiService;
         private readonly IngresosService _ingresoService;
 
         [ObservableProperty]
@@ -45,6 +60,7 @@ namespace DesktopAplicationCV.ViewModel
 
         private int _folioIngresosIngresadoText;
         private string _tipoIngresosIngresadoText;
+        private string _subTipoIngresosIngresadoText;
         private string _monedaIngresosIngresadoText;
         private DateTime _fechaIngresosIngresadoText;
         private string _clienteIngresosIngresadoText;
@@ -55,6 +71,7 @@ namespace DesktopAplicationCV.ViewModel
 
         private int _editFolioIngresos;
         private string _editTipoIngresos;
+        private string _editSubTipoIngresos;
         private string _editMonedaIngresos;
         private DateTime _editFechaIngresos;
         private string _editClienteIngresos;
@@ -167,6 +184,32 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     _editTipoIngresos = value;
                     OnPropertyChanged(nameof(EditTipoIngresos));
+                }
+            }
+        }
+
+        public string SubTipoIngresosIngresadoText
+        {
+            get => _subTipoIngresosIngresadoText;
+            set
+            {
+                if (_subTipoIngresosIngresadoText != value)
+                {
+                    _subTipoIngresosIngresadoText = value;
+                    OnPropertyChanged(nameof(SubTipoIngresosIngresadoText));
+                }
+            }
+        }
+
+        public string EditSubTipoIngresos
+        {
+            get => _editSubTipoIngresos;
+            set
+            {
+                if (_editSubTipoIngresos != value)
+                {
+                    _editSubTipoIngresos = value;
+                    OnPropertyChanged(nameof(EditSubTipoIngresos));
                 }
             }
         }
@@ -331,13 +374,15 @@ namespace DesktopAplicationCV.ViewModel
 
         #region Constructores
 
-        public IngresosViewModel(INavigationService navigationService)
-        {
+        public IngresosViewModel(INavigationService navigationService, ApiService apiService)
+        {   
+            _apiService = apiService;
             _ingresoService = new IngresosService();
             Ingresos = new ObservableCollection<IngresosModel>();
 
             _navigationService = navigationService;
-            CargarIngresos();
+            CargarGrillaIngresos();
+            CargarComboBoxes();
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
@@ -358,8 +403,10 @@ namespace DesktopAplicationCV.ViewModel
                 if (item is IngresosModel data)
                 {
                     return string.IsNullOrWhiteSpace(FilterText) ||
+                           data.Id_Ingreso.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Folio.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Tipo.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Tipo_Transaccion.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
+                           data.Subtipo_Transaccion.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Moneda.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Fecha.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Cliente.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
@@ -378,8 +425,10 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is IngresosModel ingresos)
                 {
+                    IdIngresoCeldaSeleccionada = ingresos.Id_Ingreso;
                     FolioIngresoCeldaSeleccionada = ingresos.Folio;
-                    TipoIngresoCeldaSeleccionada = ingresos.Tipo;
+                    TipoIngresoCeldaSeleccionada = ingresos.Tipo_Transaccion;
+                    SubTipoIngresoCeldaSeleccionada = ingresos.Subtipo_Transaccion;
                     MonedaIngresoCeldaSeleccionada = ingresos.Moneda;
                     FechaIngresoCeldaSeleccionada = ingresos.Fecha;
                     ClienteIngresoCeldaSeleccionada = ingresos.Cliente;
@@ -405,7 +454,7 @@ namespace DesktopAplicationCV.ViewModel
         [RelayCommand]
         public void GridCargado()
         {
-            CargarIngresos();
+            CargarGrillaIngresos();
         }
 
         [RelayCommand]
@@ -416,7 +465,7 @@ namespace DesktopAplicationCV.ViewModel
                 if (selectedIndex >= 0)
                 {
                     EliminarIngresos(FolioIngresoCeldaSeleccionada);
-                    CargarIngresos();
+                    CargarGrillaIngresos();
                 }
                 else
                 {
@@ -453,7 +502,7 @@ namespace DesktopAplicationCV.ViewModel
                 && !string.IsNullOrEmpty(ClienteIngresosIngresadoText) && !string.IsNullOrEmpty(MetodoPagoIngresosIngresadoText)
                 && !string.IsNullOrEmpty(BancoIngresosIngresadoText) && !string.IsNullOrEmpty(CuentaIngresosIngresadoText))
                 {
-                    AgregarIngresos(new IngresosModel(FolioIngresosIngresadoText, TipoIngresosIngresadoText, MonedaIngresosIngresadoText,
+                    AgregarIngresos(new IngresosModel(IdIngresoCeldaSeleccionada, FolioIngresosIngresadoText, TipoIngresosIngresadoText, SubTipoIngresosIngresadoText, MonedaIngresosIngresadoText,
                         FechaIngresosIngresadoText, ClienteIngresosIngresadoText, MetodoPagoIngresosIngresadoText, BancoIngresosIngresadoText,
                         CuentaIngresosIngresadoText));
                     _navigationService.GoBackAsync();
@@ -478,12 +527,14 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     try
                     {
-                        OldIngreso = new IngresosModel(FolioIngresoCeldaSeleccionada, TipoIngresoCeldaSeleccionada, MonedaIngresoCeldaSeleccionada,
+                        OldIngreso = new IngresosModel(IdIngresoCeldaSeleccionada, FolioIngresoCeldaSeleccionada, TipoIngresoCeldaSeleccionada, SubTipoIngresoCeldaSeleccionada, MonedaIngresoCeldaSeleccionada,
                             FechaIngresoCeldaSeleccionada, ClienteIngresoCeldaSeleccionada, MetodoPagoIngresoCeldaSeleccionada, BancoIngresoCeldaSeleccionada,
                             CuentaIngresoCeldaSeleccionada)
                         {
+                            Id_Ingreso = IdIngresoCeldaSeleccionada,
                             Folio = FolioIngresoCeldaSeleccionada,
-                            Tipo = TipoIngresoCeldaSeleccionada,
+                            Tipo_Transaccion = TipoIngresoCeldaSeleccionada,
+                            Subtipo_Transaccion = SubTipoIngresoCeldaSeleccionada,
                             Moneda = MonedaIngresoCeldaSeleccionada,
                             Fecha = FechaIngresoCeldaSeleccionada,
                             Cliente = ClienteIngresoCeldaSeleccionada,
@@ -510,7 +561,27 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task CargarIngresos()
+        [RelayCommand]
+        private async void Detalles()
+        {
+            try
+            {
+                if (selectedIndex >= 0)
+                {
+                    await _navigationService.NavigateToAsync<NavigationViewModel>("Ingresos_Detalle", IdIngresoCeldaSeleccionada);
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                }
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine("Catch Detalles: " + Ex.Message);
+            }
+        }
+
+        private async Task CargarGrillaIngresos()
         {
             try
             {
@@ -523,7 +594,22 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch (Exception Ex) 
             {
-                Console.WriteLine("Error CargarIngresos IngresosViewModel: " + Ex.Message);
+                Console.WriteLine("Error CargarGrillaIngresos IngresosViewModel: " + Ex.Message);
+            }
+        }
+
+        private async Task CargarComboBoxes()
+        {
+            try
+            {
+                Bancos = await _apiService.GetBancosAsync();
+                Monedas = await _apiService.GetMonedasAsync();
+                Metodopagos = await _apiService.GetMetodoPagoAsync();
+                Subtipos = await _ingresoService.GetSubtiposFilterByIdAsync("ingreso");
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine("Error CargarComboBoxes IngresosViewModel: " + Ex.Message);
             }
         }
 
@@ -595,8 +681,10 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditBancoIngresos: " + EditBancoIngresos);
                 Console.WriteLine("EditCuentaIngresos: " + EditCuentaIngresos);
 
+                var id = IdIngresoCeldaSeleccionada;
                 var folio = EditFolioIngresos;
                 var tipo = EditTipoIngresos;
+                var subtipo = EditSubTipoIngresos;
                 var moneda = EditMonedaIngresos;
                 DateTime fecha = EditFechaIngresos;
                 var cliente = EditClienteIngresos;
@@ -608,10 +696,12 @@ namespace DesktopAplicationCV.ViewModel
                 var NewDate = Convert.ToDateTime(date);*/
 
 
-                NewIngreso = new IngresosModel(folio, tipo, moneda, fecha, cliente, metodoPago, banco, cuenta)
+                NewIngreso = new IngresosModel(id, folio, tipo, subtipo, moneda, fecha, cliente, metodoPago, banco, cuenta)
                 {
+                    Id_Ingreso = id,
                     Folio = folio,
-                    Tipo = tipo,
+                    Tipo_Transaccion = tipo,
+                    Subtipo_Transaccion = subtipo,
                     Moneda = moneda,
                     Fecha = fecha,
                     Cliente = cliente,

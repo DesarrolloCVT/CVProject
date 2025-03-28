@@ -23,12 +23,7 @@ namespace DesktopAplicationCV.ViewModel
         private int CodigoCeldaSeleccionada;
         private string NombreTipoCeldaSeleccionada;
         private string TipoCeldaSeleccionada;
-        private string CuentaTipoCeldaSeleccionada;
-        private int PagoFacturaTipoCeldaSeleccionada;
-        private int GastoComercializacionTipoCeldaSeleccionada;
-        private int ComisionesTipoCeldaSeleccionada;
-        private int GastoFinancieroTipoCeldaSeleccionada;
-        private int AnticipoTipoCeldaSeleccionada;
+        private int CuentaTipoCeldaSeleccionada;
 
         private readonly INavigationService _navigationService;
         private readonly TipoService _tipoService;
@@ -43,22 +38,12 @@ namespace DesktopAplicationCV.ViewModel
         private int _codigoTipoIngresadoText;
         private string _nombreTipoIngresadoText;
         private string _tipoIngresadoText;
-        private string _cuentaTipoIngresadoText;
-        private long _pagoFacturaTipoIngresadoText;
-        private long _gastoComercializacionTipoIngresadoText;
-        private long _comisionesTipoIngresadoText;
-        private long _gastoFinancieroTipoIngresadoText;
-        private long _anticipoTipoIngresadoText;
+        private int _cuentaTipoIngresadoText;
 
         private int _editCodigoTipo;
         private string _editNombreTipo;
         private string _editTipo;
-        private string _editCuentaTipo;
-        private long _editPagoFacturaTipo;
-        private long _editGastoComercializacionTipo;
-        private long _editComisionesTipo;
-        private long _editGastoFinancieroTipo;
-        private long _editAnticipoTipo;
+        private int _editCuentaTipo;
 
         public ICommand CargarTiposCommand { get; }
         public ICommand AgregarTipoCommand { get; }
@@ -146,7 +131,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public string CuentaTipoIngresado
+        public int CuentaTipoIngresado
         {
             get => _cuentaTipoIngresadoText;
             set
@@ -198,7 +183,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public string EditCuentaTipo
+        public int EditCuentaTipo
         {
             get => _editCuentaTipo;
             set
@@ -207,136 +192,6 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     _editCuentaTipo = value;
                     OnPropertyChanged(nameof(EditNombreTipo));
-                }
-            }
-        }
-
-        public long EditPagoFacturaTipo
-        {
-            get => _editPagoFacturaTipo;
-            set
-            {
-                if (_editPagoFacturaTipo != value)
-                {
-                    _editPagoFacturaTipo = value;
-                    OnPropertyChanged(nameof(EditPagoFacturaTipo));
-                }
-            }
-        }
-
-        public long EditGastoComercializacionTipo
-        {
-            get => _editGastoComercializacionTipo;
-            set
-            {
-                if (_editGastoComercializacionTipo != value)
-                {
-                    _editGastoComercializacionTipo = value;
-                    OnPropertyChanged(nameof(EditGastoComercializacionTipo));
-                }
-            }
-        }
-
-        public long EditComisionesTipo
-        {
-            get => _editComisionesTipo;
-            set
-            {
-                if (_editComisionesTipo != value)
-                {
-                    _editComisionesTipo = value;
-                    OnPropertyChanged(nameof(EditComisionesTipo));
-                }
-            }
-        }
-
-        public long EditGastoFinancieroTipo
-        {
-            get => _editGastoFinancieroTipo;
-            set
-            {
-                if (_editGastoFinancieroTipo != value)
-                {
-                    _editGastoFinancieroTipo = value;
-                    OnPropertyChanged(nameof(EditGastoFinancieroTipo));
-                }
-            }
-        }
-
-        public long EditAnticipoTipo
-        {
-            get => _editAnticipoTipo;
-            set
-            {
-                if (_editAnticipoTipo != value)
-                {
-                    _editAnticipoTipo = value;
-                    OnPropertyChanged(nameof(EditAnticipoTipo));
-                }
-            }
-        }
-
-        public long PagoFacturaTipoIngresado
-        {
-            get => _pagoFacturaTipoIngresadoText;
-            set
-            {
-                if (_pagoFacturaTipoIngresadoText != value)
-                {
-                    _pagoFacturaTipoIngresadoText = value;
-                    OnPropertyChanged(nameof(PagoFacturaTipoIngresado));
-                }
-            }
-        }
-
-        public long GastoComercializacionTipoIngresado
-        {
-            get => _gastoComercializacionTipoIngresadoText;
-            set
-            {
-                if (_gastoComercializacionTipoIngresadoText != value)
-                {
-                    _gastoComercializacionTipoIngresadoText = value;
-                    OnPropertyChanged(nameof(GastoComercializacionTipoIngresado));
-                }
-            }
-        }
-
-        public long ComisionesTipoIngresado
-        {
-            get => _comisionesTipoIngresadoText;
-            set
-            {
-                if (_comisionesTipoIngresadoText != value)
-                {
-                    _comisionesTipoIngresadoText = value;
-                    OnPropertyChanged(nameof(ComisionesTipoIngresado));
-                }
-            }
-        }
-
-        public long GastoFinancieroTipoIngresado
-        {
-            get => _gastoFinancieroTipoIngresadoText;
-            set
-            {
-                if (_gastoFinancieroTipoIngresadoText != value)
-                {
-                    _gastoFinancieroTipoIngresadoText = value;
-                    OnPropertyChanged(nameof(GastoFinancieroTipoIngresado));
-                }
-            }
-        }
-
-        public long AnticipoTipoIngresado
-        {
-            get => _anticipoTipoIngresadoText;
-            set
-            {
-                if (_anticipoTipoIngresadoText != value)
-                {
-                    _anticipoTipoIngresadoText = value;
-                    OnPropertyChanged(nameof(AnticipoTipoIngresado));
                 }
             }
         }
@@ -376,12 +231,7 @@ namespace DesktopAplicationCV.ViewModel
                            data.Codigo.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Nombre.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Tipo_Dato.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Cuenta.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Pago_Factura.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Gasto_Comercializacion.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Comisiones.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Gasto_Financiero.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
-                           data.Anticipo.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase);
+                           data.Cuenta.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase);
                 }
                 return false;
             };
@@ -398,11 +248,6 @@ namespace DesktopAplicationCV.ViewModel
                     NombreTipoCeldaSeleccionada = tipos.Nombre;
                     TipoCeldaSeleccionada = tipos.Tipo_Dato;
                     CuentaTipoCeldaSeleccionada = tipos.Cuenta;
-                    PagoFacturaTipoCeldaSeleccionada = tipos.Pago_Factura;
-                    GastoComercializacionTipoCeldaSeleccionada = tipos.Gasto_Comercializacion;
-                    ComisionesTipoCeldaSeleccionada = tipos.Comisiones;
-                    GastoFinancieroTipoCeldaSeleccionada = tipos.Gasto_Financiero;
-                    AnticipoTipoCeldaSeleccionada = tipos.Anticipo;
                     // Aquí puedes manejar la lógica de negocio sin tocar la vista
                 }
             }
@@ -467,13 +312,10 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 if (CodigoTipoIngresado != 0 && !string.IsNullOrEmpty(NombreTipoIngresado)
-                && !string.IsNullOrEmpty(TipoIngresado) && !string.IsNullOrEmpty(CuentaTipoIngresado)
-                && PagoFacturaTipoIngresado != 0 && GastoComercializacionTipoIngresado != 0
-                && ComisionesTipoIngresado != 0 && GastoFinancieroTipoIngresado != 0 && AnticipoTipoIngresado != 0)
+                && !string.IsNullOrEmpty(TipoIngresado) && CuentaTipoIngresado != 0)
                 {
                     AgregarTipo(new TipoModel(CodigoTipoIngresado, NombreTipoIngresado, TipoIngresado,
-                        CuentaTipoIngresado, (int)PagoFacturaTipoIngresado, (int)GastoComercializacionTipoIngresado, (int)ComisionesTipoIngresado
-                        , (int)GastoFinancieroTipoIngresado, (int)AnticipoTipoIngresado));
+                        CuentaTipoIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -497,19 +339,12 @@ namespace DesktopAplicationCV.ViewModel
                     try
                     {
                         OldType = new TipoModel(CodigoCeldaSeleccionada, NombreTipoCeldaSeleccionada,
-                            TipoCeldaSeleccionada, CuentaTipoCeldaSeleccionada, PagoFacturaTipoCeldaSeleccionada
-                            , GastoComercializacionTipoCeldaSeleccionada, ComisionesTipoCeldaSeleccionada, GastoFinancieroTipoCeldaSeleccionada
-                            , AnticipoTipoCeldaSeleccionada)
+                            TipoCeldaSeleccionada, CuentaTipoCeldaSeleccionada)
                         {
                             Codigo = CodigoCeldaSeleccionada,
                             Nombre = NombreTipoCeldaSeleccionada,
                             Tipo_Dato = TipoCeldaSeleccionada,
-                            Cuenta = CuentaTipoCeldaSeleccionada,
-                            Pago_Factura = PagoFacturaTipoCeldaSeleccionada,
-                            Gasto_Comercializacion = GastoComercializacionTipoCeldaSeleccionada,
-                            Comisiones = ComisionesTipoCeldaSeleccionada,
-                            Gasto_Financiero = GastoFinancieroTipoCeldaSeleccionada,
-                            Anticipo = AnticipoTipoCeldaSeleccionada
+                            Cuenta = CuentaTipoCeldaSeleccionada
                         };
 
                         await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Tipo", OldType);
@@ -551,23 +386,14 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if (!(PagoFacturaTipoIngresado > MAX_INT) && !(GastoComercializacionTipoIngresado > MAX_INT)
-                    && !(ComisionesTipoIngresado > MAX_INT) && !(GastoFinancieroTipoIngresado > MAX_INT)
-                    && !(AnticipoTipoIngresado > MAX_INT))
+                if (await _tipoService.AddTipoAsync(tipo))
                 {
-                    if (await _tipoService.AddTipoAsync(tipo))
-                    {
-                        Tipos.Add(tipo);
-                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
-                    }
-                    else
-                    {
-                        Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
-                    }
+                    Tipos.Add(tipo);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos insertados correctamente. ", "Ok");
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error, ya existe una entrada asignada con este Codigo.", "Ok");
                 }
             }
             catch (Exception Ex)
@@ -623,45 +449,24 @@ namespace DesktopAplicationCV.ViewModel
                 var name = EditNombreTipo;
                 var type = EditTipo;
                 var account = EditCuentaTipo;
-                var pagoFactura = (int)EditPagoFacturaTipo;
-                var gastoComercializacion = (int)EditGastoComercializacionTipo;
-                var comisiones = (int)EditComisionesTipo;
-                var gastoFinanciero = (int)EditGastoFinancieroTipo;
-                var anticipo = (int)EditAnticipoTipo;
 
 
-                NewType = new TipoModel(cod, name, type, account, pagoFactura, gastoComercializacion, comisiones, gastoFinanciero, anticipo)
+                NewType = new TipoModel(cod, name, type, account)
                 {
                     Codigo = cod,
                     Nombre = name,
                     Tipo_Dato = type,
-                    Cuenta = account,
-                    Pago_Factura = pagoFactura,
-                    Gasto_Comercializacion = gastoComercializacion,
-                    Comisiones = comisiones,
-                    Gasto_Financiero = gastoFinanciero,
-                    Anticipo = anticipo
+                    Cuenta = account
                 };
 
-                if (!(EditPagoFacturaTipo > MAX_INT) && !(EditGastoComercializacionTipo > MAX_INT)
-                    && !(EditComisionesTipo > MAX_INT) && !(EditGastoFinancieroTipo > MAX_INT)
-                    && !(EditAnticipoTipo > MAX_INT))
+                if (await _tipoService.UpdateTipoAsync((TipoModel)NewType))
                 {
-                    if (await _tipoService.UpdateTipoAsync((TipoModel)NewType))
-                    {
-                        //Remove Old Product
-                        Tipos.Remove(AntiguoProducto);
-                        //Add new product
-                        Tipos.Add((TipoModel)NewType);
-                        Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
-                    }
+                    //Remove Old Product
+                    Tipos.Remove(AntiguoProducto);
+                    //Add new product
+                    Tipos.Add((TipoModel)NewType);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 }
-                else
-                {
-                    Application.Current.MainPage.DisplayAlert("Alerta", $"El valor no puede superar {MAX_INT}", "Ok");
-                }
-
-
             }
             catch (Exception Ex)
             {

@@ -18,11 +18,6 @@ public partial class Editar_Tipo : ContentPage
         EditCodigo.Text = tipoModel.Codigo.ToString().Trim();
         EditNombre.Text = tipoModel.Nombre.Trim();
         PkrTipo.SelectedItem = tipoModel.Tipo_Dato.Trim();
-        EditCuenta.Text = tipoModel.Cuenta.Trim();
-        EditPagoFactura.Text = tipoModel.Pago_Factura.ToString().Trim();
-        EditGastoComercializacion.Text = tipoModel.Gasto_Comercializacion.ToString().Trim();
-        EditComisiones.Text = tipoModel.Comisiones.ToString().Trim();
-        EditGastoFinanciero.Text = tipoModel.Gasto_Financiero.ToString().Trim();
-        EditAnticipo.Text = tipoModel.Anticipo.ToString().Trim();
+        EditCuenta.Text = tipoModel.Cuenta.ToString().Trim();
     }
 }

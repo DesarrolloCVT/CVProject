@@ -1,20 +1,22 @@
-using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Services;
 using DesktopAplicationCV.ViewModel;
+using DesktopAplicationCV.ViewModels;
 
 namespace DesktopAplicationCV.Views;
 
-public partial class Ingresos_Detalle : ContentPage
+public partial class Egresos : ContentPage
 {
-	public Ingresos_Detalle(int IdValido)
-	{
-        Console.WriteLine("Id: " + IdValido);
-        INavigationService navigationService = new NavigationService();
-        InitializeComponent();
-        BindingContext = new IngresoDetalleViewsModel(navigationService);
+    EgresosViewModel viewModel;
 
-        var viewModel = BindingContext as IngresoDetalleViewsModel;
-        viewModel.Id_Ingreso = IdValido;
+    public Egresos()
+	{
+        INavigationService navigationService = new NavigationService();
+        ApiService apiService = new ApiService();
+
+        InitializeComponent();
+        BindingContext = new EgresosViewModel(navigationService, apiService);
+
+        viewModel = BindingContext as EgresosViewModel;
 
         if (viewModel != null)
         {

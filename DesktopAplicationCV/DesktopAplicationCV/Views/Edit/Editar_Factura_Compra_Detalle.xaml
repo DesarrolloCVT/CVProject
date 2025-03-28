@@ -12,6 +12,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
@@ -30,48 +31,63 @@
                    Grid.Row="0" Grid.Column="0"
                    Grid.ColumnSpan="1"/>
 
+            <Label 
+                Text="ID"
+                FontSize="Small"
+                Grid.Row="1" Grid.Column="1"/>
+            <Editor 
+                Text="{Binding EditIdFactCompraDetalle}"
+                IsReadOnly="True"
+                x:Name="EditId"
+                Grid.Row="1" Grid.Column="2"/>
+            
             <Label Text="Folio"
                    FontSize="Small"
-                   Grid.Row="1" Grid.Column="1"/>
+                   Grid.Row="2" Grid.Column="1"/>
             <Editor Placeholder="Folio"
                     Text="{Binding EditFolioFactCompraDetalle}"
                     x:Name="EditFolio"
-                    Grid.Row="1" Grid.Column="2"/>
+                    Grid.Row="2" Grid.Column="2"/>
+            
             <Label Text="Codigo de Producto"
                    FontSize="Small"
-                   Grid.Row="2" Grid.Column="1"/>
+                   Grid.Row="3" Grid.Column="1"/>
             <Editor Placeholder="Codigo de Producto"
                     x:Name="EditCodigoProducto"
                     Text="{Binding EditCodigoProdFactCompraDetalle}"
-                    Grid.Row="2" Grid.Column="2"/>
+                    Grid.Row="3" Grid.Column="2"/>
+            
             <Label Text="Cantidad"
                    FontSize="Small"
-                   Grid.Row="3" Grid.Column="1"/>
+                   Grid.Row="4" Grid.Column="1"/>
             <Editor Placeholder="Cantidad"
                     Text="{Binding EditCantidadFactCompraDetalle}"
                     x:Name="EditCantidad"
-                    Grid.Row="3" Grid.Column="2"/>
+                    Grid.Row="4" Grid.Column="2"/>
+            
             <Label Text="Precio"
                    FontSize="Small"
-                   Grid.Row="4" Grid.Column="1"/>
+                   Grid.Row="5" Grid.Column="1"/>
             <Editor Placeholder="Precio"
                     x:Name="EditPrecio"
                     Text="{Binding EditPrecioFactCompraDetalle}"
-                    Grid.Row="4" Grid.Column="2"/>
+                    Grid.Row="5" Grid.Column="2"/>
+            
             <Button Text="Modificar"
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="#0288D1"
-                    Grid.Row="6" Grid.Column="1"
+                    Grid.Row="7" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding UpdateCommand}"/>
+            
             <Button Text="Cancelar"
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="#0288D1"
-                    Grid.Row="6" Grid.Column="2"
+                    Grid.Row="7" Grid.Column="2"
                     Grid.ColumnSpan="1"
                     Command="{Binding CancelarCommand}"/>
         </Grid>

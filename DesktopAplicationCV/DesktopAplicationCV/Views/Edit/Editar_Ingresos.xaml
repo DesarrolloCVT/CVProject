@@ -16,6 +16,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
@@ -48,54 +49,61 @@
                     Text="{Binding EditTipoIngresos}"
                     x:Name="EditTipo"
                     Grid.Row="2" Grid.Column="2"/>
-            <Label Text="Moneda"
+            <Label Text="Sub Tipo"
                    FontSize="Small"
                    Grid.Row="3" Grid.Column="1"/>
-            <Editor Placeholder="Moneda"
-                    Text="{Binding EditMonedaIngresos}"
-                    x:Name="EditMoneda"
+            <Picker ItemsSource="{Binding MotivoEgreso}"
+                    SelectedItem="{Binding EditSubTipoIngresos}"
+                    x:Name="EditSubTipo"
                     Grid.Row="3" Grid.Column="2"/>
-            <Label Text="Fecha"
+            <Label Text="Moneda"
                    FontSize="Small"
                    Grid.Row="4" Grid.Column="1"/>
-            <DatePicker Grid.Row="4" Grid.Column="2"
+            <Picker ItemsSource="{Binding Monedas}"
+                    SelectedItem="{Binding EditMonedaIngresos}"
+                    x:Name="EditMoneda"
+                    Grid.Row="4" Grid.Column="2"/>
+            <Label Text="Fecha"
+                   FontSize="Small"
+                   Grid.Row="5" Grid.Column="1"/>
+            <DatePicker Grid.Row="5" Grid.Column="2"
                         x:Name="PkrFecha"
                         Date="{Binding EditFechaIngresos}"
                         Format="yyyy-mm-dd"/>
             <Label Text="Cliente"
                    FontSize="Small"
-                   Grid.Row="5" Grid.Column="1"/>
+                   Grid.Row="6" Grid.Column="1"/>
             <Editor Placeholder="Cliente"
                     Text="{Binding EditClienteIngresos}"
                     x:Name="EditCliente"
-                    Grid.Row="5" Grid.Column="2"/>
+                    Grid.Row="6" Grid.Column="2"/>
             <Label Text="Metodo de Pago"
                    FontSize="Small"
-                   Grid.Row="6" Grid.Column="1"/>
-            <Editor Placeholder="Metodo de Pago"
-                    Text="{Binding EditMetodoPagoIngresos}"
+                   Grid.Row="7" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding MetodoPago}"
+                    SelectedItem="{Binding EditMetodoPagoIngresos}"
                     x:Name="EditMetodoPago"
-                    Grid.Row="6" Grid.Column="2"/>
+                    Grid.Row="7" Grid.Column="2"/>
             <Label Text="Banco"
                    FontSize="Small"
-                   Grid.Row="7" Grid.Column="1"/>
+                   Grid.Row="8" Grid.Column="1"/>
             <Editor Placeholder="Banco"
                     Text="{Binding EditBancoIngresos}"
                     x:Name="EditBanco"
-                    Grid.Row="7" Grid.Column="2"/>
+                    Grid.Row="8" Grid.Column="2"/>
             <Label Text="Cuenta"
                    FontSize="Small"
-                   Grid.Row="8" Grid.Column="1"/>
+                   Grid.Row="9" Grid.Column="1"/>
             <Editor Placeholder="Cuenta"
                     Text="{Binding EditCuentaIngresos}"
                     x:Name="EditCuenta"
-                    Grid.Row="8" Grid.Column="2"/>
+                    Grid.Row="9" Grid.Column="2"/>
             <Button Text="Modificar"
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="#0288D1"
-                    Grid.Row="10" Grid.Column="1"
+                    Grid.Row="11" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding UpdateCommand}"/>
             <Button Text="Cancelar"
@@ -103,7 +111,7 @@
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="#0288D1"
-                    Grid.Row="10" Grid.Column="2"
+                    Grid.Row="11" Grid.Column="2"
                     Grid.ColumnSpan="1"
                     Command="{Binding CancelarCommand}"/>
         </Grid>

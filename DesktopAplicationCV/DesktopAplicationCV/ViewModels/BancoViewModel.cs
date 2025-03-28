@@ -19,6 +19,7 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        private static int IdBancoCeldaSeleccionada;
         private static object _oldBank;
         private object NewBank;
 
@@ -251,7 +252,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (CodigoBancoIngresado != 0 && !string.IsNullOrEmpty(NombreBancoIngresado))
                 {
-                    AgregarBanco(new BancoModel(CodigoBancoIngresado, NombreBancoIngresado));
+                    AgregarBanco(new BancoModel(IdBancoCeldaSeleccionada, CodigoBancoIngresado, NombreBancoIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -274,7 +275,7 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     try
                     {
-                        OldBank = new BancoModel(CodigoCeldaSeleccionada, NombreBancoCeldaSeleccionada)
+                        OldBank = new BancoModel(IdBancoCeldaSeleccionada, CodigoCeldaSeleccionada, NombreBancoCeldaSeleccionada)
                         {
                             Codigo = CodigoCeldaSeleccionada,
                             Nombre = NombreBancoCeldaSeleccionada
@@ -376,10 +377,11 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditCodigoBanco: " + EditCodigoBanco);
                 Console.WriteLine("EditNombreBanco: " + EditNombreBanco);
 
+                var id = IdBancoCeldaSeleccionada;
                 var cod = EditCodigoBanco;
                 var name = EditNombreBanco;
 
-                NewBank = new BancoModel(cod, name)
+                NewBank = new BancoModel(id, cod, name)
                 {
                     Codigo = cod,
                     Nombre = name

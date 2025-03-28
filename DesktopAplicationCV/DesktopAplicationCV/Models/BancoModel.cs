@@ -9,8 +9,15 @@ namespace DesktopAplicationCV.Models
 {
     public class BancoModel
     {
+        private int id_banco;
         private int codigo;
         private string nombre;
+
+        public int Id_Banco
+        {
+            get { return id_banco; }
+            set { this.id_banco = value; }
+        }
 
         public int Codigo
         {
@@ -24,8 +31,9 @@ namespace DesktopAplicationCV.Models
             set { this.nombre = value; }
         }
 
-        public BancoModel(int codigo, string nombre)
+        public BancoModel(int id_banco, int codigo, string nombre)
         {
+            this.Id_Banco = id_banco;
             this.Codigo = codigo;
             this.Nombre = nombre;
         }

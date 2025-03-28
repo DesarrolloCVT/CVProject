@@ -115,11 +115,29 @@ namespace DesktopAplicationCV.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ver Detalle.
+        /// </summary>
+        public static string Detalles {
+            get {
+                return ResourceManager.GetString("Detalles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editar.
         /// </summary>
         public static string Editar {
             get {
                 return ResourceManager.GetString("Editar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Egresos.
+        /// </summary>
+        public static string Egreso {
+            get {
+                return ResourceManager.GetString("Egreso", resourceCulture);
             }
         }
         
@@ -300,6 +318,15 @@ namespace DesktopAplicationCV.Resources.Languages {
         public static string Usuario {
             get {
                 return ResourceManager.GetString("Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volver.
+        /// </summary>
+        public static string Volver {
+            get {
+                return ResourceManager.GetString("Volver", resourceCulture);
             }
         }
     }

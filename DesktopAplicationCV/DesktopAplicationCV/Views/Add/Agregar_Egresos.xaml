@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundColor="DarkSlateGray"
+             x:Class="DesktopAplicationCV.Views.Agregar_Egresos">
+    <ScrollView Margin="0,100,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Agregar Egresos"
+               Margin="20,0,0,0"
+               FontSize="Medium"
+               TextColor="Silver"
+               FontAttributes="Bold, Italic"
+               Grid.Row="0" Grid.Column="0"
+               Grid.ColumnSpan="1"/>
+
+            <Label Text="Folio"
+               FontSize="Small"
+               Grid.Row="1" Grid.Column="1"/>
+            <Editor Placeholder="Folio"
+                Text="{Binding FolioEgresosIngresadoText}"
+                Grid.Row="1" Grid.Column="2"/>
+            <Label Text="Tipo"
+               FontSize="Small"
+               Grid.Row="2" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Tipos}"
+                SelectedItem="{Binding TipoEgresosIngresadoText}"
+                Grid.Row="2" Grid.Column="2"/>
+            <Label Text="Sub Tipo"
+                   FontSize="Small"
+                   Grid.Row="3" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Subtipos}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding SubtipoEgresosIngresadoText}"
+                    Grid.Row="3" Grid.Column="2"/>
+            <Label Text="Moneda"
+               FontSize="Small"
+               Grid.Row="4" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Monedas}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                SelectedItem="{Binding MonedaEgresosIngresadoText}"
+                Grid.Row="4" Grid.Column="2"/>
+            <Label Text="Fecha"
+               FontSize="Small"
+               Grid.Row="5" Grid.Column="1"/>
+            <DatePicker Grid.Row="5" Grid.Column="2"
+                    x:Name="PkrFecha"
+                    Date="{Binding FechaEgresosIngresadoText}"
+                    Format="dd-mm-yyyy"/>
+            <Label Text="Cliente"
+               FontSize="Small"
+               Grid.Row="6" Grid.Column="1"/>
+            <Editor Placeholder="Cliente"
+                Text="{Binding ClienteEgresosIngresadoText}"
+                Grid.Row="6" Grid.Column="2"/>
+            <Label Text="Metodo de Pago"
+               FontSize="Small"
+               Grid.Row="7" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Metodopagos}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                SelectedItem="{Binding MetodoPagoEgresosIngresadoText}"
+                Grid.Row="7" Grid.Column="2"/>
+            <Label Text="Banco"
+               FontSize="Small"
+               Grid.Row="8" Grid.Column="1"/>
+            <Editor Placeholder="Banco"
+                Text="{Binding BancoEgresosIngresadoText}"
+                Grid.Row="8" Grid.Column="2"/>
+            <Label Text="Cuenta"
+               FontSize="Small"
+               Grid.Row="9" Grid.Column="1"/>
+            <Editor Placeholder="Cuenta"
+                Text="{Binding CuentaEgresosIngresadoText}"
+                Grid.Row="9" Grid.Column="2"/>
+            <Button Text="Insertar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="#0288D1"
+                Grid.Row="11" Grid.Column="1"
+                Grid.ColumnSpan="1"
+                Command="{Binding InsertarEgresosCommand}"/>
+            <Button Text="Cancelar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="#0288D1"
+                Grid.Row="11" Grid.Column="2"
+                Grid.ColumnSpan="1"
+                Command="{Binding CancelarCommand}"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

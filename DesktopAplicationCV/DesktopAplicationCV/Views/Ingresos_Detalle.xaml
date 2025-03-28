@@ -12,6 +12,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="200"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -23,9 +24,65 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <Button Text="{x:Static recursos:AppResources.Volver}"
+                    FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
+                    WidthRequest="150"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    BackgroundColor="#455A64"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding VolverCommand}"/>
+            
             <!-- * Botones de accion * -->
 
             <Button Text="{x:Static recursos:AppResources.Agregar}"
+                    FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
+                    WidthRequest="150"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    BackgroundColor="#0288D1"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding AgregarCommand}"/>
+
+            <Button Text="{x:Static recursos:AppResources.Eliminar}"
+                    FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
+                    WidthRequest="150"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    BackgroundColor="#0288D1"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding EliminarCommand}"/>
+
+            <Button Text="{x:Static recursos:AppResources.Editar}"
+                    FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
+                    WidthRequest="150"
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    BackgroundColor="#0288D1"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding EditarCommand}"/>
+
+            <!--Button Text="{x:Static recursos:AppResources.Agregar}"
                     FontAttributes="Bold"
                     BorderColor="White"
                     BorderWidth="1.5"
@@ -65,7 +122,7 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     TextColor="White"
-                    Command="{Binding EditarCommand}"/>
+                    Command="{Binding EditarCommand}"/-->
             
             <!-- * Busqueda * -->
 
@@ -92,7 +149,7 @@
                                    GridLinesVisibility="Both"
                                    HeaderGridLinesVisibility="Both"
                                    BackgroundColor="DarkSlateGray"
-                                   Grid.Row="1"
+                                   Grid.Row="2"
                                    Grid.ColumnSpan="6"
                                    ColumnWidthMode="Fill"
                                    CellTappedCommand="{Binding CeldaTocadaCommand}">
@@ -114,6 +171,8 @@
                 </syncfusion:SfDataGrid.Resources>
 
                 <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:DataGridTextColumn MappingName="Id_Ingreso_Detalle" HeaderText="Id Ingreso Detalle" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Id_Ingreso" HeaderText="Id Ingreso" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Folio_FacturaVenta" HeaderText="Folio Factura Ventas" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Monto" HeaderText="Monto" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>

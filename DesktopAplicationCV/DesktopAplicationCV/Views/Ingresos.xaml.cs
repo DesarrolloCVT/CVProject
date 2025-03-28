@@ -10,9 +10,10 @@ public partial class Ingresos : ContentPage
     public Ingresos()
 	{
         INavigationService navigationService = new NavigationService();
+        ApiService apiService = new ApiService();
 
         InitializeComponent();
-        BindingContext = new IngresosViewModel(navigationService);
+        BindingContext = new IngresosViewModel(navigationService, apiService);
 
         viewModel = BindingContext as IngresosViewModel;
 

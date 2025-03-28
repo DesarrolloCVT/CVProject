@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Services;
+using DesktopAplicationCV.Views;
 using Syncfusion.Maui.DataGrid;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace DesktopAplicationCV.ViewModel
         private static object _oldFacturaCompraDetalle;
         private object NewFacturaCompraDetalle;
 
+        private int IdFactCompraDetalleCeldaSeleccionada;
         private int FolioFactCompraDetalleCeldaSeleccionada;
         private string CodigoProdFactCompraDetalleCeldaSeleccionada;
         private int CantidadFactCompraDetalleCeldaSeleccionada;
@@ -44,6 +46,7 @@ namespace DesktopAplicationCV.ViewModel
         private int _cantidadFactCompraDetalleIngresadoText;
         private long _precioFactCompraDetalleIngresadoText;
 
+        private int _editIdFactCompraDetalle;
         private int _editFolioFactCompraDetalle;
         private string _editCodigoProdFactCompraDetalle;
         private int _editCantidadFactCompraDetalle;
@@ -105,6 +108,19 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     _folioFactCompraDetalleIngresadoText = value;
                     OnPropertyChanged(nameof(FolioFactCompraDetalleIngresado));
+                }
+            }
+        }
+
+        public int EditIdFactCompraDetalle
+        {
+            get => _editIdFactCompraDetalle;
+            set
+            {
+                if (_editIdFactCompraDetalle != value)
+                {
+                    _editIdFactCompraDetalle = value;
+                    OnPropertyChanged(nameof(EditIdFactCompraDetalle));
                 }
             }
         }
@@ -212,6 +228,9 @@ namespace DesktopAplicationCV.ViewModel
             _navigationService = navigationService;
             CargarFactCompraDetalles();
 
+            /* Test */
+            CargarFacturasAsync();
+
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
 
@@ -231,6 +250,7 @@ namespace DesktopAplicationCV.ViewModel
                 if (item is FacturaCompraDetalleModel data)
                 {
                     return string.IsNullOrWhiteSpace(FilterText) ||
+                           data.Id_Factura_Compra_Detalle.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Folio.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Codigo_Producto.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
                            data.Cantidad.ToString().Contains(FilterText, StringComparison.OrdinalIgnoreCase) ||
@@ -247,6 +267,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is FacturaCompraDetalleModel facturaCompraModel)
                 {
+                    IdFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Id_Factura_Compra_Detalle;
                     FolioFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Folio;
                     CodigoProdFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Codigo_Producto;
                     CantidadFactCompraDetalleCeldaSeleccionada = facturaCompraModel.Cantidad;
@@ -267,6 +288,21 @@ namespace DesktopAplicationCV.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public async Task CargarFacturasAsync()
+        {
+            var facturas = await _factComprDetalleService.GetFactCompraDetallesByIdAsync(2);//ApiService.ObtenerFacturasAsync();
+
+            foreach (var factura in facturas)
+            {
+                // Obtener los detalles de la factura
+                //factura.Detalles = await ApiService.ObtenerDetallesFacturaAsync(factura.Id);
+                Console.WriteLine($"{factura}");
+            }
+
+            /*Facturas = new ObservableCollection<FacturaCompra>(facturas);
+            OnPropertyChanged(nameof(Facturas));*/
+        }
+
         [RelayCommand]
         public void GridCargado()
         {
@@ -280,7 +316,8 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarFactCompraDetalle(FolioFactCompraDetalleCeldaSeleccionada);
+                    //EliminarFactCompraDetalle(FolioFactCompraDetalleCeldaSeleccionada);
+                    EliminarFactCompraDetalle(IdFactCompraDetalleCeldaSeleccionada);
                     CargarFactCompraDetalles();
                 }
                 else
@@ -317,7 +354,7 @@ namespace DesktopAplicationCV.ViewModel
                 if (FolioFactCompraDetalleIngresado != 0 && !string.IsNullOrEmpty(CodigoProdFactCompraDetalleIngresado)
                 && CantidadFactCompraDetalleIngresado != 0 && PrecioFactCompraDetalleIngresado != 0)
                 {
-                    AgregarFactCompraDetalle(new FacturaCompraDetalleModel(FolioFactCompraDetalleIngresado, CodigoProdFactCompraDetalleIngresado,
+                    AgregarFactCompraDetalle(new FacturaCompraDetalleModel(IdFactCompraDetalleCeldaSeleccionada, FolioFactCompraDetalleIngresado, CodigoProdFactCompraDetalleIngresado,
                         CantidadFactCompraDetalleIngresado, (int)PrecioFactCompraDetalleIngresado));
                     _navigationService.GoBackAsync();
                 }
@@ -339,9 +376,10 @@ namespace DesktopAplicationCV.ViewModel
             {
                 try
                 {
-                    OldFacturaCompraDetalle = new FacturaCompraDetalleModel(FolioFactCompraDetalleCeldaSeleccionada, CodigoProdFactCompraDetalleCeldaSeleccionada,
+                    OldFacturaCompraDetalle = new FacturaCompraDetalleModel(IdFactCompraDetalleCeldaSeleccionada, FolioFactCompraDetalleCeldaSeleccionada, CodigoProdFactCompraDetalleCeldaSeleccionada,
                         CantidadFactCompraDetalleCeldaSeleccionada, PrecioFactCompraDetalleCeldaSeleccionada)
                     {
+                        Id_Factura_Compra_Detalle = IdFactCompraDetalleCeldaSeleccionada,
                         Folio = FolioFactCompraDetalleCeldaSeleccionada,
                         Codigo_Producto = CodigoProdFactCompraDetalleCeldaSeleccionada,
                         Cantidad = CantidadFactCompraDetalleCeldaSeleccionada,
@@ -408,13 +446,13 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task EliminarFactCompraDetalle(int folio)
+        private async Task EliminarFactCompraDetalle(int id)
         {
             try
             {
-                if (await _factComprDetalleService.DeleteFactCompraDetalleAsync(folio))
+                if (await _factComprDetalleService.DeleteFactCompraDetalleAsync(id))
                 {
-                    var producto = FacturaCompraDetalleModels.FirstOrDefault(p => p.Folio == folio);
+                    var producto = FacturaCompraDetalleModels.FirstOrDefault(p => p.Id_Factura_Compra_Detalle == id);
                     if (producto != null)
                     {
                         FacturaCompraDetalleModels.Remove(producto);
@@ -449,13 +487,15 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditCantidadFactCompraDetalle: " + EditCantidadFactCompraDetalle);
                 Console.WriteLine("EditPrecioFactCompraDetalle: " + EditPrecioFactCompraDetalle);
 
+                var id = EditIdFactCompraDetalle;
                 var folio = EditFolioFactCompraDetalle;
                 var codigo = EditCodigoProdFactCompraDetalle;
                 var cantidad = EditCantidadFactCompraDetalle;
                 var precio = (int)EditPrecioFactCompraDetalle;
 
-                NewFacturaCompraDetalle = new FacturaCompraDetalleModel(folio, codigo, cantidad, precio)
+                NewFacturaCompraDetalle = new FacturaCompraDetalleModel(id, folio, codigo, cantidad, precio)
                 {
+                    Id_Factura_Compra_Detalle = id,
                     Folio = folio,
                     Codigo_Producto = codigo,
                     Cantidad = cantidad,

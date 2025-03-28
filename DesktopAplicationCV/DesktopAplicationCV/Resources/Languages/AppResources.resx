@@ -135,8 +135,14 @@
   <data name="Cuentas" xml:space="preserve">
     <value>Cuentas</value>
   </data>
+  <data name="Detalles" xml:space="preserve">
+    <value>Ver Detalle</value>
+  </data>
   <data name="Editar" xml:space="preserve">
     <value>Editar</value>
+  </data>
+  <data name="Egreso" xml:space="preserve">
+    <value>Egresos</value>
   </data>
   <data name="Eliminar" xml:space="preserve">
     <value>Eliminar</value>
@@ -197,5 +203,8 @@
   </data>
   <data name="Usuario" xml:space="preserve">
     <value>Usuario:</value>
+  </data>
+  <data name="Volver" xml:space="preserve">
+    <value>Volver</value>
   </data>
 </root>

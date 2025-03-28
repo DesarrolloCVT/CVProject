@@ -4,6 +4,7 @@
        x:Class="DesktopAplicationCV.Views.Operaciones_Bancarias"
        xmlns:local="clr-namespace:DesktopAplicationCV.Views"
        Shell.TabBarBackgroundColor="DarkSlateGray"
+       NavigationPage.HasBackButton="True"
        xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
 
     <!--Shell.ToolbarItems>
@@ -13,11 +14,11 @@
     <TabBar>
         <Tab Title="{x:Static recursos:AppResources.Ingresos}">
             <ShellContent
-                      ContentTemplate="{DataTemplate local:Ingresos}" />
+                ContentTemplate="{DataTemplate local:Ingresos}" />
         </Tab>
-        <Tab Title="{x:Static recursos:AppResources.IngresosDetalle}">
+        <Tab Title="{x:Static recursos:AppResources.Egreso}">
             <ShellContent
-              ContentTemplate="{DataTemplate local:Ingresos_Detalle}" />
+                ContentTemplate="{DataTemplate local:Egresos}" />
         </Tab>
     </TabBar>
 </Shell>

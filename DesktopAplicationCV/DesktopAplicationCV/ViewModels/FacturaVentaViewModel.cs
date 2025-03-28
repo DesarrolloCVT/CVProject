@@ -22,6 +22,7 @@ namespace DesktopAplicationCV.ViewModel
         private static object _oldFacturaVenta;
         private object NewFacturaVenta;
 
+        private int IdFactVentaCeldaSeleccionada;
         private int FolioFactVentaCeldaSeleccionada;
         private string ClienteFactVentaCeldaSeleccionada;
         private string DirDespachoFactVentaCeldaSeleccionada;
@@ -45,6 +46,7 @@ namespace DesktopAplicationCV.ViewModel
         private string _monedaFactVentaIngresado;
         private DateTime _fechaFactVentaIngresado;
 
+        private int _editIdFactVenta;
         private int _editFolioFactVenta;
         private string _editClienteFactVenta;
         private string _editDirDespachoFactVenta;
@@ -162,6 +164,19 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        public int EditIdFactVenta
+        {
+            get => _editIdFactVenta;
+            set
+            {
+                if (_editIdFactVenta != value)
+                {
+                    _editIdFactVenta = value;
+                    OnPropertyChanged(nameof(EditIdFactVenta));
+                }
+            }
+        }
+        
         public int EditFolioFactVenta
         {
             get => _editFolioFactVenta;
@@ -348,7 +363,7 @@ namespace DesktopAplicationCV.ViewModel
                 if (FolioFactVentaIngresado != 0 && !string.IsNullOrEmpty(ClienteFactVentaIngresado) && !string.IsNullOrEmpty(DirDespachoFactVentaIngresado)
                 && !string.IsNullOrEmpty(MonedaFactVentaIngresado))
                 {
-                    AgregarFactVentas(new FacturaVentaModel(FolioFactVentaIngresado, ClienteFactVentaIngresado, DirDespachoFactVentaIngresado
+                    AgregarFactVentas(new FacturaVentaModel(IdFactVentaCeldaSeleccionada, FolioFactVentaIngresado, ClienteFactVentaIngresado, DirDespachoFactVentaIngresado
                         , MonedaFactVentaIngresado, FechaFactVentaIngresado));
                     _navigationService.GoBackAsync();
                 }
@@ -373,7 +388,7 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     try
                     {
-                        OldFacturaVenta = new FacturaVentaModel(FolioFactVentaCeldaSeleccionada, ClienteFactVentaCeldaSeleccionada,
+                        OldFacturaVenta = new FacturaVentaModel(IdFactVentaCeldaSeleccionada, FolioFactVentaCeldaSeleccionada, ClienteFactVentaCeldaSeleccionada,
                             DirDespachoFactVentaCeldaSeleccionada, MonedaFactVentaCeldaSeleccionada, FechaFactVentaCeldaSeleccionada)
                         {
                             Folio = FolioFactVentaCeldaSeleccionada,
@@ -398,6 +413,26 @@ namespace DesktopAplicationCV.ViewModel
             catch(Exception Ex)
             {
                 Console.WriteLine("Error InsertarFactVenta FacturaVentaViewModel: " + Ex.Message);
+            }
+        }
+
+        [RelayCommand]
+        private void Detalles()
+        {
+            try
+            {
+                if (selectedIndex >= 0)
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Has seleccionado una Fila Valida", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                }
+            }
+            catch (Exception Ex)
+            {
+
             }
         }
 
@@ -481,14 +516,16 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditMonedaFactVenta: " + EditMonedaFactVenta);
                 Console.WriteLine("EditFechaFactVenta: " + EditFechaFactVenta);
 
+                var id = EditIdFactVenta;
                 var folio = EditFolioFactVenta;
                 var cliente = EditClienteFactVenta;
                 var dirDespacho = EditDirDespachoFactVenta;
                 var moneda = EditMonedaFactVenta;
                 var fecha = EditFechaFactVenta;
 
-                NewFacturaVenta = new FacturaVentaModel(folio, cliente, dirDespacho, moneda, fecha)
+                NewFacturaVenta = new FacturaVentaModel(id, folio, cliente, dirDespacho, moneda, fecha)
                 {
+                    Id_Factura_Venta = id,
                     Folio = folio,
                     Cliente = cliente,
                     Direccion_Despacho = dirDespacho,

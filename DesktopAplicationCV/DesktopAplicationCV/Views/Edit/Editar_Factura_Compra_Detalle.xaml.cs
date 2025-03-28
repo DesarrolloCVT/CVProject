@@ -15,6 +15,7 @@ public partial class Editar_Factura_Compra_Detalle : ContentPage
         var viewModel = BindingContext as FacturaCompraDetalleViewModel;
 
         FacturaCompraDetalleModel facturaCompraDetalleModel = (FacturaCompraDetalleModel)obj;
+        EditId.Text = facturaCompraDetalleModel.Id_Factura_Compra_Detalle.ToString();
         EditFolio.Text = facturaCompraDetalleModel.Folio.ToString().Trim();
         EditCodigoProducto.Text = facturaCompraDetalleModel.Codigo_Producto.Trim();
         EditCantidad.Text = facturaCompraDetalleModel.Cantidad.ToString().Trim();

@@ -21,9 +21,12 @@ namespace DesktopAplicationCV.ViewModel
 
         private const int MAX_INT = 2147483647; // Máximo permitido en SQL Server para INT
 
+        public int Id_Ingreso;
         private static object _oldIngresoDetalle;
         private object NewIngresoDetalle;
 
+        private static int IdCeldaSeleccionada;
+        private static int IdIngresoCeldaSeleccionada;
         private int FolioCeldaSeleccionada;
         private int MontoIngresoDetalleCeldaSeleccionada;
 
@@ -153,7 +156,8 @@ namespace DesktopAplicationCV.ViewModel
             IngresoDetalleModels = new ObservableCollection<IngresoDetalleModel>();
 
             _navigationService = navigationService;
-            CargarIngresoDetalles();
+            //CargarIngresoDetalles();
+            CargarFacturasAsync();
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
@@ -164,6 +168,23 @@ namespace DesktopAplicationCV.ViewModel
         public void Cancelar()
         {
             _navigationService.GoBackAsync();
+        }
+
+        public async Task CargarFacturasAsync()
+        {
+            try
+            {
+                var ingresoDetalle = await _ingresoDetalleService.GetIngresoDetalleFilterByIdAsync(Id_Ingreso);//ApiService.ObtenerFacturasAsync();
+                IngresoDetalleModels.Clear();
+                foreach (var ingreso in ingresoDetalle)
+                {
+                    IngresoDetalleModels.Add(ingreso);
+                }
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine("Error CargarFacturasAsync IngresoDetalleViewsModel: " + Ex.Message);
+            }
         }
 
         // Lógica de filtrado como delegado
@@ -188,6 +209,8 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is IngresoDetalleModel ingreso)
                 {
+                    IdCeldaSeleccionada = ingreso.Id_Ingreso_Detalle;
+                    IdIngresoCeldaSeleccionada = ingreso.Id_Ingreso;
                     FolioCeldaSeleccionada = ingreso.Folio_FacturaVenta;
                     MontoIngresoDetalleCeldaSeleccionada = ingreso.Monto;
                     // Aquí puedes manejar la lógica de negocio sin tocar la vista
@@ -208,7 +231,8 @@ namespace DesktopAplicationCV.ViewModel
         [RelayCommand]
         public void GridCargado()
         {
-            CargarIngresoDetalles();
+            CargarFacturasAsync();
+            //CargarIngresoDetalles();
         }
 
         [RelayCommand]
@@ -248,13 +272,27 @@ namespace DesktopAplicationCV.ViewModel
         }
 
         [RelayCommand]
+        public async void Volver()
+        {
+            try
+            {
+                await _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex)
+            {
+                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error. ", "Ok");
+                Console.WriteLine("Error Volver IngresoDetalleViewsModel: " + Ex.Message);
+            }
+        }
+
+        [RelayCommand]
         public async void InsertarIngresoDetalle()
         {
             try
             {
                 if (FolioIngresoDetalleIngresado != 0 && MontoIngresoDetalleIngresado != 0)
                 {
-                    AgregarIngresoDetalle(new IngresoDetalleModel(FolioIngresoDetalleIngresado, (int)MontoIngresoDetalleIngresado));
+                    AgregarIngresoDetalle(new IngresoDetalleModel(IdCeldaSeleccionada, IdIngresoCeldaSeleccionada, FolioIngresoDetalleIngresado, (int)MontoIngresoDetalleIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -278,7 +316,7 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     try
                     {
-                        OldIngresoDetalle = new IngresoDetalleModel(FolioCeldaSeleccionada, MontoIngresoDetalleCeldaSeleccionada)
+                        OldIngresoDetalle = new IngresoDetalleModel(IdCeldaSeleccionada, IdIngresoCeldaSeleccionada, FolioCeldaSeleccionada, MontoIngresoDetalleCeldaSeleccionada)
                         {
                             Folio_FacturaVenta = FolioCeldaSeleccionada,
                             Monto = MontoIngresoDetalleCeldaSeleccionada
@@ -385,11 +423,15 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditFolioIngresoDetalle: " + EditFolioIngresoDetalle);
                 Console.WriteLine("EditMontoIngresoDetalle: " + EditMontoIngresoDetalle);
 
+                var id = IdCeldaSeleccionada;
+                var idIngreso = IdIngresoCeldaSeleccionada;
                 var folio = EditFolioIngresoDetalle;
                 var monto = (int)EditMontoIngresoDetalle;
 
-                NewIngresoDetalle = new IngresoDetalleModel(folio, monto)
+                NewIngresoDetalle = new IngresoDetalleModel(id, idIngreso, folio, monto)
                 {
+                    Id_Ingreso_Detalle = id,
+                    Id_Ingreso = idIngreso,
                     Folio_FacturaVenta = folio,
                     Monto = monto
                 };

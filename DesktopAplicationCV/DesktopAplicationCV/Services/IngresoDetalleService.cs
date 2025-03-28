@@ -16,6 +16,12 @@ namespace DesktopAplicationCV.Services
             return await GetAsync<List<IngresoDetalleModel>>(Endpoint) ?? new List<IngresoDetalleModel>();
         }
 
+        public async Task<List<IngresoDetalleModel>> GetIngresoDetalleFilterByIdAsync(int id)
+        {
+            var Endpoint = $"IngresosDetalle/GetIngreso?idIngreso";
+            return await GetFilterByIdAsync<List<IngresoDetalleModel>>(Endpoint, id) ?? new List<IngresoDetalleModel>();
+        }
+
         public async Task<bool> AddIngresoDetalleAsync(IngresoDetalleModel ingresoDetalleModel)
         {
             return await PostAsync(Endpoint, ingresoDetalleModel);

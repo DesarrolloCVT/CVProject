@@ -42,7 +42,7 @@
                     Text="{Binding NombreBancoIngresado}"
                     Placeholder="Nombre"
                     Grid.Row="2" Grid.Column="2"/>
-            <Button Text="Ingresar"
+            <Button Text="Isertar"
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"

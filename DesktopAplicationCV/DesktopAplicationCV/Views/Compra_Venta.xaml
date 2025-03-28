@@ -15,17 +15,9 @@
             <ShellContent
                 ContentTemplate="{DataTemplate local:Factura_Venta}" />
         </Tab>
-        <Tab Title="{x:Static recursos:AppResources.FacturaVentasDetalle}">
-            <ShellContent
-                ContentTemplate="{DataTemplate local:Factura_Venta_Detalle}" />
-        </Tab>
         <Tab Title="{x:Static recursos:AppResources.FacturaCompra}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Factura_Compra}" />
-        </Tab>
-        <Tab Title="{x:Static recursos:AppResources.FacturaCompraDetalle}">
-            <ShellContent
-                ContentTemplate="{DataTemplate local:Factura_Compra_detalle}" />
         </Tab>
     </TabBar>
 </Shell>

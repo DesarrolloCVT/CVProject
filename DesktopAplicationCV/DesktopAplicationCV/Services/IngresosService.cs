@@ -16,6 +16,18 @@ namespace DesktopAplicationCV.Services
             return await GetAsync<List<IngresosModel>>(Endpoint) ?? new List<IngresosModel>();
         }
 
+        public async Task<List<MonedaModel>> GetMonedasAsync()
+        {
+            var NewEndPoint = "monedas";
+            return await GetAsync<List<MonedaModel>>(NewEndPoint) ?? new List<MonedaModel>();
+        }
+
+        public async Task<List<SubtiposModel>> GetSubtiposFilterByIdAsync(string identificador)
+        {
+            var NewEndPoint = $"Subtipos/GetSubtipos?Identificador";
+            return await GetFilterAsync<List<SubtiposModel>>(NewEndPoint, identificador) ?? new List<SubtiposModel>();
+        }
+
         public async Task<bool> AddIngresoAsync(IngresosModel ingreso)
         {
             return await PostAsync(Endpoint, ingreso);
@@ -23,7 +35,7 @@ namespace DesktopAplicationCV.Services
 
         public async Task<bool> UpdateIngresoAsync(IngresosModel ingreso)
         {
-            return await PutAsync($"{Endpoint}/{ingreso.Folio}", ingreso);
+            return await PutAsync($"{Endpoint}/{ingreso.Id_Ingreso}", ingreso);
         }
 
         public async Task<bool> DeleteIngresoAsync(int id)

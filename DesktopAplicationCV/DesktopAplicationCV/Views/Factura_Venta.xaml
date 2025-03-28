@@ -67,6 +67,20 @@
                     TextColor="White"
                     Command="{Binding EditarCommand}"/>
 
+            <Button Text="{x:Static recursos:AppResources.Detalles}"
+                    FontAttributes="Bold"
+                    BorderColor="White"
+                    BorderWidth="1.5"
+                    WidthRequest="150"
+                    Grid.Column="3"
+                    Grid.Row="0"
+                    BackgroundColor="#0288D1"
+                    CornerRadius="10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding DetallesCommand}"/>
+            
             <!-- * Busqueda * -->
 
             <Editor x:Name="txtBusqueda"
@@ -78,7 +92,7 @@
                     AutoSize="Disabled"
                     Keyboard="Numeric"
                     Grid.Row="0"
-                    Grid.Column="3"
+                    Grid.Column="4"
                     Grid.ColumnSpan="3"
                     HeightRequest="10"/>
             
@@ -114,6 +128,7 @@
                 </syncfusion:SfDataGrid.Resources>
 
                 <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:DataGridTextColumn MappingName="Id_Factura_Venta" HeaderText="Id" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Folio" HeaderText="Folio" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Cliente" HeaderText="Cliente" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Direccion_Despacho" HeaderText="Direccion de Despacho" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>

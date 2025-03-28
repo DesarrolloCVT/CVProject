@@ -15,6 +15,11 @@ namespace DesktopAplicationCV.Services
         {
             return await GetAsync<List<FacturaCompraDetalleModel>>(Endpoint) ?? new List<FacturaCompraDetalleModel>();
         }
+        
+        public async Task<List<FacturaCompraDetalleModel>> GetFactCompraDetallesByIdAsync(int id)
+        {
+            return await GetByIdAsync<List<FacturaCompraDetalleModel>>(Endpoint, id) ?? new List<FacturaCompraDetalleModel>();
+        }
 
         public async Task<bool> AddFactCompraDetalleAsync(FacturaCompraDetalleModel facturaCompraDetalleModel)
         {
@@ -23,7 +28,7 @@ namespace DesktopAplicationCV.Services
 
         public async Task<bool> UpdateFactCompraDetalleAsync(FacturaCompraDetalleModel facturaCompraDetalleModel)
         {
-            return await PutAsync($"{Endpoint}/{facturaCompraDetalleModel.Folio}", facturaCompraDetalleModel);
+            return await PutAsync($"{Endpoint}/{facturaCompraDetalleModel.Id_Factura_Compra_Detalle}", facturaCompraDetalleModel);
         }
 
         public async Task<bool> DeleteFactCompraDetalleAsync(int id)

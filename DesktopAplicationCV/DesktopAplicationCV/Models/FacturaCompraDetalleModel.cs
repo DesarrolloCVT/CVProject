@@ -9,12 +9,19 @@ namespace DesktopAplicationCV.Models
 {
     public  class FacturaCompraDetalleModel
     {
+        private int id_factura_compra_detalle;
         private int folio;
         private string codigo_producto;
         private int cantidad;
         private int precio;
 
         private ICommand buttonCommand;
+
+        public int Id_Factura_Compra_Detalle
+        {
+            get { return this.id_factura_compra_detalle; }
+            set { this.id_factura_compra_detalle = value; }
+        }
 
         public int Folio
         {
@@ -40,8 +47,9 @@ namespace DesktopAplicationCV.Models
             set { this.precio = value; }
         }
 
-        public FacturaCompraDetalleModel(int folio, string codigo_producto, int cantidad, int precio)
+        public FacturaCompraDetalleModel(int id_factura_compra_detalle, int folio, string codigo_producto, int cantidad, int precio)
         {
+            this.Id_Factura_Compra_Detalle = id_factura_compra_detalle;
             this.Folio = folio;
             this.Codigo_Producto = codigo_producto;
             this.Cantidad = cantidad;

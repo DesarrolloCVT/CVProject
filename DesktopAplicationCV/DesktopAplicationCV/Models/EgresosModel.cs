@@ -7,9 +7,9 @@ using System.Windows.Input;
 
 namespace DesktopAplicationCV.Models
 {
-    public class IngresosModel
+    public class EgresosModel
     {
-        private int id_ingreso;
+        private int id_egreso;
         private int folio;
         private string tipo_transaccion;
         private string subtipo_transaccion;
@@ -20,10 +20,10 @@ namespace DesktopAplicationCV.Models
         private string banco;
         private string cuenta;
 
-        public int Id_Ingreso
+        public int Id_Egreso
         {
-            get { return this.id_ingreso; }
-            set { this.id_ingreso = value; }
+            get { return this.id_egreso; }
+            set { this.id_egreso = value; }
         }
 
         public int Folio
@@ -37,7 +37,7 @@ namespace DesktopAplicationCV.Models
             get { return tipo_transaccion; }
             set { this.tipo_transaccion = value; }
         }
-
+        
         public string Subtipo_Transaccion
         {
             get { return subtipo_transaccion; }
@@ -80,9 +80,9 @@ namespace DesktopAplicationCV.Models
             set { this.cuenta = value; }
         }
 
-        public IngresosModel(int id_ingreso, int folio, string tipo_transaccion, string subtipo_transaccion, string moneda, DateTime fecha, string cliente, string metodo_pago, string banco, string cuenta)
+        public EgresosModel(int id_egreso, int folio, string tipo_transaccion, string subtipo_transaccion,  string moneda, DateTime fecha, string cliente, string metodo_pago, string banco, string cuenta)
         {
-            this.Id_Ingreso = id_ingreso;
+            this.Id_Egreso = id_egreso;
             this.Folio = folio;
             this.Tipo_Transaccion = tipo_transaccion;
             this.Subtipo_Transaccion = subtipo_transaccion;
