@@ -20,6 +20,7 @@ namespace DesktopAplicationCV.ViewModel
         private static object _oldType;
         private object NewType;
 
+        private static int IdTipoCeldaSeleccionada;
         private int CodigoCeldaSeleccionada;
         private string NombreTipoCeldaSeleccionada;
         private string TipoCeldaSeleccionada;
@@ -244,6 +245,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is TipoModel tipos)
                 {
+                    //IdTipoCeldaSeleccionada = tipos.Id_Tipo;
                     CodigoCeldaSeleccionada = tipos.Codigo;
                     NombreTipoCeldaSeleccionada = tipos.Nombre;
                     TipoCeldaSeleccionada = tipos.Tipo_Dato;
@@ -314,7 +316,7 @@ namespace DesktopAplicationCV.ViewModel
                 if (CodigoTipoIngresado != 0 && !string.IsNullOrEmpty(NombreTipoIngresado)
                 && !string.IsNullOrEmpty(TipoIngresado) && CuentaTipoIngresado != 0)
                 {
-                    AgregarTipo(new TipoModel(CodigoTipoIngresado, NombreTipoIngresado, TipoIngresado,
+                    AgregarTipo(new TipoModel(IdTipoCeldaSeleccionada, CodigoTipoIngresado, NombreTipoIngresado, TipoIngresado,
                         CuentaTipoIngresado));
                     _navigationService.GoBackAsync();
                 }
@@ -338,7 +340,7 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     try
                     {
-                        OldType = new TipoModel(CodigoCeldaSeleccionada, NombreTipoCeldaSeleccionada,
+                        OldType = new TipoModel(IdTipoCeldaSeleccionada, CodigoCeldaSeleccionada, NombreTipoCeldaSeleccionada,
                             TipoCeldaSeleccionada, CuentaTipoCeldaSeleccionada)
                         {
                             Codigo = CodigoCeldaSeleccionada,
@@ -445,14 +447,16 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditTipo: " + EditTipo);
                 Console.WriteLine("EditCuentaTipo: " + EditCuentaTipo);
 
+                var id = IdTipoCeldaSeleccionada;
                 var cod = EditCodigoTipo;
                 var name = EditNombreTipo;
                 var type = EditTipo;
                 var account = EditCuentaTipo;
 
 
-                NewType = new TipoModel(cod, name, type, account)
+                NewType = new TipoModel(id, cod, name, type, account)
                 {
+                    Id_Tipo = id,
                     Codigo = cod,
                     Nombre = name,
                     Tipo_Dato = type,

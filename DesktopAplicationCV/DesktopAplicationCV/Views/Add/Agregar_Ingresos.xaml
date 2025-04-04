@@ -52,7 +52,7 @@
                    Grid.Row="3" Grid.Column="1"/>
             <Picker ItemsSource="{Binding Subtipos}"
                     ItemDisplayBinding="{Binding Nombre}"
-                    SelectedItem="{Binding SubTipoIngresosIngresadoText}"
+                    SelectedItem="{Binding Test}"
                     Grid.Row="3" Grid.Column="2"/>
             <Label Text="Moneda"
                    FontSize="Small"

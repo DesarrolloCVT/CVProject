@@ -15,5 +15,20 @@ namespace DesktopAplicationCV.Services
         {
             return await GetAsync<List<MonedaModel>>(Endpoint) ?? new List<MonedaModel>();
         }
+
+        public async Task<bool> AddMonedasAsync(MonedaModel moneda)
+        {
+            return await PostAsync(Endpoint, moneda);
+        }
+
+        public async Task<bool> UpdateMonedasAsync(MonedaModel moneda)
+        {
+            return await PutAsync($"{Endpoint}/{moneda.Id_Monedas}", moneda);
+        }
+
+        public async Task<bool> DeleteMonedasAsync(int id)
+        {
+            return await DeleteAsync($"{Endpoint}/{id}");
+        }
     }
 }

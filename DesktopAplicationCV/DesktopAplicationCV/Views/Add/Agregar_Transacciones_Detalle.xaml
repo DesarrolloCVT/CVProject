@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Agregar_Transacciones_Detalle"
+             xmlns:behaviors="clr-namespace:DesktopAplicationCV.Behaviors"
+             BackgroundColor="DarkSlateGray">
+
+    
+
+    <ScrollView Margin="0,100,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Agregar Detalle de Transacciones"
+               Margin="20,0,0,0"
+               FontSize="Medium"
+               TextColor="Silver"
+               FontAttributes="Bold, Italic"
+               Grid.Row="0" Grid.Column="0"
+               Grid.ColumnSpan="1"/>
+
+            <Label Text="Id de transaccion asociada"
+               FontSize="Small"
+               Grid.Row="1" Grid.Column="1"/>
+            <Editor Placeholder="Id de transaccion"
+                Text="{Binding IdTransaccionIngresadoText}"
+                Grid.Row="1" Grid.Column="2"/>
+
+            <Label Text="Folio Factura"
+                   FontSize="Small"
+                   Grid.Row="2" Grid.Column="1"/>
+            <Editor Placeholder="Folio Factura"
+                    Text="{Binding FolioFacturaTransaccionDetalleIngresadoText}"
+                    Grid.Row="2" Grid.Column="2"/>
+            <Label Text="Tipo Factura"
+                   FontSize="Small"
+                   Grid.Row="3" Grid.Column="1"/>
+            <Editor Placeholder="Tipo Factura"
+                    Text="{Binding TipoFacturaTransaccionDetalleIngresadoText}"
+                    Grid.Row="3" Grid.Column="2"/>
+            <Label Text="Monto"
+               FontSize="Small"
+               Grid.Row="4" Grid.Column="1"/>
+            <Entry Placeholder="Monto"
+                   Keyboard="Numeric"
+                    Text="{Binding MontoTransaccionDetalleFormateado, Mode=TwoWay}"
+                    Grid.Row="4" Grid.Column="2">
+                <Entry.Behaviors>
+                    <behaviors:AdvancedCurrencyEntryBehavior 
+                        CultureCode="es-CL"
+                        DecimalPlaces="0"
+                        UseSymbol="True"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Button Text="Insertar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="#0288D1"
+                Grid.Row="6" Grid.Column="1"
+                Grid.ColumnSpan="1"
+                Command="{Binding InsertarTransaccionesDetalleCommand}"/>
+            <Button Text="Cancelar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="#0288D1"
+                Grid.Row="6" Grid.Column="2"
+                Grid.ColumnSpan="1"
+                Command="{Binding CancelarCommand}"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

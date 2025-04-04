@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Agregar_Transacciones"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="DarkSlateGray"
+             Title="Transacciones">
+    <ScrollView Margin="0,75,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Agregar Transacciones"
+               Margin="20,0,0,0"
+               FontSize="Medium"
+               TextColor="Silver"
+               FontAttributes="Bold, Italic"
+               Grid.Row="0" Grid.Column="0"
+               Grid.ColumnSpan="1"/>
+
+            <Label Text="Folio"
+               FontSize="Small"
+               Grid.Row="1" Grid.Column="1"/>
+            <Editor Placeholder="Folio"
+                Text="{Binding FolioTransaccionIngresadoText}"
+                Grid.Row="1" Grid.Column="2"/>
+            <Label Text="Tipo"
+               FontSize="Small"
+               Grid.Row="2" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Tipos}"
+                    ItemDisplayBinding="{Binding Tipo_Dato}"
+                    SelectedItem="{Binding TipoSeleccionado, Mode=TwoWay}"
+                    Grid.Row="2" Grid.Column="2">
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Focused"
+                        Command="{Binding CargarSubTiposCommand}" />
+                </Picker.Behaviors>
+            </Picker>
+            <Label Text="Sub Tipo"
+               FontSize="Small"
+               Grid.Row="3" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Subtipos}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding SubTipoSeleccionado, Mode=TwoWay}"
+                    Grid.Row="3" Grid.Column="2">
+            </Picker>
+            <Label Text="Moneda"
+               FontSize="Small"
+               Grid.Row="4" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Monedas}"
+                ItemDisplayBinding="{Binding Nombre}"
+                SelectedItem="{Binding MonedaSeleccionado, Mode=TwoWay}"
+                Grid.Row="4" Grid.Column="2"/>
+            <Label Text="Fecha"
+               FontSize="Small"
+               Grid.Row="5" Grid.Column="1"/>
+            <DatePicker Grid.Row="5" Grid.Column="2"
+                    x:Name="PkrFecha"
+                    Date="{Binding FechaTransaccionIngresadoText}"
+                    Format="dd-mm-yyyy"/>
+            <Label Text="Cliente"
+               FontSize="Small"
+               Grid.Row="6" Grid.Column="1"/>         
+            <Picker ItemsSource="{Binding Cliente}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding ClienteSeleccionado, Mode=TwoWay}"
+                    Grid.Row="6" Grid.Column="2"/>
+            <Label Text="Metodo de Pago"
+               FontSize="Small"
+               Grid.Row="7" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Metodopagos}"
+                ItemDisplayBinding="{Binding Nombre}"
+                SelectedItem="{Binding MetodoPagoSeleccionado, Mode=TwoWay}"
+                Grid.Row="7" Grid.Column="2"/>
+            <Label Text="Banco"
+               FontSize="Small"
+               Grid.Row="8" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Bancos}"
+                ItemDisplayBinding="{Binding Nombre}"
+                SelectedItem="{Binding BancoSeleccionado, Mode=TwoWay}"
+                Grid.Row="8" Grid.Column="2"/>
+            <Label Text="Cuenta"
+               FontSize="Small"
+               Grid.Row="9" Grid.Column="1"/>
+            <Picker ItemsSource="{Binding Cuentas}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding CuentasSeleccionado, Mode=TwoWay}"
+                    Grid.Row="9" Grid.Column="2"/>
+            <Button Text="Insertar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="#0288D1"
+                Grid.Row="11" Grid.Column="1"
+                Grid.ColumnSpan="1"
+                Command="{Binding InsertarTransaccionesCommand}"/>
+            <Button Text="Cancelar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="#0288D1"
+                Grid.Row="11" Grid.Column="2"
+                Grid.ColumnSpan="1"
+                Command="{Binding CancelarCommand}"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

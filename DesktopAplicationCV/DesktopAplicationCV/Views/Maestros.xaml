@@ -27,10 +27,22 @@
             <ShellContent
                 ContentTemplate="{DataTemplate local:Tipo}" />
         </Tab>
-        <Tab Title="{x:Static recursos:AppResources.BancoDetalle}">
+        <Tab Title="{x:Static recursos:AppResources.SubTipos}">
+            <ShellContent
+        ContentTemplate="{DataTemplate local:Subtipos}" />
+        </Tab>
+        <Tab Title="{x:Static recursos:AppResources.Metodo_Pago}">
+            <ShellContent
+        ContentTemplate="{DataTemplate local:Metodo_Pago}" />
+        </Tab>
+        <Tab Title="{x:Static recursos:AppResources.Moneda}">
+            <ShellContent
+                ContentTemplate="{DataTemplate local:Monedas}" />
+        </Tab>
+        <!--Tab Title="{x:Static recursos:AppResources.BancoDetalle}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Banco_Detalle}" />
-        </Tab>
+        </Tab-->
         <Tab Title="{x:Static recursos:AppResources.Cuentas}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Cuentas}" />

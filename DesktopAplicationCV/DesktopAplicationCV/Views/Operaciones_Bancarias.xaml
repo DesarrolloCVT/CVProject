@@ -12,13 +12,13 @@
     </Shell.ToolbarItems-->
 
     <TabBar>
-        <Tab Title="{x:Static recursos:AppResources.Ingresos}">
+        <Tab Title="{x:Static recursos:AppResources.Transacciones}">
             <ShellContent
-                ContentTemplate="{DataTemplate local:Ingresos}" />
+                ContentTemplate="{DataTemplate local:Transacciones}" />
         </Tab>
-        <Tab Title="{x:Static recursos:AppResources.Egreso}">
+        <!--Tab Title="{x:Static recursos:AppResources.Egreso}">
             <ShellContent
                 ContentTemplate="{DataTemplate local:Egresos}" />
-        </Tab>
+        </Tab-->
     </TabBar>
 </Shell>

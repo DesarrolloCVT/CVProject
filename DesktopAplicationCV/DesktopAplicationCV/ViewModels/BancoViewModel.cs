@@ -185,6 +185,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is BancoModel banco)
                 {
+                    IdBancoCeldaSeleccionada = banco.Id_Banco;
                     CodigoCeldaSeleccionada = banco.Codigo;
                     NombreBancoCeldaSeleccionada = banco.Nombre;
                     // Aquí puedes manejar la lógica de negocio sin tocar la vista
@@ -252,7 +253,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (CodigoBancoIngresado != 0 && !string.IsNullOrEmpty(NombreBancoIngresado))
                 {
-                    AgregarBanco(new BancoModel(IdBancoCeldaSeleccionada, CodigoBancoIngresado, NombreBancoIngresado));
+                    AgregarBanco(new BancoModel(0, CodigoBancoIngresado, NombreBancoIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else

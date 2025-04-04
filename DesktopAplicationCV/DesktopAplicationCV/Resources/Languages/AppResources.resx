@@ -180,6 +180,12 @@
   <data name="IngresosDetalle" xml:space="preserve">
     <value>Detalle de Ingresos</value>
   </data>
+  <data name="Metodo_Pago" xml:space="preserve">
+    <value>Metodo de Pago</value>
+  </data>
+  <data name="Moneda" xml:space="preserve">
+    <value>Monedas</value>
+  </data>
   <data name="NombreProyecto" xml:space="preserve">
     <value>CV Project</value>
   </data>
@@ -198,8 +204,17 @@
   <data name="SocioNegocio" xml:space="preserve">
     <value>Socio de Negocio</value>
   </data>
+  <data name="SubTipos" xml:space="preserve">
+    <value>SubTipo</value>
+  </data>
   <data name="Tipo" xml:space="preserve">
     <value>Tipo</value>
+  </data>
+  <data name="TransaccionDetalle" xml:space="preserve">
+    <value>Transaccion Detalle</value>
+  </data>
+  <data name="Transacciones" xml:space="preserve">
+    <value>Transacciones</value>
   </data>
   <data name="Usuario" xml:space="preserve">
     <value>Usuario:</value>

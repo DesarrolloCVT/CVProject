@@ -8,7 +8,25 @@ namespace DesktopAplicationCV.Models
 {
     public class MonedaModel
     {
-        public int Id_Monedas { get; set; }
-        public string Nombre { get; set; }
+        private int id_monedas { get; set; }
+        private string nombre { get; set; }
+
+        public int Id_Monedas
+        {
+            get { return this.id_monedas; }
+            set { this.id_monedas = value; }
+        }
+
+        public string Nombre
+        {
+            get { return this.nombre; }
+            set { this.nombre = value; }
+        }
+
+        public MonedaModel(int id_monedas, string nombre)
+        {
+            this.Id_Monedas = id_monedas;
+            this.Nombre = nombre;
+        }
     }
 }

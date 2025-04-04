@@ -91,6 +91,9 @@
 	  <Compile Update="Views\Add\Agregar_Socio_Negocio.xaml.cs">
 	    <DependentUpon>Agregar_Socio_Negocio.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Add\Agregar_Subtipo.xaml.cs">
+	    <DependentUpon>Agregar_Subtipo.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Edit\Editar_Socio_Negocio.xaml.cs">
 	    <DependentUpon>Editar_Socio_Negocio.xaml</DependentUpon>
 	  </Compile>
@@ -140,10 +143,25 @@
 	  <MauiXaml Update="Views\Add\Agregar_Ingresos_Detalle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Add\Agregar_Metodo_Pago.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Add\Agregar_Monedas.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Add\Agregar_Productos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Add\Agregar_Subtipo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Add\Agregar_Tipo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Add\Agregar_Transacciones.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Add\Agregar_Transacciones_Detalle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Banco.xaml">
@@ -188,13 +206,28 @@
 	  <MauiXaml Update="Views\Edit\Editar_Ingresos_Detalle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Edit\Editar_Metodo_Pago.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Edit\Editar_Monedas.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Edit\Editar_Productos.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Edit\Editar_Socio_Negocio.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Edit\Editar_Subtipos.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Edit\Editar_Tipo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Edit\Editar_Transacciones.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Edit\Editar_Transacciones_Detalle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Egresos.xaml">
@@ -230,6 +263,9 @@
 	  <MauiXaml Update="Views\MenuPrincipal.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Monedas.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Operaciones_Bancarias.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -242,7 +278,16 @@
 	  <MauiXaml Update="Views\Add\Agregar_Socio_Negocio.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Subtipos.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Tipo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Transacciones.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Transacciones_Detalle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

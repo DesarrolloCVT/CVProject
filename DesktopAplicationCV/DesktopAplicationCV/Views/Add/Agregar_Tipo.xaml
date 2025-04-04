@@ -17,7 +17,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -65,36 +65,6 @@
             <Editor Placeholder="Cuenta"
                     Text="{Binding CuentaTipoIngresado}"
                     Grid.Row="4" Grid.Column="2"/>
-            <Label Text="Pago de Factura"
-                   FontSize="Small"
-                   Grid.Row="5" Grid.Column="1"/>
-            <Editor Placeholder="Pago de Factura"
-                    Text="{Binding PagoFacturaTipoIngresado}"
-                    Grid.Row="5" Grid.Column="2"/>
-            <Label Text="Gasto de Comercializacion"
-                   FontSize="Small"
-                   Grid.Row="6" Grid.Column="1"/>
-            <Editor Placeholder="Gasto de Comercializacion"
-                    Text="{Binding GastoComercializacionTipoIngresado}"
-                    Grid.Row="6" Grid.Column="2"/>
-            <Label Text="Comisiones"
-                   FontSize="Small"
-                   Grid.Row="7" Grid.Column="1"/>
-            <Editor Placeholder="Comisiones"
-                    Text="{Binding ComisionesTipoIngresado}"
-                    Grid.Row="7" Grid.Column="2"/>
-            <Label Text="Gasto Financiero"
-                   FontSize="Small"
-                   Grid.Row="8" Grid.Column="1"/>
-            <Editor Placeholder="Gasto Financiero"
-                    Text="{Binding GastoFinancieroTipoIngresado}"
-                    Grid.Row="8" Grid.Column="2"/>
-            <Label Text="Anticipo"
-                   FontSize="Small"
-                   Grid.Row="9" Grid.Column="1"/>
-            <Editor Placeholder="Anticipo"
-                    Text="{Binding AnticipoTipoIngresado}"
-                    Grid.Row="9" Grid.Column="2"/>
             <Button Text="Ingresar"
                     TextColor="White"
                     WidthRequest="200"

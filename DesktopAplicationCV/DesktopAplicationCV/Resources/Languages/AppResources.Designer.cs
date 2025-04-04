@@ -250,6 +250,24 @@ namespace DesktopAplicationCV.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Metodo de Pago.
+        /// </summary>
+        public static string Metodo_Pago {
+            get {
+                return ResourceManager.GetString("Metodo_Pago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monedas.
+        /// </summary>
+        public static string Moneda {
+            get {
+                return ResourceManager.GetString("Moneda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CV Project.
         /// </summary>
         public static string NombreProyecto {
@@ -304,11 +322,38 @@ namespace DesktopAplicationCV.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SubTipo.
+        /// </summary>
+        public static string SubTipos {
+            get {
+                return ResourceManager.GetString("SubTipos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tipo.
         /// </summary>
         public static string Tipo {
             get {
                 return ResourceManager.GetString("Tipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaccion Detalle.
+        /// </summary>
+        public static string TransaccionDetalle {
+            get {
+                return ResourceManager.GetString("TransaccionDetalle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transacciones.
+        /// </summary>
+        public static string Transacciones {
+            get {
+                return ResourceManager.GetString("Transacciones", resourceCulture);
             }
         }
         

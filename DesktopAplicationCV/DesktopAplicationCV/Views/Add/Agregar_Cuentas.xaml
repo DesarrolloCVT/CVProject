@@ -51,6 +51,9 @@
                 <Picker.Items>
                     <x:String>Corriente</x:String>
                     <x:String>Vista</x:String>
+                    <x:String>Ahorro</x:String>
+                    <x:String>Cuenta Rut</x:String>
+                    <x:String>Cuenta Chequera Electronica</x:String>
                 </Picker.Items>
             </Picker>
             <Button Text="Insertar"

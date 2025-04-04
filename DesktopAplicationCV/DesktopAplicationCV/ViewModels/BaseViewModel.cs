@@ -16,8 +16,8 @@ namespace DesktopAplicationCV.ViewModel
         /*[ObservableProperty]
         private ObservableCollection<string> monedas;*/
 
-        [ObservableProperty]
-        private ObservableCollection<string> tipos;
+        /*[ObservableProperty]
+        private ObservableCollection<string> tipos;*/
 
         [ObservableProperty]
         private ObservableCollection<string> motivoIngreso;
@@ -30,7 +30,7 @@ namespace DesktopAplicationCV.ViewModel
 
         public BaseViewModel()
         {
-            Tipos = new ObservableCollection<string> { "Ingreso", "Egreso" };
+            //Tipos = new ObservableCollection<string> { "Ingreso", "Egreso" };
             //Monedas = new ObservableCollection<string> { "USD", "EUR", "CLP" };
             MotivoIngreso = new ObservableCollection<string> { "Pago de Factura" , "Devolucion de Dinero" };
             MotivoEgreso = new ObservableCollection<string> { "Pago de Factura" , "Gasto de Comercializacion", "Comisiones" , "Gasto Financiero" , "Anticipo" };

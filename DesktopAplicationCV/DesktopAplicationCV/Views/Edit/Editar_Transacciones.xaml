@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Editar_Transacciones"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             BackgroundColor="DarkSlateGray">
+    <ScrollView Margin="0,70,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Editar Transacciones"
+               Margin="20,0,0,0"
+               FontSize="Medium"
+               TextColor="Silver"
+               FontAttributes="Bold, Italic"
+               Grid.Row="0" Grid.Column="0"
+               Grid.ColumnSpan="1"/>
+
+            <!--FOLIO-->
+            <Label 
+            Text="Folio"
+            FontSize="Small"
+            Grid.Row="1" Grid.Column="1"/>
+            <Editor
+            x:Name="EditFolio"
+            Text="{Binding EditFolioTransaccion}"
+            Placeholder="Folio"
+            Grid.Row="1" Grid.Column="2"/>
+
+            <!--TIPO-->
+            <Label Text="Tipo"
+               FontSize="Small"
+               Grid.Row="2" Grid.Column="1"
+               FontAttributes="Bold"/>
+            <Picker 
+                x:Name="PkrTipo"
+                ItemsSource="{Binding Tipos}"
+                ItemDisplayBinding="{Binding Tipo_Dato}"
+                SelectedItem="{Binding TipoSeleccionado, Mode=TwoWay}"
+                Grid.Row="2" Grid.Column="2">
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="Focused"
+                        Command="{Binding CargarSubTiposCommand}" />
+                </Picker.Behaviors>
+            </Picker>
+
+            <!--SUBTIPO-->
+            <Label 
+                Text="SubTipo"
+                FontSize="Small"
+                Grid.Row="3" Grid.Column="1"/>
+            <Picker 
+                x:Name="PkrSubTipo"
+                ItemsSource="{Binding Subtipos}"
+                ItemDisplayBinding="{Binding Nombre}"
+                SelectedItem="{Binding SubTipoSeleccionado, Mode=TwoWay}"
+                Grid.Row="3" Grid.Column="2">
+            </Picker>
+
+            <!--MONEDA-->
+            <Label 
+                Text="Moneda"
+                FontSize="Small"
+                Grid.Row="4" Grid.Column="1"/>
+            <Editor
+                x:Name="EditMoneda"
+                Text="{Binding EditMonedaTransaccion}"
+                Placeholder="Moneda"
+                Grid.Row="4" Grid.Column="2"/>
+
+            <!--FECHA-->
+            <Label 
+                Text="Fecha"
+                FontSize="Small"
+                Grid.Row="5" Grid.Column="1"/>
+
+            <DatePicker
+                x:Name="PkrFecha"
+                Date="{Binding EditFechaTransaccion}"
+                Grid.Row="5" Grid.Column="2">
+            </DatePicker>
+            <!--Editor
+                x:Name="EditFecha"
+                Text="{Binding EditFechaTransaccion}"
+                Placeholder="Fecha"
+                Grid.Row="5" Grid.Column="2"/-->
+
+            <!--CLIENTE-->
+            <Label 
+                Text="Cliente"
+                FontSize="Small"
+                Grid.Row="6" Grid.Column="1"/>
+            <Editor
+                x:Name="EditCliente"
+                Text="{Binding EditClienteTransaccion}"
+                Placeholder="Cliente"
+                Grid.Row="6" Grid.Column="2"/>
+
+            <!--METODO DE PAGO-->
+            <Label 
+                Text="Metodo de Pago"
+                FontSize="Small"
+                Grid.Row="7" Grid.Column="1"/>
+            <Editor
+                x:Name="EditMetodoPago"
+                Text="{Binding EditMetodoPagoTransaccion}"
+                Placeholder="Metodo de Pago"
+                Grid.Row="7" Grid.Column="2"/>
+            
+            <!--BANCO-->
+            <Label 
+                Text="Banco"
+                FontSize="Small"
+                Grid.Row="8" Grid.Column="1"/>
+            <Editor
+                x:Name="EditBanco"
+                Text="{Binding EditBancoTransaccion}"
+                Placeholder="Banco"
+                Grid.Row="8" Grid.Column="2"/>
+
+            <!--CUENTA-->
+            <Label 
+                Text="Cuenta"
+                FontSize="Small"
+                Grid.Row="9" Grid.Column="1"/>
+            
+            <Editor
+                x:Name="EditCuenta"
+                Text="{Binding EditCuentaTransaccion}"
+                Placeholder="Cuenta"
+                Grid.Row="9" Grid.Column="2"/>
+
+            <!--BOTONES-->
+            <Button 
+                Text="Modificar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="#0288D1"
+                Grid.Row="11" Grid.Column="1"
+                Grid.ColumnSpan="1"
+                Command="{Binding UpdateCommand}"/>
+            <Button Text="Cancelar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="#0288D1"
+                Grid.Row="11" Grid.Column="2"
+                Grid.ColumnSpan="1"
+                Command="{Binding CancelarCommand}"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DesktopAplicationCV.Views.Agregar_Subtipo"
+             BackgroundColor="DarkSlateGray">
+    <ScrollView Margin="0,100,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Agregar Metodo de Pago"
+           Margin="20,0,0,0"
+           FontSize="Medium"
+           TextColor="Silver"
+           FontAttributes="Bold, Italic"
+           Grid.Row="0" Grid.Column="0"
+           Grid.ColumnSpan="1"/>
+
+            <Label Text="Identificador"
+                   FontSize="Small"
+                   Grid.Row="1" Grid.Column="1"/>
+
+            <Picker x:Name="PkrTipo"
+                    SelectedItem="{Binding IdentificadorSubTipoIngresadoText}"
+                    Grid.Row="1" Grid.Column="2">
+                <Picker.Items>
+                    <x:String>Ingreso</x:String>
+                    <x:String>Egreso</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!--Editor WidthRequest="150"
+                    Text="{Binding IdentificadorSubTipoIngresadoText}"
+                    Placeholder="Ingreso o Egreso"
+                    Grid.Row="1" Grid.Column="2"/-->
+
+            <Label Text="Nombre"
+                   FontSize="Small"
+                   Grid.Row="2" Grid.Column="1"/>
+            <Editor 
+                Text="{Binding NombreSubTipoIngresadoText}"
+                Placeholder="Nombre"
+                Grid.Row="2" Grid.Column="2"/>
+            
+            <Button Text="Insertar"
+                    TextColor="White"
+                    WidthRequest="200"
+                    FontAttributes="Bold"
+                    BackgroundColor="#0288D1"
+                    Grid.Row="4" Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    Command="{Binding InsertarSubTipoCommand}"/>
+            <Button 
+                Text="Cancelar"
+                TextColor="White"
+                WidthRequest="200"
+                FontAttributes="Bold"
+                BackgroundColor="#0288D1"
+                Grid.Row="4" Grid.Column="2"
+                Grid.ColumnSpan="1"
+                Command="{Binding CancelarCommand}"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

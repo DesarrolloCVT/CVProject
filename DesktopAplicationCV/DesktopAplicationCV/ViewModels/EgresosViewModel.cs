@@ -31,6 +31,9 @@ namespace DesktopAplicationCV.ViewModels
         [ObservableProperty]
         private List<MetodoPagoModel> _metodopagos;
 
+        [ObservableProperty]
+        private List<BancoModel> _bancos;
+
         private static object _oldEgreso;
         private object NewEgreso;
 
@@ -614,9 +617,10 @@ namespace DesktopAplicationCV.ViewModels
         {
             try
             {
+                /*Bancos = await _apiService.GetBancosAsync();
                 Monedas = await _apiService.GetMonedasAsync();
                 Metodopagos = await _apiService.GetMetodoPagoAsync();
-                Subtipos = await _egresoService.GetSubtiposFilterByIdAsync("egreso");
+                Subtipos = await _egresoService.GetSubtiposFilterByIdAsync("egreso");*/
             }
             catch (Exception Ex)
             {

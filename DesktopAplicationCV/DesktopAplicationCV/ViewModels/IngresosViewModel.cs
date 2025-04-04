@@ -514,7 +514,7 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch(Exception Ex)
             {
-                Console.WriteLine("Error InsertarIngresos IngresosViewModel: " + Ex.Message);
+                Console.WriteLine("Error InsertarTransaccionesDetalle IngresosViewModel: " + Ex.Message);
             }
         }
 
@@ -602,10 +602,10 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                Bancos = await _apiService.GetBancosAsync();
+                /*Bancos = await _apiService.GetBancosAsync();
                 Monedas = await _apiService.GetMonedasAsync();
                 Metodopagos = await _apiService.GetMetodoPagoAsync();
-                Subtipos = await _ingresoService.GetSubtiposFilterByIdAsync("ingreso");
+                Subtipos = await _ingresoService.GetSubtiposFilterByIdAsync("ingreso");*/
             }
             catch (Exception Ex)
             {
@@ -629,7 +629,7 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch (Exception Ex) 
             {
-                Console.WriteLine("Error AgregarIngresos IngresosViewModel: " + Ex.Message);
+                Console.WriteLine("Error AgregarTransaccionesDetalle IngresosViewModel: " + Ex.Message);
             }
         }
 
@@ -648,7 +648,7 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch (Exception Ex) 
             {
-                Console.WriteLine("Error EliminarIngresos IngresosViewModel: " + Ex.Message);
+                Console.WriteLine("Error EliminarTransacciones IngresosViewModel: " + Ex.Message);
             }
         }
 
@@ -722,7 +722,7 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch (Exception Ex) 
             {
-                Console.WriteLine("Error ActualizarIngresos IngresosViewModel: " + Ex.Message);
+                Console.WriteLine("Error ActualizarTransacciones IngresosViewModel: " + Ex.Message);
             }
         }
     }

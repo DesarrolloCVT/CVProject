@@ -83,9 +83,10 @@
             <Label Text="Banco"
                FontSize="Small"
                Grid.Row="8" Grid.Column="1"/>
-            <Editor Placeholder="Banco"
-                Text="{Binding BancoEgresosIngresadoText}"
-                Grid.Row="8" Grid.Column="2"/>
+            <Picker ItemsSource="{Binding Bancos}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding BancoIngresosIngresadoText}"
+                    Grid.Row="8" Grid.Column="2"/>
             <Label Text="Cuenta"
                FontSize="Small"
                Grid.Row="9" Grid.Column="1"/>

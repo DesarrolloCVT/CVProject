@@ -18,8 +18,8 @@ namespace DesktopAplicationCV.Services
         {
             _httpClient = new HttpClient
             {
-                //BaseAddress = new Uri("https://localhost:44374/api/")
-                BaseAddress = new Uri("https://localhost:8443/api/") 
+                BaseAddress = new Uri("https://localhost:44374/api/")
+                //BaseAddress = new Uri("https://localhost:8443/api/") 
             };
 
             _jsonOptions = new JsonSerializerOptions
@@ -64,54 +64,6 @@ namespace DesktopAplicationCV.Services
         {
             var response = await _httpClient.DeleteAsync(endpoint);
             return response.IsSuccessStatusCode;
-        }
-
-        public async Task<List<MonedaModel>> GetMonedasAsync()
-        {
-            var response = await _httpClient.GetAsync("Monedas");
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<MonedaModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<MonedaModel>();
-            }
-
-            return new List<MonedaModel>();
-        }
-
-        public async Task<List<SubtiposModel>> GetSubtiposAsync()
-        {
-            var response = await _httpClient.GetAsync("Subtipos");
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<SubtiposModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<SubtiposModel>();
-            }
-
-            return new List<SubtiposModel>();
-        }
-
-        public async Task<List<MetodoPagoModel>> GetMetodoPagoAsync()
-        {
-            var response = await _httpClient.GetAsync("MetodoPago");
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<MetodoPagoModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<MetodoPagoModel>();
-            }
-
-            return new List<MetodoPagoModel>();
-        }
-
-        public async Task<List<BancoModel>> GetBancosAsync()
-        {
-            var response = await _httpClient.GetAsync("Banco");
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<BancoModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<BancoModel>();
-            }
-
-            return new List<BancoModel>();
         }
     }
 }

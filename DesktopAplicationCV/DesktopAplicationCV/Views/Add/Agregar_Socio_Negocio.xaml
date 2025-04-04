@@ -9,7 +9,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="80"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
@@ -57,7 +57,6 @@
                    FontAttributes="Bold"/>
             <Picker x:Name="PkrTipo"
                     SelectedItem="{Binding TipoSocioIngresado}"
-                    Title="Seleccione Tipo de Socio"
                     WidthRequest="300"
                     Grid.Row="3" Grid.Column="2">
             <Picker.Items>
