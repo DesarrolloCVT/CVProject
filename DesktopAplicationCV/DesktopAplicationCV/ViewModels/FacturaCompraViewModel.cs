@@ -19,16 +19,23 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        [ObservableProperty]
+        private List<MonedaModel> _monedas;
+
+        [ObservableProperty]
+        private List<SocioNegocioModel> _proveedor;
+
         private static object _oldFacturaCompra;
         private object NewFacturaCompra;
 
-        private int IdFactCompraCeldaSeleccionada;
+        private static int IdFactCompraCeldaSeleccionada;
         private int FolioCeldaSeleccionada;
         private string ProveedorFactCompraCeldaSeleccionada;
         private DateTime FechaFactCompraCeldaSeleccionada;
         private string MonedaFactCompraCeldaSeleccionada;
 
         private readonly INavigationService _navigationService;
+        private readonly AuxService _auxService;
         private readonly FacturaCompraService _facturaCompraService;
 
         [ObservableProperty]
@@ -37,6 +44,9 @@ namespace DesktopAplicationCV.ViewModel
         private ObservableCollection<FacturaCompraModel> facturaCompra;
 
         private string _filterText;
+
+        private SocioNegocioModel _proveedorSeleccionado;
+        private MonedaModel _monedaSeleccionado;
 
         private int _folioFactCompraIngresadoText;
         private string _proveedorFactCompraIngresadoText;
@@ -214,22 +224,59 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        public SocioNegocioModel ProveedorSeleccionado
+        {
+            get => _proveedorSeleccionado;
+            set
+            {
+                if (_proveedorSeleccionado != value)
+                {
+                    _proveedorSeleccionado = value;
+                    ProveedorFactCompraIngresado = value.Nombre.Trim();
+                    EditProveedorFactCompra = value.Nombre.Trim();
+                    OnPropertyChanged(nameof(ProveedorSeleccionado));
+                    OnPropertyChanged(nameof(ProveedorFactCompraIngresado)); // Para actualizar la vista
+                }
+            }
+        }
+
+        public MonedaModel MonedaSeleccionado
+        {
+            get => _monedaSeleccionado;
+            set
+            {
+                if (_monedaSeleccionado != value)
+                {
+                    _monedaSeleccionado = value;
+                    MonedaFactCompraIngresado = value.Nombre.Trim();
+                    EditMonedaFactCompra = value.Nombre.Trim();
+                    OnPropertyChanged(nameof(MonedaSeleccionado));
+                    OnPropertyChanged(nameof(MonedaFactCompraIngresado)); // Para actualizar la vista
+                }
+            }
+        }
+
+
         #endregion
 
         #region Constructores
 
-        public FacturaCompraViewModel(INavigationService navigationService)
+        public FacturaCompraViewModel(INavigationService navigationService, AuxService auxService)
         {
             _facturaCompraService = new FacturaCompraService();
+            _auxService = auxService;
             facturaCompra = new ObservableCollection<FacturaCompraModel>();
 
             _navigationService = navigationService;
             CargarFacturaCompra();
+            CargarComboBoxes();
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
 
         #endregion
+
+        #region Metodos 
 
         [RelayCommand]
         public void Cancelar()
@@ -261,6 +308,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is FacturaCompraModel facturaCompraModel)
                 {
+                    IdFactCompraCeldaSeleccionada = facturaCompraModel.Id_Factura_Compra;
                     FolioCeldaSeleccionada = facturaCompraModel.Folio;
                     ProveedorFactCompraCeldaSeleccionada = facturaCompraModel.Proveedor;
                     FechaFactCompraCeldaSeleccionada = facturaCompraModel.Fecha;
@@ -294,7 +342,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarFacturaCompra(FolioCeldaSeleccionada);
+                    EliminarFacturaCompra(IdFactCompraCeldaSeleccionada);
                     CargarFacturaCompra();
                 }
                 else
@@ -378,13 +426,14 @@ namespace DesktopAplicationCV.ViewModel
         }
 
         [RelayCommand]
-        private void Detalles()
+        private async void Detalles()
         {
             try
             {
                 if (selectedIndex >= 0)
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Has seleccionado una Fila Valida", "Ok");
+                    await _navigationService.NavigateToAsync<NavigationViewModel>("Factura_Compra_Detalle",IdFactCompraCeldaSeleccionada);
+                    //Application.Current.MainPage.DisplayAlert("Alerta", "Has seleccionado una Fila Valida", "Ok");
                 }
                 else
                 {
@@ -393,7 +442,7 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch (Exception Ex)
             {
-
+                Console.WriteLine("ERROR: Detalles ViewModelFacturaCompra: " + Ex.Message);
             }
         }
 
@@ -411,6 +460,20 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex) 
             {
                 Console.WriteLine("Error CargarFacturaCompra FacturaCompraViewModel: " + Ex.Message);
+            }
+        }
+
+        private async Task CargarComboBoxes()
+        {
+            var tipo = "Proveedor";
+            try
+            {
+                Proveedor = await _auxService.GetSocioNegociosFilterByIdAsync(tipo);
+                Monedas = await _auxService.GetMonedasAsync();
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine("Error CargarComboBoxes FacturaComprasViewModel: " + Ex.Message);
             }
         }
 
@@ -434,13 +497,13 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task EliminarFacturaCompra(int folio)
+        private async Task EliminarFacturaCompra(int id)
         {
             try
             {
-                if (await _facturaCompraService.DeleteFacturaCompraAsync(folio))
+                if (await _facturaCompraService.DeleteFacturaCompraAsync(id))
                 {
-                    var factCompra = facturaCompra.FirstOrDefault(p => p.Folio == folio);
+                    var factCompra = facturaCompra.FirstOrDefault(p => p.Id_Factura_Compra == id);
                     if (factCompra != null)
                     {
                         facturaCompra.Remove(factCompra);
@@ -459,7 +522,6 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarFacturaCompra((FacturaCompraModel)OldFacturaCompra);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex) 
@@ -477,7 +539,7 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditFechaFactCompra: " + EditFechaFactCompra);
                 Console.WriteLine("EditMonedaFactCompra: " + EditMonedaFactCompra);
 
-                var id = EditIdFactCompra;
+                var id = IdFactCompraCeldaSeleccionada;
                 var folio = EditFolioFactCompra;
                 var proveedor = EditProveedorFactCompra;
                 var fecha = EditFechaFactCompra;
@@ -499,11 +561,17 @@ namespace DesktopAplicationCV.ViewModel
 
                     //Add new product
                     facturaCompra.Add((FacturaCompraModel)NewFacturaCompra);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                }
+                else 
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error al editar. ", "Ok");
                 }
             }
             catch (Exception Ex) {
                 Console.WriteLine("Error ActualizarFacturaCompra FacturaCompraViewModel: " + Ex.Message);
             }
         }
+        #endregion
     }
 }

@@ -82,11 +82,16 @@
                 Text="Moneda"
                 FontSize="Small"
                 Grid.Row="4" Grid.Column="1"/>
-            <Editor
+            <!--Editor
                 x:Name="EditMoneda"
                 Text="{Binding EditMonedaTransaccion}"
                 Placeholder="Moneda"
-                Grid.Row="4" Grid.Column="2"/>
+                Grid.Row="4" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Monedas}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding MonedaSeleccionado, Mode=TwoWay}"
+                    x:Name="PkrMoneda"
+                    Grid.Row="4" Grid.Column="2"/>
 
             <!--FECHA-->
             <Label 
@@ -110,33 +115,48 @@
                 Text="Cliente"
                 FontSize="Small"
                 Grid.Row="6" Grid.Column="1"/>
-            <Editor
+            <!--Editor
                 x:Name="EditCliente"
                 Text="{Binding EditClienteTransaccion}"
                 Placeholder="Cliente"
-                Grid.Row="6" Grid.Column="2"/>
+                Grid.Row="6" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Cliente}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding ClienteSeleccionado, Mode=TwoWay}"
+                    x:Name="PkrCliente"
+                    Grid.Row="6" Grid.Column="2"/>
 
             <!--METODO DE PAGO-->
             <Label 
                 Text="Metodo de Pago"
                 FontSize="Small"
                 Grid.Row="7" Grid.Column="1"/>
-            <Editor
+            <!--Editor
                 x:Name="EditMetodoPago"
                 Text="{Binding EditMetodoPagoTransaccion}"
                 Placeholder="Metodo de Pago"
-                Grid.Row="7" Grid.Column="2"/>
+                Grid.Row="7" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Metodopagos}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding MetodoPagoSeleccionado, Mode=TwoWay}"
+                    x:Name="PkrMetodoPago"
+                    Grid.Row="7" Grid.Column="2"/>
             
             <!--BANCO-->
             <Label 
                 Text="Banco"
                 FontSize="Small"
                 Grid.Row="8" Grid.Column="1"/>
-            <Editor
+            <!--Editor
                 x:Name="EditBanco"
                 Text="{Binding EditBancoTransaccion}"
                 Placeholder="Banco"
-                Grid.Row="8" Grid.Column="2"/>
+                Grid.Row="8" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Bancos}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding BancoSeleccionado, Mode=TwoWay}"
+                    x:Name="PkrBanco"
+                    Grid.Row="8" Grid.Column="2"/>
 
             <!--CUENTA-->
             <Label 
@@ -144,11 +164,16 @@
                 FontSize="Small"
                 Grid.Row="9" Grid.Column="1"/>
             
-            <Editor
+            <!--Editor
                 x:Name="EditCuenta"
                 Text="{Binding EditCuentaTransaccion}"
                 Placeholder="Cuenta"
-                Grid.Row="9" Grid.Column="2"/>
+                Grid.Row="9" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Cuentas}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding CuentasSeleccionado, Mode=TwoWay}"
+                    x:Name="PkrCuenta"
+                    Grid.Row="9" Grid.Column="2"/>
 
             <!--BOTONES-->
             <Button 

@@ -23,7 +23,7 @@ namespace DesktopAplicationCV.Services
 
         public async Task<bool> UpdateFactVentaAsync(FacturaVentaModel facturaVentaModel)
         {
-            return await PutAsync($"{Endpoint}/{facturaVentaModel.Folio}", facturaVentaModel);
+            return await PutAsync($"{Endpoint}/{facturaVentaModel.Id_Factura_Venta}", facturaVentaModel);
         }
 
         public async Task<bool> DeleteFactVentaAsync(int id)

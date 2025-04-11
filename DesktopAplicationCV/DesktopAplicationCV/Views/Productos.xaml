@@ -112,6 +112,7 @@
                 </syncfusion:SfDataGrid.Resources>
 
                 <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:DataGridTextColumn MappingName="Id_Producto" HeaderText="Id" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Codigo" HeaderText="Codigo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Producto" HeaderText="Producto" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>

@@ -23,7 +23,7 @@ namespace DesktopAplicationCV.Services
 
         public async Task<bool> UpdateBancoAsync(BancoModel banco)
         {
-            return await PutAsync($"{Endpoint}/{banco.Codigo}", banco);
+            return await PutAsync($"{Endpoint}/{banco.Id_Banco}", banco);
         }
 
         public async Task<bool> DeleteBancoAsync(int id)

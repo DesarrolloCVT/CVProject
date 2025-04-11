@@ -9,11 +9,6 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="100"/>
@@ -71,46 +66,7 @@
                 Text="{Binding EditCuentaTipo}"
                 Placeholder="Cuenta"
                 Grid.Row="4" Grid.Column="2"/>
-            <Label Text="Pago de Factura"
-                   FontSize="Small"
-                   Grid.Row="5" Grid.Column="1"/>
-            <Editor
-                x:Name="EditPagoFactura"
-                Text="{Binding EditPagoFacturaTipo}"
-                Placeholder="Pago de Factura"
-                Grid.Row="5" Grid.Column="2"/>
-            <Label Text="Gasto de Comercializacion"
-                   FontSize="Small"
-                   Grid.Row="6" Grid.Column="1"/>
-            <Editor
-                x:Name="EditGastoComercializacion"
-                Text="{Binding EditGastoComercializacionTipo}"
-                Placeholder="Gasto de Comercializacion"
-                Grid.Row="6" Grid.Column="2"/>
-            <Label Text="Comisiones"
-                   FontSize="Small"
-                   Grid.Row="7" Grid.Column="1"/>
-            <Editor
-                x:Name="EditComisiones"
-                Text="{Binding EditComisionesTipo}"
-                Placeholder="Comisiones"
-                Grid.Row="7" Grid.Column="2"/>
-            <Label Text="Gasto Financiero"
-                   FontSize="Small"
-                   Grid.Row="8" Grid.Column="1"/>
-            <Editor
-                x:Name="EditGastoFinanciero"
-                Text="{Binding EditGastoFinancieroTipo}"
-                Placeholder="Gasto Financiero"
-                Grid.Row="8" Grid.Column="2"/>
-            <Label Text="Anticipo"
-                   FontSize="Small"
-                   Grid.Row="9" Grid.Column="1"/>
-            <Editor
-                x:Name="EditAnticipo"
-                Text="{Binding EditAnticipoTipo}"
-                Placeholder="Anticipo"
-                Grid.Row="9" Grid.Column="2"/>
+            
             <Button Text="Modificar"
                     TextColor="White"
                     WidthRequest="200"

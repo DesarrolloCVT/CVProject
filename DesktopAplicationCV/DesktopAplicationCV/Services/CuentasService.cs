@@ -23,7 +23,7 @@ namespace DesktopAplicationCV.Services
 
         public async Task<bool> UpdateCuentaAsync(CuentasModel cuenta)
         {
-            return await PutAsync($"{Endpoint}/{cuenta.Codigo}", cuenta);
+            return await PutAsync($"{Endpoint}/{cuenta.Id_Cuenta}", cuenta);
         }
 
         public async Task<bool> DeleteCuentaAsync(int id)

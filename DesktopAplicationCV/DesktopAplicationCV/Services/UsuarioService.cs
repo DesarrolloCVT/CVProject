@@ -22,8 +22,8 @@ namespace DesktopAplicationCV.Services
         {
             try
             {   
-                var response = await _httpClient.GetAsync($"https://localhost:44374/api/usuarios/name/{name}");
-                //var response = await _httpClient.GetAsync($"https://localhost:8443/api/usuarios/name/{name}");
+                //var response = await _httpClient.GetAsync($"https://localhost:44374/api/usuarios/name/{name}");
+                var response = await _httpClient.GetAsync($"https://localhost:8443/api/usuarios/name/{name}");
 
                 if (response.IsSuccessStatusCode)
                 {

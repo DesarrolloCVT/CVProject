@@ -217,7 +217,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarBanco(CodigoCeldaSeleccionada);
+                    EliminarBanco(IdBancoCeldaSeleccionada);
                     CargarBancos();
                 }
                 else
@@ -278,6 +278,7 @@ namespace DesktopAplicationCV.ViewModel
                     {
                         OldBank = new BancoModel(IdBancoCeldaSeleccionada, CodigoCeldaSeleccionada, NombreBancoCeldaSeleccionada)
                         {
+                            Id_Banco = IdBancoCeldaSeleccionada,
                             Codigo = CodigoCeldaSeleccionada,
                             Nombre = NombreBancoCeldaSeleccionada
                         };
@@ -297,6 +298,27 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex)
             {
                 Console.WriteLine("Error Editar BancoViewModel: " + Ex.Message);
+            }
+        }
+
+        [RelayCommand]
+        private async void Detalles()
+        {
+            try
+            {
+                if (selectedIndex >= 0)
+                {
+                    await _navigationService.NavigateToAsync<NavigationViewModel>("Banco_Detalle", IdBancoCeldaSeleccionada);
+                    //Application.Current.MainPage.DisplayAlert("Alerta", "Has seleccionado una Fila Valida", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Debe seleccionar una fila valida", "Ok");
+                }
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine("ERROR: Detalles ViewModelBancoDetalle: " + Ex.Message);
             }
         }
 
@@ -337,13 +359,13 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task EliminarBanco(int codigo)
+        private async Task EliminarBanco(int id)
         {
             try
             {
-                if (await _bancoService.DeleteBancoAsync(codigo))
+                if (await _bancoService.DeleteBancoAsync(id))
                 {
-                    var banco = Bancos.FirstOrDefault(p => p.Codigo == codigo);
+                    var banco = Bancos.FirstOrDefault(p => p.Id_Banco == id);
                     if (banco != null)
                     {
                         Bancos.Remove(banco);
@@ -362,7 +384,6 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarBanco((BancoModel)OldBank);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex)
@@ -384,6 +405,7 @@ namespace DesktopAplicationCV.ViewModel
 
                 NewBank = new BancoModel(id, cod, name)
                 {
+                    Id_Banco = id,
                     Codigo = cod,
                     Nombre = name
                 };
@@ -395,7 +417,12 @@ namespace DesktopAplicationCV.ViewModel
 
                     //Add new product
                     Bancos.Add((BancoModel)NewBank);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
 
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error al editar", "Ok");
                 }
             }
             catch (Exception Ex)

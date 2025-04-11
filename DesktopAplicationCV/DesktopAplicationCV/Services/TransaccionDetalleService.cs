@@ -11,9 +11,15 @@ namespace DesktopAplicationCV.Services
     {
         private const string Endpoint = "transacciondetalle";
 
-        public async Task<List<TransaccionesDetalleModel>> GetTransaccionesDetalleAsync()
+        public async Task<List<TransaccionesDetalleModel>> GetTransaccionesDetalleAsync(int id)
         {
-            return await GetAsync<List<TransaccionesDetalleModel>>(Endpoint) ?? new List<TransaccionesDetalleModel>();
+            return await GetByIdAsync<List<TransaccionesDetalleModel>>(Endpoint, id) ?? new List<TransaccionesDetalleModel>();
+        }
+
+        public async Task<List<TransaccionesDetalleModel>> GetTransaccionDetalleFilterByIdAsync(int id)
+        {
+            var Endpoint = $"TransaccionDetalle/GetTransaccion?idTransaccion";
+            return await GetFilterByIdAsync<List<TransaccionesDetalleModel>>(Endpoint, id) ?? new List<TransaccionesDetalleModel>();
         }
 
         public async Task<bool> AddTransaccionDetalleAsync(TransaccionesDetalleModel transaccionesDetalle)

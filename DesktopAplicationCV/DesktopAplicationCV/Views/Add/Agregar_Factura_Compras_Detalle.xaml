@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BackgroundColor="DarkSlateGray"
-             x:Class="DesktopAplicationCV.Views.Agregar_Factura_Compras_Detalle">
+             x:Class="DesktopAplicationCV.Views.Agregar_Factura_Compras_Detalle"
+             xmlns:behaviors="clr-namespace:DesktopAplicationCV.Behaviors"
+             Title="Agregar Factura Compra Detalle">
     
     <ScrollView Margin="0,100,0,0">
         <Grid>
@@ -39,21 +41,47 @@
             <Label Text="Codigo de Producto"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
-            <Editor Placeholder="Codigo de Producto"
+            <!--Editor Placeholder="Codigo de Producto"
                     Text="{Binding CodigoProdFactCompraDetalleIngresado}"
+                    Grid.Row="2" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Productos}"
+                    ItemDisplayBinding="{Binding Codigo}"
+                    SelectedItem="{Binding ProductoSeleccionado, Mode=TwoWay}"
                     Grid.Row="2" Grid.Column="2"/>
             <Label Text="Cantidad"
                    FontSize="Small"
                    Grid.Row="3" Grid.Column="1"/>
-            <Editor Placeholder="Cantidad"
+            <!--Editor Placeholder="Cantidad"
                     Text="{Binding CantidadFactCompraDetalleIngresado}"
-                    Grid.Row="3" Grid.Column="2"/>
+                    Grid.Row="3" Grid.Column="2"/-->
+            <Entry Placeholder="Cantidad"
+                   Keyboard="Numeric"
+                   Text="{Binding CantidadFactCompraDetalleFormateado, Mode=TwoWay}"
+                   Grid.Row="3" Grid.Column="2">
+                <Entry.Behaviors>
+                    <behaviors:AdvancedCurrencyEntryBehavior 
+                        CultureCode="es-CL"
+                        DecimalPlaces="0"
+                        UseSymbol="True"/>
+                </Entry.Behaviors>
+            </Entry>
             <Label Text="Precio"
                    FontSize="Small"
                    Grid.Row="4" Grid.Column="1"/>
-            <Editor Placeholder="Precio"
+            <!--Editor Placeholder="Precio"
                     Text="{Binding PrecioFactCompraDetalleIngresado}"
-                    Grid.Row="4" Grid.Column="2"/>
+                    Grid.Row="4" Grid.Column="2"/-->
+            <Entry Placeholder="Precio"
+                   Keyboard="Numeric"
+                   Text="{Binding PrecioFactCompraDetalleFormateado, Mode=TwoWay}"
+                   Grid.Row="4" Grid.Column="2">
+                <Entry.Behaviors>
+                    <behaviors:AdvancedCurrencyEntryBehavior 
+                        CultureCode="es-CL"
+                        DecimalPlaces="0"
+                        UseSymbol="True"/>
+                </Entry.Behaviors>
+            </Entry>
             <Button Text="Insertar"
                     TextColor="White"
                     WidthRequest="200"

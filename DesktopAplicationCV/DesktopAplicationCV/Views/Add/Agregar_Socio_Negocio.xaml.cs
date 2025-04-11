@@ -11,9 +11,10 @@ public partial class Agregar_Socio_Negocio : ContentPage
     public Agregar_Socio_Negocio()
 	{
         INavigationService navigationService = new NavigationService();
+        AuxService auxService = new AuxService();
 
         InitializeComponent();
-        BindingContext = new SocioViewModel(navigationService);
+        BindingContext = new SocioViewModel(navigationService, auxService);
         var viewModel = BindingContext as SocioViewModel;
     }
 }

@@ -23,11 +23,15 @@ namespace DesktopAplicationCV.ViewModel
 
         private const int MAX_INT = 2147483647; // Máximo permitido en SQL Server para INT
 
+        public static int _idBanco;
+
         private static object _oldbankDetail;
         private object NewbankDetail;
 
+        private static int IdBancoDetalleCeldaSeleccionada;
         private int CodigoBancoCeldaSeleccionada;
         private int NumeroBancoDetalleCeldaSeleccionada;
+        private int SaldoBancoDetalleCeldaSeleccionada;
 
         private readonly INavigationService _navigationService;
         private readonly BancoDetalleService _bancoDetalleService;
@@ -41,9 +45,11 @@ namespace DesktopAplicationCV.ViewModel
 
         private int _codigoBancoDetallesIngresadoText;
         private long _numerobancoDetallesIngresadoText;
+        private long _saldobancoDetallesIngresadoText;
 
         private int _editCodigoBancoDetalles;
         private long _editNumerobancoDetalles;
+        private long _editSaldobancoDetalles;
         
 
         public ICommand CargarBancoDetallesCommand { get; }
@@ -143,6 +149,45 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        public long SaldobancoDetallesIngresado
+        {
+            get => _saldobancoDetallesIngresadoText;
+            set
+            {
+                if (_saldobancoDetallesIngresadoText != value)
+                {
+                    _saldobancoDetallesIngresadoText = value;
+                    OnPropertyChanged(nameof(SaldobancoDetallesIngresado));
+                }
+            }
+        }
+
+        public long EditSaldobancoDetalles
+        {
+            get => _editSaldobancoDetalles;
+            set
+            {
+                if (_editSaldobancoDetalles != value)
+                {
+                    _editSaldobancoDetalles = value;
+                    OnPropertyChanged(nameof(EditSaldobancoDetalles));
+                }
+            }
+        }
+
+        public int Id_Banco
+        {
+            get => _idBanco;
+            set
+            {
+                if (_idBanco != value)
+                {
+                    _idBanco = value;
+                    OnPropertyChanged(nameof(Id_Banco));
+                }
+            }
+        }
+
         #endregion
 
         #region Constructores
@@ -159,6 +204,23 @@ namespace DesktopAplicationCV.ViewModel
         #endregion
 
         #region Metodos 
+
+        [RelayCommand]
+        public async void Volver()
+        {
+            try
+            {
+                bancoDetalles.Clear();
+                Id_Banco = 0;
+                await _navigationService.GoBackAsync();
+            }
+            catch (Exception Ex)
+            {
+                Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error. ", "Ok");
+                Console.WriteLine("Error Volver IngresoDetalleViewsModel: " + Ex.Message);
+            }
+        }
+
         [RelayCommand]
         public void Cancelar()
         {
@@ -187,8 +249,10 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is BancoDetalleModel bancoDetalleModel)
                 {
+                    IdBancoDetalleCeldaSeleccionada = bancoDetalleModel.Id_Banco_Detalle;
                     CodigoBancoCeldaSeleccionada = bancoDetalleModel.Codigo_Banco;
                     NumeroBancoDetalleCeldaSeleccionada = bancoDetalleModel.Numero;
+                    SaldoBancoDetalleCeldaSeleccionada = bancoDetalleModel.Saldo;
                 }
             }
             catch (Exception Ex)
@@ -218,7 +282,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarBancoDatlles(CodigoBancoCeldaSeleccionada);
+                    EliminarBancoDatlles(IdBancoDetalleCeldaSeleccionada);
                     CargarBancoDetalles();
                 }
                 else
@@ -254,7 +318,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (CodigoBancoDetalleIngresado != 0 && NumerobancoDetallesIngresado != 0)
                 {
-                    AgregarBancoDetalle(new BancoDetalleModel(CodigoBancoDetalleIngresado, (int)NumerobancoDetallesIngresado));
+                    AgregarBancoDetalle(new BancoDetalleModel(IdBancoDetalleCeldaSeleccionada, Id_Banco, CodigoBancoDetalleIngresado, (int)NumerobancoDetallesIngresado, (int)SaldobancoDetallesIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -276,10 +340,12 @@ namespace DesktopAplicationCV.ViewModel
             {
                 try
                 {
-                    OldbankDetail = new BancoDetalleModel(CodigoBancoCeldaSeleccionada, NumeroBancoDetalleCeldaSeleccionada)
+                    OldbankDetail = new BancoDetalleModel(IdBancoDetalleCeldaSeleccionada, Id_Banco, CodigoBancoCeldaSeleccionada, NumeroBancoDetalleCeldaSeleccionada, SaldoBancoDetalleCeldaSeleccionada)
                     {
+                        Id_Banco = Id_Banco,
                         Codigo_Banco = CodigoBancoCeldaSeleccionada,
-                        Numero = NumeroBancoDetalleCeldaSeleccionada
+                        Numero = NumeroBancoDetalleCeldaSeleccionada,
+                        Saldo = SaldoBancoDetalleCeldaSeleccionada
                     };
 
                     await _navigationService.NavigateToAsync<NavigationViewModel>("Editar_Banco_Detalle", OldbankDetail);
@@ -300,7 +366,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                var bancoDetalle = await _bancoDetalleService.GetBancoDetallesAsync();
+                var bancoDetalle = await _bancoDetalleService.GetBancoDetalleFilterByIdAsync(Id_Banco);
                 bancoDetalles.Clear();
                 foreach (var bancoDetail in bancoDetalle)
                 {
@@ -340,13 +406,13 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task EliminarBancoDatlles(int codigo)
+        private async Task EliminarBancoDatlles(int id)
         {
             try
             {
-                if (await _bancoDetalleService.DeleteBancoDetalleAsync(codigo))
+                if (await _bancoDetalleService.DeleteBancoDetalleAsync(id))
                 {
-                    var bancoDetalle = bancoDetalles.FirstOrDefault(p => p.Codigo_Banco == codigo);
+                    var bancoDetalle = bancoDetalles.FirstOrDefault(p => p.Id_Banco_Detalle == id);
                     if (bancoDetalle != null)
                     {
                         bancoDetalles.Remove(bancoDetalle);
@@ -380,13 +446,18 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditCodigoBancoDetalles: " + EditCodigoBancoDetalles);
                 Console.WriteLine("EditNumeroBancoDetalles: " + EditNumeroBancoDetalles);
 
+                var id = IdBancoDetalleCeldaSeleccionada;
+                var id_banco = Id_Banco;
                 var codigo = EditCodigoBancoDetalles;
                 var numero = (int)EditNumeroBancoDetalles;
+                var saldo = (int)EditSaldobancoDetalles;
 
-                NewbankDetail = new BancoDetalleModel(codigo, numero)
+                NewbankDetail = new BancoDetalleModel(id, id_banco, codigo, numero, saldo)
                 {
                     Codigo_Banco = codigo,
-                    Numero = numero
+                    Numero = numero,
+                    Saldo = saldo
+                    
                 };
 
                 if (!(EditNumeroBancoDetalles > MAX_INT))
@@ -398,6 +469,10 @@ namespace DesktopAplicationCV.ViewModel
                         //Add new product
                         bancoDetalles.Add((BancoDetalleModel)NewbankDetail);
                         Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente. ", "Ok");
+                    }
+                    else
+                    {
+                        Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error al actualizar. ", "Ok");
                     }
                 }
                 else

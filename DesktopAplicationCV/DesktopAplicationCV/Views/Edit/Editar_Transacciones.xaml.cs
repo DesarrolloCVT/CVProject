@@ -19,11 +19,11 @@ public partial class Editar_Transacciones : ContentPage
         EditFolio.Text = transaccionesModel?.Folio.ToString().Trim();
         PkrTipo.SelectedItem = transaccionesModel.Tipo_Transaccion.Trim();
         PkrSubTipo.SelectedItem = transaccionesModel.Subtipo_Transaccion.Trim();
-        EditMoneda.Text = transaccionesModel?.Moneda.Trim();
+        PkrMoneda.SelectedItem = transaccionesModel?.Moneda.Trim();
         PkrFecha.Date = transaccionesModel.Fecha;
-        EditCliente.Text = transaccionesModel?.Cliente.ToString().Trim();
-        EditMetodoPago.Text = transaccionesModel?.Metodo_Pago.ToString().Trim();
-        EditBanco.Text = transaccionesModel?.Banco.ToString().Trim();
-        EditCuenta.Text = transaccionesModel?.Cuenta.ToString().Trim();
+        PkrCliente.SelectedItem = transaccionesModel?.Cliente.ToString().Trim();
+        PkrMetodoPago.SelectedItem = transaccionesModel?.Metodo_Pago.ToString().Trim();
+        PkrBanco.SelectedItem = transaccionesModel?.Banco.ToString().Trim();
+        PkrCuenta.SelectedItem = transaccionesModel?.Cuenta.ToString().Trim();
     }
 }

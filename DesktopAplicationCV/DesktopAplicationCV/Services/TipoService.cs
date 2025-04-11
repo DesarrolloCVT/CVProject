@@ -23,7 +23,7 @@ namespace DesktopAplicationCV.Services
 
         public async Task<bool> UpdateTipoAsync(TipoModel tipo)
         {
-            return await PutAsync($"{Endpoint}/{tipo.Codigo}", tipo);
+            return await PutAsync($"{Endpoint}/{tipo.Id_Tipo}", tipo);
         }
 
         public async Task<bool> DeleteTipoAsync(int id)

@@ -23,7 +23,7 @@ namespace DesktopAplicationCV.Services
 
         public async Task<bool> UpdateSocioAsync(SocioNegocioModel socioOld, SocioNegocioModel socioNew)
         {
-            return await PutAsync($"{Endpoint}/{socioOld.Codigo.ToString()}", socioNew);
+            return await PutAsync($"{Endpoint}/{socioOld.Id_Socio.ToString()}", socioNew);
         }
 
         public async Task<bool> DeleteSocioAsync(int id)

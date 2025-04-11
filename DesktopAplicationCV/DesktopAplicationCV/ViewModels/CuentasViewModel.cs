@@ -19,6 +19,8 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        private static int IdCuentaSeleccionada;
+
         private static object _oldAccount;
         private object NewAccount;
 
@@ -214,6 +216,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is CuentasModel cuentas)
                 {
+                    IdCuentaSeleccionada = cuentas.Id_Cuenta;
                     CodigoCeldaSeleccionada = cuentas.Codigo;
                     NombreCuentaCeldaSeleccionada = cuentas.Nombre;
                     TipoCuentaCeldaSeleccionada = cuentas.Tipo;
@@ -247,7 +250,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarCuentas(CodigoCeldaSeleccionada);
+                    EliminarCuentas(IdCuentaSeleccionada);
                     CargarCuentas();
                 }
                 else
@@ -283,7 +286,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (CodigoCuentaIngresado != 0 && !string.IsNullOrEmpty(NombreCuentaIngresado) && !string.IsNullOrEmpty(TipoCuentaIngresado))
                 {
-                    AgregarCuenta(new CuentasModel(CodigoCuentaIngresado, NombreCuentaIngresado, TipoCuentaIngresado));
+                    AgregarCuenta(new CuentasModel(IdCuentaSeleccionada, CodigoCuentaIngresado, NombreCuentaIngresado, TipoCuentaIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -307,8 +310,9 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     try
                     {
-                        OldAccount = new CuentasModel(CodigoCeldaSeleccionada, NombreCuentaCeldaSeleccionada, TipoCuentaCeldaSeleccionada)
+                        OldAccount = new CuentasModel(IdCuentaSeleccionada, CodigoCeldaSeleccionada, NombreCuentaCeldaSeleccionada, TipoCuentaCeldaSeleccionada)
                         {
+                            Id_Cuenta = IdCuentaSeleccionada,
                             Codigo = CodigoCeldaSeleccionada,
                             Nombre = NombreCuentaCeldaSeleccionada,
                             Tipo = TipoCuentaCeldaSeleccionada
@@ -369,13 +373,13 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task EliminarCuentas(int codigo)
+        private async Task EliminarCuentas(int id)
         {
             try
             {
-                if (await _cuentaService.DeleteCuentaAsync(codigo))
+                if (await _cuentaService.DeleteCuentaAsync(id))
                 {
-                    var cuenta = Cuentas.FirstOrDefault(p => p.Codigo == codigo);
+                    var cuenta = Cuentas.FirstOrDefault(p => p.Id_Cuenta == id);
                     if (cuenta != null)
                     {
                         Cuentas.Remove(cuenta);
@@ -394,7 +398,6 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarCuenta((CuentasModel)OldAccount);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex)
@@ -411,12 +414,14 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditNombreCuenta: " + EditNombreCuenta);
                 Console.WriteLine("EditTipoCuenta: " + EditTipoCuenta);
 
+                var id = IdCuentaSeleccionada;
                 var cod = EditCodigoCuenta;
                 var name = EditNombreCuenta;
                 var type = EditTipoCuenta;
 
-                NewAccount = new CuentasModel(cod, name, type)
+                NewAccount = new CuentasModel(id, cod, name, type)
                 {
+                    Id_Cuenta = id,
                     Codigo = cod,
                     Nombre = name,
                     Tipo = type
@@ -429,7 +434,12 @@ namespace DesktopAplicationCV.ViewModel
 
                     //Add new
                     Cuentas.Add((CuentasModel)NewAccount);
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
 
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error al editar. ", "Ok");
                 }
             }
             catch (Exception Ex)

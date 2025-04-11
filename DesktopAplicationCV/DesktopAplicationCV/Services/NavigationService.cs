@@ -8,13 +8,13 @@ namespace DesktopAplicationCV.Services
         {
             Page page;
             var pageType = GetPageTypeForViewModel(typeof(TViewModel), identificador);
-            if(obj != null)
-            {
-                page = (Page)Activator.CreateInstance(pageType, args:obj);
-            }
-            else if (num != null)
+            if (num != null)
             {
                 page = (Page)Activator.CreateInstance(pageType, args: num);
+            }
+            else if(obj != null)
+            {
+                page = (Page)Activator.CreateInstance(pageType, args:obj);
             }
             else
             {

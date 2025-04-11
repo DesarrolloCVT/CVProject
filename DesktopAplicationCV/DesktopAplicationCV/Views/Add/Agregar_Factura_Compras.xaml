@@ -40,8 +40,12 @@
             <Label Text="Proveedor"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
-            <Editor Placeholder="Proveedor"
+            <!--Editor Placeholder="Proveedor"
                     Text="{Binding ProveedorFactCompraIngresado}"
+                    Grid.Row="2" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Proveedor}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding ProveedorSeleccionado, Mode=TwoWay}"
                     Grid.Row="2" Grid.Column="2"/>
             <Label Text="Fecha"
                    FontSize="Small"
@@ -53,8 +57,12 @@
             <Label Text="Moneda"
                    FontSize="Small"
                    Grid.Row="4" Grid.Column="1"/>
-            <Editor Placeholder="Moneda"
+            <!--Editor Placeholder="Moneda"
                     Text="{Binding MonedaFactCompraIngresado}"
+                    Grid.Row="4" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Monedas}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding MonedaSeleccionado, Mode=TwoWay}"
                     Grid.Row="4" Grid.Column="2"/>
             <Button Text="Insertar"
                     TextColor="White"

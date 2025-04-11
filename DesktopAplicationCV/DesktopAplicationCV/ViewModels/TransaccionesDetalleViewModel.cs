@@ -26,7 +26,7 @@ namespace DesktopAplicationCV.ViewModels
 
         public int Id_Transaccion;
         private static int IdTransaccionDetalleCeldaSeleccionada;
-        private int IdTransaccionCeldaSeleccionada;
+        private int? IdTransaccionCeldaSeleccionada;
         private int FolioFacturaTransaccionDetalleCeldaSeleccionada;
         private string TipoFacturaTransaccionDetalleCeldaSeleccionada;
         private int MontoTransaccionDetalleCeldaSeleccionada;
@@ -43,7 +43,7 @@ namespace DesktopAplicationCV.ViewModels
         private string _filterText;
         private string _tituloPagina;
 
-        private int _idTransaccionIngresadoText;
+        private int? _idTransaccionIngresadoText;
         private int _folioFacturaTransaccionDetalleIngresadoText;
         private string _tipoFacturaTransaccionDetalleIngresadoText;
         private string _montoTransaccionDetalleFormateado;
@@ -112,7 +112,7 @@ namespace DesktopAplicationCV.ViewModels
             }
         }
 
-        public int IdTransaccionIngresadoText
+        public int? IdTransaccionIngresadoText
         {
             get => _idTransaccionIngresadoText;
             set
@@ -228,12 +228,12 @@ namespace DesktopAplicationCV.ViewModels
                 }
             }
         }
-        #endregion
 
         public int MontoTransaccionDetalleIngresadoText =>
     int.TryParse(MontoTransaccionDetalleFormateado, NumberStyles.Currency, CultureInfo.CurrentCulture, out var resultado)
         ? (int)resultado
         : 0;
+        #endregion
 
         #region Constructores
 
@@ -318,7 +318,7 @@ namespace DesktopAplicationCV.ViewModels
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarTransaccionesDetalle(IdTransaccionCeldaSeleccionada);
+                    EliminarTransaccionesDetalle(IdTransaccionDetalleCeldaSeleccionada);
                     CargarGrillaIngresos();
                 }
                 else
@@ -352,7 +352,7 @@ namespace DesktopAplicationCV.ViewModels
         {
             try
             {
-                if (IdTransaccionIngresadoText != 0 && FolioFacturaTransaccionDetalleIngresadoText != 0 && !string.IsNullOrEmpty(TipoFacturaTransaccionDetalleIngresadoText) && MontoTransaccionDetalleIngresadoText != 0)
+                if (/*IdTransaccionIngresadoText != 0 && */ FolioFacturaTransaccionDetalleIngresadoText != 0 && !string.IsNullOrEmpty(TipoFacturaTransaccionDetalleIngresadoText) && MontoTransaccionDetalleIngresadoText != 0)
                 {
                     AgregarTransaccionesDetalle(new TransaccionesDetalleModel(IdTransaccionDetalleCeldaSeleccionada, IdTransaccionIngresadoText, FolioFacturaTransaccionDetalleIngresadoText, TipoFacturaTransaccionDetalleIngresadoText, MontoTransaccionDetalleIngresadoText));
                     _navigationService.GoBackAsync();
@@ -411,7 +411,7 @@ namespace DesktopAplicationCV.ViewModels
         {
             try
             {
-                var transaccionesDetalles = await _transaccionDetalleService.GetTransaccionesDetalleAsync();
+                var transaccionesDetalles = await _transaccionDetalleService.GetTransaccionDetalleFilterByIdAsync(Id_Transaccion);
                 TransaccionesDetalle.Clear();
                 foreach (var transaccionDetalle in transaccionesDetalles)
                 {

@@ -9,9 +9,17 @@ namespace DesktopAplicationCV.Models
 {
     public class CuentasModel
     {
+        private int id_cuenta;
         private int codigo;
         private string nombre;
         private string tipo;
+
+
+        public int Id_Cuenta
+        {
+            get { return this.id_cuenta; }
+            set { this.id_cuenta = value; }
+        }
 
         public int Codigo
         {
@@ -31,8 +39,9 @@ namespace DesktopAplicationCV.Models
             set { this.tipo = value; }
         }
 
-        public CuentasModel(int codigo, string nombre, string tipo)
+        public CuentasModel(int id_cuenta, int codigo, string nombre, string tipo)
         {
+            this.Id_Cuenta = id_cuenta;
             this.Codigo = codigo;
             this.Nombre = nombre;
             this.Tipo = tipo;

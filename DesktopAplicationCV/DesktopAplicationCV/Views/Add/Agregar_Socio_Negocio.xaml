@@ -32,8 +32,7 @@
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"
                    FontAttributes="Bold"/>
-            <Editor WidthRequest="300" 
-                    x:Name="edtCodigo"
+            <Editor x:Name="edtCodigo"
                     Text="{Binding CodigoSocioIngresado}"
                     Keyboard="Numeric"
                     Placeholder="Codigo"
@@ -45,8 +44,7 @@
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"
                    FontAttributes="Bold"/>
-            <Editor WidthRequest="300"
-                    Text="{Binding NombreSocioIngresado}"
+            <Editor Text="{Binding NombreSocioIngresado}"
                     Placeholder="Nombre"
                     Grid.Row="2" Grid.Column="2"/>
 
@@ -55,9 +53,15 @@
                    FontSize="Small"
                    Grid.Row="3" Grid.Column="1"
                    FontAttributes="Bold"/>
+            <!--Picker 
+                x:Name="PkrTipo"
+                ItemsSource="{Binding Tipos}"
+                ItemDisplayBinding="{Binding Tipo_Dato}"
+                SelectedItem="{Binding TipoSeleccionado, Mode=TwoWay}"
+                Grid.Row="3" Grid.Column="2">
+            </Picker-->
             <Picker x:Name="PkrTipo"
                     SelectedItem="{Binding TipoSocioIngresado}"
-                    WidthRequest="300"
                     Grid.Row="3" Grid.Column="2">
             <Picker.Items>
                 <x:String>Cliente</x:String>

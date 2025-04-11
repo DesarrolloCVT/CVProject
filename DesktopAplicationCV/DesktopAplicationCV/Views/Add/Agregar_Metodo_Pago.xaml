@@ -36,7 +36,7 @@
                 Placeholder="Nombre"
                 Grid.Row="2" Grid.Column="2"/>
            
-            <Button Text="Isertar"
+            <Button Text="Insertar"
                 TextColor="White"
                 WidthRequest="200"
                 FontAttributes="Bold"

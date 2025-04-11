@@ -16,6 +16,12 @@ namespace DesktopAplicationCV.Services
             return await GetAsync<List<BancoDetalleModel>>(Endpoint) ?? new List<BancoDetalleModel>();
         }
 
+        public async Task<List<BancoDetalleModel>> GetBancoDetalleFilterByIdAsync(int id)
+        {
+            var Endpoint = $"BancoDetalle/GetBancoDetalle?idBanco";
+            return await GetFilterByIdAsync<List<BancoDetalleModel>>(Endpoint, id) ?? new List<BancoDetalleModel>();
+        }
+
         public async Task<bool> AddBancoDetalleAsync(BancoDetalleModel bancoDetalleModel)
         {
             return await PostAsync(Endpoint, bancoDetalleModel);
@@ -23,7 +29,7 @@ namespace DesktopAplicationCV.Services
 
         public async Task<bool> UpdateBancoDetalleAsync(BancoDetalleModel bancoDetalleModel)
         {
-            return await PutAsync($"{Endpoint}/{bancoDetalleModel.Codigo_Banco}", bancoDetalleModel);
+            return await PutAsync($"{Endpoint}/{bancoDetalleModel.Id_Banco_Detalle}", bancoDetalleModel);
         }
 
         public async Task<bool> DeleteBancoDetalleAsync(int id)

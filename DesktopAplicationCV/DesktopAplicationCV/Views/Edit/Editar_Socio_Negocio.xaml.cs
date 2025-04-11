@@ -9,9 +9,10 @@ public partial class Editar_Socio_Negocio : ContentPage
 	public Editar_Socio_Negocio(object obj)
 	{
         INavigationService navigationService = new NavigationService();
+        AuxService auxService = new AuxService();
 
         InitializeComponent();
-        BindingContext = new SocioViewModel(navigationService);
+        BindingContext = new SocioViewModel(navigationService, auxService);
         var viewModel = BindingContext as SocioViewModel;
 
         SocioNegocioModel socioModel = (SocioNegocioModel)obj;

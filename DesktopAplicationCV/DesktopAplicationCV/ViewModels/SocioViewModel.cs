@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Services;
+using DesktopAplicationCV.Views;
 using Syncfusion.Maui.DataGrid;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,6 +15,11 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        [ObservableProperty]
+        private List<TipoModel> _tipos;
+
+        private static int IdSocioSeleccionado;
+
         private static object _oldSocio;
         private object NewSocio;
 
@@ -23,12 +29,15 @@ namespace DesktopAplicationCV.ViewModel
         private int SaldoSocioCeldaSeleccionada;
 
         private readonly INavigationService _navigationService;
+        private readonly AuxService _auxService;
         private readonly SocioNegocioService _socioNegocioService;
 
         [ObservableProperty]
         private int selectedIndex;
 
         private ObservableCollection<SocioNegocioModel> Socios;
+
+        private TipoModel _tipoSeleccionado;
 
         private string _filterText;
         private int _codigoSocioIngresadoText;
@@ -163,6 +172,22 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        public TipoModel TipoSeleccionado
+        {
+            get => _tipoSeleccionado;
+            set
+            {
+                if (_tipoSeleccionado != value)
+                {
+                    _tipoSeleccionado = value;
+                    TipoSocioIngresado = value.Tipo_Dato.Trim();
+                    EditTipoSocio = value.Tipo_Dato.Trim();
+                    OnPropertyChanged(nameof(TipoSeleccionado));
+                    OnPropertyChanged(nameof(TipoSocioIngresado)); // Para actualizar la vista
+                }
+            }
+        }
+
         public int SaldoSocioIngresado
         {
             get => _saldoSocioIngresadoText;
@@ -196,18 +221,23 @@ namespace DesktopAplicationCV.ViewModel
 
         #region Constructores
 
-        public SocioViewModel(INavigationService navigationService)
+        public SocioViewModel(INavigationService navigationService, AuxService auxService)
         {
+            _auxService = auxService;
             _socioNegocioService = new SocioNegocioService();
             Socios = new ObservableCollection<SocioNegocioModel>();
 
             _navigationService = navigationService;
             CargarSocios();
+            CargarComboBoxes();
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
+            _auxService = auxService;
         }
 
         #endregion
+
+        #region Metodos 
 
         // Lógica de filtrado como delegado
         public Predicate<object> GetFilter()
@@ -233,6 +263,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is SocioNegocioModel socios)
                 {
+                    IdSocioSeleccionado = socios.Id_Socio;
                     CodigoCeldaSeleccionada = socios.Codigo;
                     NombreSocioCeldaSeleccionada = socios.Nombre;
                     TipoSocioCeldaSeleccionada = socios.Tipo;
@@ -274,7 +305,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarSocio(CodigoCeldaSeleccionada);
+                    EliminarSocio(IdSocioSeleccionado);
                     CargarSocios();
                 }
                 else
@@ -310,7 +341,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (CodigoSocioIngresado != 0 && !string.IsNullOrEmpty(NombreSocioIngresado) && !string.IsNullOrEmpty(TipoSocioIngresado))
                 {
-                    AgregarSocio(new SocioNegocioModel(CodigoSocioIngresado, NombreSocioIngresado, TipoSocioIngresado, SaldoSocioIngresado));
+                    AgregarSocio(new SocioNegocioModel(IdSocioSeleccionado, CodigoSocioIngresado, NombreSocioIngresado, TipoSocioIngresado, SaldoSocioIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -333,8 +364,9 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     try
                     {
-                        OldSocio = new SocioNegocioModel(CodigoCeldaSeleccionada, NombreSocioCeldaSeleccionada, TipoSocioCeldaSeleccionada, SaldoSocioCeldaSeleccionada)
+                        OldSocio = new SocioNegocioModel(IdSocioSeleccionado, CodigoCeldaSeleccionada, NombreSocioCeldaSeleccionada, TipoSocioCeldaSeleccionada, SaldoSocioCeldaSeleccionada)
                         {
+                            Id_Socio = IdSocioSeleccionado,
                             Codigo = CodigoCeldaSeleccionada,
                             Nombre = NombreSocioCeldaSeleccionada,
                             Tipo = TipoSocioCeldaSeleccionada,
@@ -373,6 +405,18 @@ namespace DesktopAplicationCV.ViewModel
             catch(Exception Ex)
             {
                 Console.WriteLine("Error CargarSocios SocioViewModel: " + Ex.Message);
+            }
+        }
+
+        private async Task CargarComboBoxes()
+        {
+            try
+            {
+                Tipos = await _auxService.GetTiposAsync();
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine("Error CargarComboBoxes TransaccionesViewModel: " + Ex.Message);
             }
         }
 
@@ -421,7 +465,6 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarSocio((SocioNegocioModel)OldSocio);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex) 
@@ -439,13 +482,15 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditNombreSocio: " + EditNombreSocio);
                 Console.WriteLine("EditTipoSocio: " + EditTipoSocio);
 
+                var id = IdSocioSeleccionado;
                 var cod = EditCodigoSocio;
                 var nombre = EditNombreSocio;
                 var tipo = EditTipoSocio;
                 var saldo = SaldoSocioCeldaSeleccionada;
 
-                NewSocio = new SocioNegocioModel(cod, nombre, tipo, saldo)
+                NewSocio = new SocioNegocioModel(id, cod, nombre, tipo, saldo)
                 {
+                    Id_Socio = id,
                     Codigo = cod,
                     Nombre = nombre,
                     Tipo = tipo,
@@ -460,6 +505,11 @@ namespace DesktopAplicationCV.ViewModel
                     //Add new Socio
                     Socios.Add((SocioNegocioModel)NewSocio);
 
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error al actualizar. ", "Ok");
                 }
             }
             catch(Exception Ex)
@@ -467,5 +517,6 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("Error ActualizarSocio SocioViewModel: " + Ex.Message);
             }
         }
+        #endregion
     }
 }

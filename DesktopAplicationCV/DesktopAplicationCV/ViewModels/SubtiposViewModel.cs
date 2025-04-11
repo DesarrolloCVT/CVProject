@@ -235,7 +235,7 @@ namespace DesktopAplicationCV.ViewModels
             {
                 if (!string.IsNullOrEmpty(IdentificadorSubTipoIngresadoText) && !string.IsNullOrEmpty(NombreSubTipoIngresadoText))
                 {
-                    AgregarSubTipo(new SubtiposModel(0, IdentificadorSubTipoIngresadoText, NombreSubTipoIngresadoText));
+                    AgregarSubTipo(new SubtiposModel(IdSubtipoCeldaSeleccionada, IdentificadorSubTipoIngresadoText, NombreSubTipoIngresadoText));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -260,6 +260,7 @@ namespace DesktopAplicationCV.ViewModels
                     {
                         OldSubtype = new SubtiposModel(IdSubtipoCeldaSeleccionada, IdentificadorSubtipoCeldaSeleccionada, NombreSubtipoCeldaSeleccionada)
                         {
+                            Id_Subtipos = IdSubtipoCeldaSeleccionada,
                             Identificador = IdentificadorSubtipoCeldaSeleccionada,
                             Nombre = NombreSubtipoCeldaSeleccionada
                         };
@@ -345,7 +346,6 @@ namespace DesktopAplicationCV.ViewModels
             try
             {
                 ActualizarSubTipo((SubtiposModel)OldSubtype);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex)
@@ -379,6 +379,12 @@ namespace DesktopAplicationCV.ViewModels
                     //Add new product
                     Subtipo.Add((SubtiposModel)NewSubtype);
 
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error al editar. ", "Ok");
                 }
             }
             catch (Exception Ex)

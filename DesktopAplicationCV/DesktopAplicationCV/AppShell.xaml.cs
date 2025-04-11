@@ -14,7 +14,7 @@ namespace DesktopAplicationCV
             Routing.RegisterRoute("Compra_Venta", typeof(Compra_Venta));
             Routing.RegisterRoute("Cuentas", typeof(Cuentas));
             Routing.RegisterRoute("Factura_Compra", typeof(Factura_Compra));
-            Routing.RegisterRoute("Factura_Compra_detalle", typeof(Factura_Compra_detalle));
+            Routing.RegisterRoute("Factura_Compra_Detalle", typeof(Factura_Compra_Detalle));
             Routing.RegisterRoute("Factura_Venta", typeof(Factura_Venta));
             Routing.RegisterRoute("Factura_Venta_Detalle", typeof(Factura_Venta_Detalle));
             Routing.RegisterRoute("Ingresos", typeof(Ingresos));

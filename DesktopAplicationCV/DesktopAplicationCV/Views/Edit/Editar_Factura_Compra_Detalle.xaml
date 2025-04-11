@@ -2,13 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Editar_Factura_Compra_Detalle"
+             xmlns:behaviors="clr-namespace:DesktopAplicationCV.Behaviors"
              BackgroundColor="DarkSlateGray"
              Title="Modificar Factura Compra Detalle">
     <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
-                <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
@@ -30,55 +30,75 @@
                    FontAttributes="Bold, Italic"
                    Grid.Row="0" Grid.Column="0"
                    Grid.ColumnSpan="1"/>
-
-            <Label 
-                Text="ID"
-                FontSize="Small"
-                Grid.Row="1" Grid.Column="1"/>
-            <Editor 
-                Text="{Binding EditIdFactCompraDetalle}"
-                IsReadOnly="True"
-                x:Name="EditId"
-                Grid.Row="1" Grid.Column="2"/>
+            
             
             <Label Text="Folio"
                    FontSize="Small"
-                   Grid.Row="2" Grid.Column="1"/>
+                   Grid.Row="1" Grid.Column="1"/>
             <Editor Placeholder="Folio"
                     Text="{Binding EditFolioFactCompraDetalle}"
                     x:Name="EditFolio"
-                    Grid.Row="2" Grid.Column="2"/>
+                    Grid.Row="1" Grid.Column="2"/>
             
             <Label Text="Codigo de Producto"
                    FontSize="Small"
-                   Grid.Row="3" Grid.Column="1"/>
-            <Editor Placeholder="Codigo de Producto"
+                   Grid.Row="2" Grid.Column="1"/>
+            <!--Editor Placeholder="Codigo de Producto"
                     x:Name="EditCodigoProducto"
                     Text="{Binding EditCodigoProdFactCompraDetalle}"
-                    Grid.Row="3" Grid.Column="2"/>
+                    Grid.Row="2" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Productos}"
+                    x:Name="PkrProducto"
+                    ItemDisplayBinding="{Binding Codigo}"
+                    SelectedItem="{Binding ProductoSeleccionado, Mode=TwoWay}"
+                    Grid.Row="2" Grid.Column="2"/>
             
             <Label Text="Cantidad"
                    FontSize="Small"
-                   Grid.Row="4" Grid.Column="1"/>
-            <Editor Placeholder="Cantidad"
+                   Grid.Row="3" Grid.Column="1"/>
+            <!--Editor Placeholder="Cantidad"
                     Text="{Binding EditCantidadFactCompraDetalle}"
                     x:Name="EditCantidad"
-                    Grid.Row="4" Grid.Column="2"/>
-            
+                    Grid.Row="3" Grid.Column="2"/-->
+            <Entry Placeholder="Cantidad"
+                   x:Name="EditCantidad"
+                   Keyboard="Numeric"
+                   Text="{Binding CantidadFactCompraDetalleFormateado, Mode=TwoWay}"
+                   Grid.Row="3" Grid.Column="2">
+                <Entry.Behaviors>
+                    <behaviors:AdvancedCurrencyEntryBehavior 
+                        CultureCode="es-CL"
+                        DecimalPlaces="0"
+                        UseSymbol="True"/>
+                </Entry.Behaviors>
+            </Entry>
+
             <Label Text="Precio"
                    FontSize="Small"
-                   Grid.Row="5" Grid.Column="1"/>
-            <Editor Placeholder="Precio"
+                   Grid.Row="4" Grid.Column="1"/>
+            <!--Editor Placeholder="Precio"
                     x:Name="EditPrecio"
                     Text="{Binding EditPrecioFactCompraDetalle}"
-                    Grid.Row="5" Grid.Column="2"/>
-            
+                    Grid.Row="5" Grid.Column="2"/-->
+            <Entry Placeholder="Precio"
+                   x:Name="EditPrecio"
+                   Keyboard="Numeric"
+                   Text="{Binding PrecioFactCompraDetalleFormateado, Mode=TwoWay}"
+                   Grid.Row="4" Grid.Column="2">
+                <Entry.Behaviors>
+                    <behaviors:AdvancedCurrencyEntryBehavior 
+                        CultureCode="es-CL"
+                        DecimalPlaces="0"
+                        UseSymbol="True"/>
+                </Entry.Behaviors>
+            </Entry>
+
             <Button Text="Modificar"
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="#0288D1"
-                    Grid.Row="7" Grid.Column="1"
+                    Grid.Row="6" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding UpdateCommand}"/>
             
@@ -87,7 +107,7 @@
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="#0288D1"
-                    Grid.Row="7" Grid.Column="2"
+                    Grid.Row="6" Grid.Column="2"
                     Grid.ColumnSpan="1"
                     Command="{Binding CancelarCommand}"/>
         </Grid>

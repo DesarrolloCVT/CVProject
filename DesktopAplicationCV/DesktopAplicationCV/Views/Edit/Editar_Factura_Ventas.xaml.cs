@@ -6,19 +6,20 @@ namespace DesktopAplicationCV.Views;
 
 public partial class Editar_Factura_Ventas : ContentPage
 {
-	public Editar_Factura_Ventas(object obj)
-	{
+    public Editar_Factura_Ventas(object obj)
+    {
         INavigationService navigationService = new NavigationService();
+        AuxService auxService = new AuxService();
 
         InitializeComponent();
-        BindingContext = new FacturaVentaViewModel(navigationService);
+        BindingContext = new FacturaVentaViewModel(navigationService, auxService);
         var viewModel = BindingContext as FacturaVentaViewModel;
 
         FacturaVentaModel facturaVentaModel = (FacturaVentaModel)obj;
         EditFolio.Text = facturaVentaModel.Folio.ToString().Trim();
-        EditCliente.Text = facturaVentaModel.Cliente.Trim();
+        PkrCliente.SelectedItem = facturaVentaModel.Cliente.Trim();
         EditDirDespacho.Text = facturaVentaModel.Direccion_Despacho.Trim();
-        EditMoneda.Text = facturaVentaModel.Moneda.Trim();
+        PkrMoneda.SelectedItem = facturaVentaModel.Moneda.Trim();
         PkrFecha.Date = facturaVentaModel.Fecha;
     }
 }

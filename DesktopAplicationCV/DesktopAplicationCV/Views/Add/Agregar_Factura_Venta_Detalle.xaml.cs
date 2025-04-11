@@ -8,9 +8,10 @@ public partial class Agregar_Factura_Venta_Detalle : ContentPage
 	public Agregar_Factura_Venta_Detalle()
 	{
         INavigationService navigationService = new NavigationService();
+        AuxService auxService = new AuxService();
 
         InitializeComponent();
-        BindingContext = new FacturaVentaDetalleViewModel(navigationService);
+        BindingContext = new FacturaVentaDetalleViewModel(navigationService, auxService);
         var viewModel = BindingContext as FacturaVentaDetalleViewModel;
     }
 }

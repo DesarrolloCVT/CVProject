@@ -245,7 +245,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is TipoModel tipos)
                 {
-                    //IdTipoCeldaSeleccionada = tipos.Id_Tipo;
+                    IdTipoCeldaSeleccionada = tipos.Id_Tipo;
                     CodigoCeldaSeleccionada = tipos.Codigo;
                     NombreTipoCeldaSeleccionada = tipos.Nombre;
                     TipoCeldaSeleccionada = tipos.Tipo_Dato;
@@ -279,7 +279,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarTipo(CodigoCeldaSeleccionada);
+                    EliminarTipo(IdTipoCeldaSeleccionada);
                     CargarTipos();
                 }
                 else
@@ -343,6 +343,7 @@ namespace DesktopAplicationCV.ViewModel
                         OldType = new TipoModel(IdTipoCeldaSeleccionada, CodigoCeldaSeleccionada, NombreTipoCeldaSeleccionada,
                             TipoCeldaSeleccionada, CuentaTipoCeldaSeleccionada)
                         {
+                            Id_Tipo = IdTipoCeldaSeleccionada,
                             Codigo = CodigoCeldaSeleccionada,
                             Nombre = NombreTipoCeldaSeleccionada,
                             Tipo_Dato = TipoCeldaSeleccionada,
@@ -404,13 +405,13 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task EliminarTipo(int codigo)
+        private async Task EliminarTipo(int id)
         {
             try
             {
-                if (await _tipoService.DeleteTipoAsync(codigo))
+                if (await _tipoService.DeleteTipoAsync(id))
                 {
-                    var tipo = Tipos.FirstOrDefault(p => p.Codigo == codigo);
+                    var tipo = Tipos.FirstOrDefault(p => p.Id_Tipo == id);
                     if (tipo != null)
                     {
                         Tipos.Remove(tipo);
@@ -470,6 +471,10 @@ namespace DesktopAplicationCV.ViewModel
                     //Add new product
                     Tipos.Add((TipoModel)NewType);
                     Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido al editar", "Ok");
                 }
             }
             catch (Exception Ex)

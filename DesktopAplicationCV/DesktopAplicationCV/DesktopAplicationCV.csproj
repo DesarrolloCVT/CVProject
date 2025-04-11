@@ -100,6 +100,9 @@
 	  <Compile Update="Views\Edit\Editar_Productos.xaml.cs">
 	    <DependentUpon>Editar_Productos.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Factura_Compra_detalle.xaml.cs">
+	    <DependentUpon>Factura_Compra_Detalle.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Socio_Negocio.xaml.cs">
 	    <DependentUpon>Socio_Negocio.xaml</DependentUpon>
 	  </Compile>
@@ -236,7 +239,7 @@
 	  <MauiXaml Update="Views\Factura_Compra.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Factura_Compra_detalle.xaml">
+	  <MauiXaml Update="Views\Factura_Compra_Detalle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Factura_Venta.xaml">

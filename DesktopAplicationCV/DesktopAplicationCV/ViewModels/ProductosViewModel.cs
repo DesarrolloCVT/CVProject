@@ -14,10 +14,12 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        private static int IdProductoSeleccionado;
+
         private static object _oldProduct;
         private object NewProduct;
 
-        private int CodigoCeldaSeleccionada;
+        private string CodigoCeldaSeleccionada;
         private string NombreProductoCeldaSeleccionada;
 
         private readonly INavigationService _navigationService;
@@ -30,10 +32,10 @@ namespace DesktopAplicationCV.ViewModel
 
         private string _filterText;
         private string _nombreProductoIngresadoText;
-        private int _codigoProductoIngresadoText;
+        private string _codigoProductoIngresadoText;
         
         private string _editNombreProducto;
-        private int _editCodigoProducto;
+        private string _editCodigoProducto;
 
         public ICommand CargarProductosCommand { get; }
         public ICommand AgregarProductoCommand { get; }
@@ -108,7 +110,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int CodigoProductoIngresado
+        public string CodigoProductoIngresado
         {
             get => _codigoProductoIngresadoText;
             set
@@ -121,7 +123,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditCodigoProducto
+        public string EditCodigoProducto
         {
             get => _editCodigoProducto;
             set
@@ -151,6 +153,8 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
+        #region Metodos 
+
         [RelayCommand]
         public void Cancelar()
         {
@@ -179,6 +183,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is ProductosModel productos)
                 {
+                    IdProductoSeleccionado = productos.Id_Producto;
                     CodigoCeldaSeleccionada = productos.Codigo;
                     NombreProductoCeldaSeleccionada = productos.Producto;
                     // Aquí puedes manejar la lógica de negocio sin tocar la vista
@@ -210,7 +215,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarProducto(CodigoCeldaSeleccionada);
+                    EliminarProducto(IdProductoSeleccionado);
                     CargarProductos();
                 }
                 else
@@ -244,9 +249,9 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if (CodigoProductoIngresado != 0 && !string.IsNullOrEmpty(NombreProductoIngresado))
+                if (string.IsNullOrEmpty(CodigoProductoIngresado) && !string.IsNullOrEmpty(NombreProductoIngresado))
                 {
-                    AgregarProducto(new ProductosModel(CodigoProductoIngresado, NombreProductoIngresado));
+                    AgregarProducto(new ProductosModel(IdProductoSeleccionado, CodigoProductoIngresado, NombreProductoIngresado));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -269,8 +274,9 @@ namespace DesktopAplicationCV.ViewModel
                 {
                     try
                     {
-                        OldProduct = new ProductosModel(CodigoCeldaSeleccionada, NombreProductoCeldaSeleccionada)
+                        OldProduct = new ProductosModel(IdProductoSeleccionado, CodigoCeldaSeleccionada, NombreProductoCeldaSeleccionada)
                         {
+                            Id_Producto = IdProductoSeleccionado,
                             Codigo = CodigoCeldaSeleccionada,
                             Producto = NombreProductoCeldaSeleccionada
                         };
@@ -330,13 +336,13 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task EliminarProducto(int codigo)
+        private async Task EliminarProducto(int id)
         {
             try
             {
-                if (await _productoService.DeleteProductoAsync(codigo))
+                if (await _productoService.DeleteProductoAsync(id))
                 {
-                    var producto = Productos.FirstOrDefault(p => p.Codigo == codigo);
+                    var producto = Productos.FirstOrDefault(p => p.Id_Producto == id);
                     if (producto != null)
                     {
                         Productos.Remove(producto);
@@ -355,7 +361,6 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 ActualizarProducto((ProductosModel)OldProduct);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex) {
@@ -371,11 +376,13 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditCodigoProducto: " + EditCodigoProducto);
                 Console.WriteLine("EditNombreProducto: " + EditNombreProducto);
 
+                var id = IdProductoSeleccionado;
                 var cod = EditCodigoProducto;
                 var prod = EditNombreProducto;
 
-                NewProduct = new ProductosModel(cod, prod)
+                NewProduct = new ProductosModel(id, cod, prod)
                 {
+                    Id_Producto = id,
                     Codigo = cod,
                     Producto = prod
                 };
@@ -388,6 +395,11 @@ namespace DesktopAplicationCV.ViewModel
                     //Add new product
                     Productos.Add((ProductosModel)NewProduct);
 
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error al editar", "Ok");
                 }
             }
             catch (Exception Ex) 
@@ -395,5 +407,6 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("Error ActualizarBancoDetalle ProductosViewModel: " + Ex.Message);
             }
         }
+        #endregion
     }
 }

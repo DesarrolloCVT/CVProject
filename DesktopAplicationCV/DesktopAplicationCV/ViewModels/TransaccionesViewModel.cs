@@ -205,6 +205,7 @@ namespace DesktopAplicationCV.ViewModels
                 {
                     _tipoSeleccionado = value;
                     TipoTransaccionIngresadoText = value.Tipo_Dato.Trim();
+                    EditTipoTransaccion = value.Tipo_Dato.Trim();
                     OnPropertyChanged(nameof(TipoSeleccionado));
                     OnPropertyChanged(nameof(TipoTransaccionIngresadoText)); // Para actualizar la vista
                 }
@@ -246,6 +247,7 @@ namespace DesktopAplicationCV.ViewModels
                 {
                     _subtipoSeleccionado = value;
                     SubTipoTransaccionIngresadoText = value.Nombre.Trim();
+                    EditSubTipoTransaccion = value.Nombre.Trim();
                     OnPropertyChanged(nameof(SubTipoSeleccionado));
                     OnPropertyChanged(nameof(SubTipoTransaccionIngresadoText)); // Para actualizar la vista
                 }
@@ -592,7 +594,7 @@ namespace DesktopAplicationCV.ViewModels
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarTransacciones(FolioTransaccionCeldaSeleccionada);
+                    EliminarTransacciones(IdTransaccionCeldaSeleccionada);
                     CargarGrillaIngresos();
                 }
                 else
@@ -735,7 +737,6 @@ namespace DesktopAplicationCV.ViewModels
                 Bancos = await _auxService.GetBancosAsync();
                 Monedas = await _auxService.GetMonedasAsync();
                 Metodopagos = await _auxService.GetMetodoPagoAsync();
-                Cliente = await _auxService.GetSociosNegocioAsync();
                 Cuentas = await _auxService.GetCuentasAsync();
             }
             catch (Exception Ex)
@@ -745,11 +746,14 @@ namespace DesktopAplicationCV.ViewModels
         }
 
         [RelayCommand]
-        private async Task CargarSubTipos()
+        private async Task CargarDependencias()
         {
             try
             {
+                string tipoCliente = string.Empty;
+                tipoCliente = (TipoTransaccionIngresadoText == "Ingreso") ? tipoCliente = "Cliente" : tipoCliente = "Proveedor";
                 Subtipos = await _auxService.GetSubtiposFilterByIdAsync(TipoTransaccionIngresadoText);
+                Cliente = await _auxService.GetSocioNegociosFilterByIdAsync(tipoCliente);
             }
             catch (Exception Ex)
             {
@@ -802,7 +806,6 @@ namespace DesktopAplicationCV.ViewModels
             try
             {
                 ActualizarTransacciones((TransaccionesModel)OldTransaccion);
-                Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 _navigationService.GoBackAsync();
             }
             catch (Exception Ex)
@@ -862,6 +865,11 @@ namespace DesktopAplicationCV.ViewModels
                     //Add new product
                     Transacciones.Add((TransaccionesModel)NewTransaccion);
 
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
+                }
+                else
+                {
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Error al editar. ", "Ok");
                 }
             }
             catch (Exception Ex)

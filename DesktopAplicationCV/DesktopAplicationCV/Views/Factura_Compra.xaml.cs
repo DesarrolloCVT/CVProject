@@ -10,9 +10,10 @@ public partial class Factura_Compra : ContentPage
 	public Factura_Compra()
 	{
         INavigationService navigationService = new NavigationService();
+        AuxService auxService = new AuxService();
 
         InitializeComponent();
-        BindingContext = new FacturaCompraViewModel(navigationService);
+        BindingContext = new FacturaCompraViewModel(navigationService, auxService);
 
         var viewModel = BindingContext as FacturaCompraViewModel;
 

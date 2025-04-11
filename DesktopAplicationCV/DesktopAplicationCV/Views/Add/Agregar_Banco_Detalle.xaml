@@ -9,6 +9,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
@@ -39,12 +40,18 @@
             <Editor Placeholder="Numero"
                     Text="{Binding NumerobancoDetallesIngresado}"
                     Grid.Row="2" Grid.Column="2"/>
+            <Label Text="Saldo"
+                   FontSize="Small"
+                   Grid.Row="3" Grid.Column="1"/>
+            <Editor Placeholder="Saldo"
+                    Text="{Binding SaldobancoDetallesIngresado}"
+                    Grid.Row="3" Grid.Column="2"/>
             <Button Text="Insertar"
                     TextColor="White"
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="#0288D1"
-                    Grid.Row="4" Grid.Column="1"
+                    Grid.Row="5" Grid.Column="1"
                     Grid.ColumnSpan="1"
                     Command="{Binding InsertarBancoDetalleCommand}"/>
             <Button Text="Cancelar"
@@ -52,7 +59,7 @@
                     WidthRequest="200"
                     FontAttributes="Bold"
                     BackgroundColor="#0288D1"
-                    Grid.Row="4" Grid.Column="2"
+                    Grid.Row="5" Grid.Column="2"
                     Grid.ColumnSpan="1"
                     Command="{Binding CancelarCommand}"/>
         </Grid>

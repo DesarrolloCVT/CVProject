@@ -6,7 +6,7 @@ namespace DesktopAplicationCV.Views;
 
 public partial class Banco_Detalle : ContentPage
 {
-	public Banco_Detalle()
+	public Banco_Detalle(int id)
 	{
         INavigationService navigationService = new NavigationService();
 
@@ -14,6 +14,7 @@ public partial class Banco_Detalle : ContentPage
         BindingContext = new BancoDetalleViewModel(navigationService);
 
         var viewModel = BindingContext as BancoDetalleViewModel;
+        viewModel.Id_Banco = id;
 
         if (viewModel != null)
         {

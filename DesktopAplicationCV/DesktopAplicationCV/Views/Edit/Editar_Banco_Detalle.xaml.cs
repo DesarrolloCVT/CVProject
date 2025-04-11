@@ -17,5 +17,6 @@ public partial class Editar_Banco_Detalle : ContentPage
         BancoDetalleModel bancoDetalleModel = (BancoDetalleModel)obj;
         EditCodigoBanco.Text = bancoDetalleModel.Codigo_Banco.ToString().Trim();
         EditNumero.Text = bancoDetalleModel.Numero.ToString().Trim();
+        EditSaldo.Text = bancoDetalleModel.Saldo.ToString().Trim();
     }
 }

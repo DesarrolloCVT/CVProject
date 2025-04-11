@@ -389,6 +389,8 @@ namespace DesktopAplicationCV.ViewModel
 
         #endregion
 
+        #region Metodos 
+
         [RelayCommand]
         public void Cancelar()
         {
@@ -725,5 +727,6 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("Error ActualizarTransacciones IngresosViewModel: " + Ex.Message);
             }
         }
+        #endregion
     }
 }

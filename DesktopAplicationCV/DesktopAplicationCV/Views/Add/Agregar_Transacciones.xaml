@@ -52,7 +52,7 @@
                 <Picker.Behaviors>
                     <toolkit:EventToCommandBehavior
                         EventName="Focused"
-                        Command="{Binding CargarSubTiposCommand}" />
+                        Command="{Binding CargarDependenciasCommand}" />
                 </Picker.Behaviors>
             </Picker>
             <Label Text="Sub Tipo"

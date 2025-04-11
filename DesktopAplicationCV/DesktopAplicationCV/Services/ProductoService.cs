@@ -18,7 +18,7 @@ namespace DesktopAplicationCV.Services
 
         public async Task<bool> UpdateProductoAsync(ProductosModel producto)
         {
-            return await PutAsync($"{Endpoint}/{producto.Codigo}", producto);
+            return await PutAsync($"{Endpoint}/{producto.Id_Producto}", producto);
         }
 
         public async Task<bool> DeleteProductoAsync(int id)

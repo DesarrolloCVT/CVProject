@@ -15,7 +15,13 @@ namespace DesktopAplicationCV.Services
         {
             return await GetAsync<List<FacturaCompraDetalleModel>>(Endpoint) ?? new List<FacturaCompraDetalleModel>();
         }
-        
+
+        public async Task<List<FacturaCompraDetalleModel>> GetFactCompraDetalleFilterByIdAsync(int id)
+        {
+            var Endpoint = $"FacturaCompraDetalle/GetFacturaCompraDetalle?idFactCompra";
+            return await GetFilterByIdAsync<List<FacturaCompraDetalleModel>>(Endpoint, id) ?? new List<FacturaCompraDetalleModel>();
+        }
+
         public async Task<List<FacturaCompraDetalleModel>> GetFactCompraDetallesByIdAsync(int id)
         {
             return await GetByIdAsync<List<FacturaCompraDetalleModel>>(Endpoint, id) ?? new List<FacturaCompraDetalleModel>();

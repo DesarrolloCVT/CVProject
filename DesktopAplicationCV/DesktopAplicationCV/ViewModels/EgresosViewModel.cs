@@ -405,6 +405,8 @@ namespace DesktopAplicationCV.ViewModels
 
         #endregion
 
+        #region Metodos 
+
         [RelayCommand]
         public void Cancelar()
         {
@@ -740,5 +742,6 @@ namespace DesktopAplicationCV.ViewModels
                 Console.WriteLine("Error ActualizarEgresos EgresosViewModel: " + Ex.Message);
             }
         }
+        #endregion
     }
 }

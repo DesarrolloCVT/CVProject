@@ -41,9 +41,14 @@
             <Label Text="Cliente"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
-            <Editor Placeholder="Cliente"
+            <!--Editor Placeholder="Cliente"
                     Text="{Binding EditClienteFactVenta}"
                     x:Name="EditCliente"
+                    Grid.Row="2" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Cliente}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding ClienteSeleccionado, Mode=TwoWay}"
+                    x:Name="PkrCliente"
                     Grid.Row="2" Grid.Column="2"/>
             <Label Text="Direccion de Despacho"
                    FontSize="Small"
@@ -55,10 +60,15 @@
             <Label Text="Moneda"
                    FontSize="Small"
                    Grid.Row="4" Grid.Column="1"/>
-            <Editor Placeholder="Moneda"
+            <Picker ItemsSource="{Binding Monedas}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding MonedaSeleccionado, Mode=TwoWay}"
+                    x:Name="PkrMoneda"
+                    Grid.Row="4" Grid.Column="2"/>
+            <!--Editor Placeholder="Moneda"
                     Text="{Binding EditMonedaFactVenta}"
                     x:Name="EditMoneda"
-                    Grid.Row="4" Grid.Column="2"/>
+                    Grid.Row="4" Grid.Column="2"/-->
             <Label Text="Fecha"
                    FontSize="Small"
                    Grid.Row="5" Grid.Column="1"/>

@@ -18,8 +18,8 @@ namespace DesktopAplicationCV.Services
         {
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://localhost:44374/api/")
-                //BaseAddress = new Uri("https://localhost:8443/api/")
+                //BaseAddress = new Uri("https://localhost:44374/api/")
+                BaseAddress = new Uri("https://localhost:8443/api/")
             };
 
             _jsonOptions = new JsonSerializerOptions
@@ -68,6 +68,18 @@ namespace DesktopAplicationCV.Services
             }
 
             return new List<MetodoPagoModel>();
+        }
+
+        public async Task<List<ProductosModel>> GetProductosAsync()
+        {
+            var response = await _httpClient.GetAsync("Productos");
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<List<ProductosModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<ProductosModel>();
+            }
+
+            return new List<ProductosModel>();
         }
 
         public async Task<List<BancoModel>> GetBancosAsync()
@@ -123,6 +135,12 @@ namespace DesktopAplicationCV.Services
         {
             var EndPoint = $"Subtipos/GetSubtipo?Identificador";
             return await GetFilterAsync<List<SubtiposModel>>(EndPoint, identificador) ?? new List<SubtiposModel>();
+        }
+
+        public async Task<List<SocioNegocioModel>> GetSocioNegociosFilterByIdAsync(string tipo)
+        {
+            var EndPoint = $"SocioNegocio/GetSocioNegocio?tipo";
+            return await GetFilterAsync<List<SocioNegocioModel>>(EndPoint, tipo) ?? new List<SocioNegocioModel>();
         }
     }
 }

@@ -97,8 +97,8 @@ namespace DesktopAplicationCV
             //API
             builder.Services.AddHttpClient("ApiClient", client =>
             {
-                client.BaseAddress = new Uri("https://localhost:44374/api/");
-                //client.BaseAddress = new Uri("https://localhost:8443/api/");
+                //client.BaseAddress = new Uri("https://localhost:44374/api/");
+                client.BaseAddress = new Uri("https://localhost:8443/api/");
                 client.Timeout = TimeSpan.FromSeconds(30);
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
             });

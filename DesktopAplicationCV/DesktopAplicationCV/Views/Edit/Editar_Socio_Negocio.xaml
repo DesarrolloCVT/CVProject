@@ -12,7 +12,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="80"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
@@ -39,7 +39,6 @@
                 x:Name="EditCodigo"
                 IsReadOnly="True"
                 Text="{Binding EditCodigoSocio}"
-                WidthRequest="300"
                 Keyboard="Numeric"
                 Placeholder="Codigo"
                 Grid.Row="1" Grid.Column="2"/>
@@ -52,7 +51,6 @@
             <Editor 
                 x:Name="EditNombre"
                 Text="{Binding EditNombreSocio}"
-                WidthRequest="300"
                 Placeholder="Nombre"
                 Grid.Row="2" Grid.Column="2"/>
 
@@ -61,11 +59,16 @@
                FontSize="Small"
                Grid.Row="3" Grid.Column="1"
                FontAttributes="Bold"/>
+            <!--Picker 
+                x:Name="PkrTipo"
+                ItemsSource="{Binding Tipos}"
+                ItemDisplayBinding="{Binding Tipo_Dato}"
+                SelectedItem="{Binding TipoSeleccionado, Mode=TwoWay}"
+                Grid.Row="3" Grid.Column="2">
+            </Picker-->
             <Picker 
                 x:Name="pkrTipo"
                 SelectedItem="{Binding EditTipoSocio}"
-                Title="Seleccione Tipo de Socio"
-                WidthRequest="300"
                 Grid.Row="3" Grid.Column="2">
             <Picker.Items>
                 <x:String>Cliente</x:String>

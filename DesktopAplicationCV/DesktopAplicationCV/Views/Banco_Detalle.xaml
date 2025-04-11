@@ -11,7 +11,10 @@
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="150"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -23,7 +26,31 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <Label 
+                Text="{x:Static recursos:AppResources.BancoDetalle}"
+                HorizontalOptions="Center"
+                FontSize="Medium"
+                Grid.Column="2"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                FontAttributes="Bold"/>
+
             <!-- * Botones de accion * -->
+
+            <Button 
+                Text="{x:Static recursos:AppResources.Volver}"
+                FontAttributes="Bold"
+                BorderColor="White"
+                BorderWidth="1.5"
+                WidthRequest="150"
+                Grid.Column="0"
+                Grid.Row="2"
+                BackgroundColor="#455A64"
+                CornerRadius="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor="White"
+                Command="{Binding VolverCommand}"/>
 
             <Button Text="{x:Static recursos:AppResources.Agregar}"
                     WidthRequest="150"
@@ -31,7 +58,7 @@
                     BorderColor="White"
                     BorderWidth="1.5"
                     Grid.Column="0"
-                    Grid.Row="0"
+                    Grid.Row="3"
                     BackgroundColor="#0288D1"
                     CornerRadius="10"
                     HorizontalOptions="Center"
@@ -45,7 +72,7 @@
                     BorderWidth="1.5"
                     WidthRequest="150"
                     Grid.Column="1"
-                    Grid.Row="0"
+                    Grid.Row="3"
                     BackgroundColor="#0288D1"
                     CornerRadius="10"
                     HorizontalOptions="Center"
@@ -59,7 +86,7 @@
                     BorderWidth="1.5"
                     WidthRequest="150"
                     Grid.Column="2"
-                    Grid.Row="0"
+                    Grid.Row="3"
                     BackgroundColor="#0288D1"
                     CornerRadius="10"
                     HorizontalOptions="Center"
@@ -77,7 +104,7 @@
                     Text="{Binding FilterText}"
                     AutoSize="Disabled"
                     Keyboard="Numeric"
-                    Grid.Row="0"
+                    Grid.Row="3"
                     Grid.Column="3"
                     Grid.ColumnSpan="3"
                     HeightRequest="10"/>
@@ -92,7 +119,7 @@
                                    GridLinesVisibility="Both"
                                    HeaderGridLinesVisibility="Both"
                                    BackgroundColor="DarkSlateGray"
-                                   Grid.Row="1"
+                                   Grid.Row="4"
                                    Grid.ColumnSpan="6"
                                    ColumnWidthMode="Fill"
                                    CellTappedCommand="{Binding CeldaTocadaCommand}">
@@ -113,8 +140,11 @@
                 </syncfusion:SfDataGrid.Resources>
 
                 <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:DataGridTextColumn MappingName="Id_Banco_Detalle" HeaderText="Id Banco Detalle" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Id_Banco" HeaderText="Id Banco" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Codigo_Banco" HeaderText="Codigo del Banco" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Numero" HeaderText="Numero" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Saldo" HeaderText="Saldo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>
             </syncfusion:SfDataGrid>
         </Grid>

@@ -41,8 +41,12 @@
             <Label Text="Cliente"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
-            <Editor Placeholder="Cliente"
+            <!--Editor Placeholder="Cliente"
                     Text="{Binding ClienteFactVentaIngresado}"
+                    Grid.Row="2" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Cliente}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding ClienteSeleccionado, Mode=TwoWay}"
                     Grid.Row="2" Grid.Column="2"/>
             <Label Text="Direccion de Despacho"
                    FontSize="Small"
@@ -53,8 +57,12 @@
             <Label Text="Moneda"
                    FontSize="Small"
                    Grid.Row="4" Grid.Column="1"/>
-            <Editor Placeholder="Moneda"
+            <!--Editor Placeholder="Moneda"
                     Text="{Binding MonedaFactVentaIngresado}"
+                    Grid.Row="4" Grid.Column="2"/-->
+            <Picker ItemsSource="{Binding Monedas}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding MonedaSeleccionado, Mode=TwoWay}"
                     Grid.Row="4" Grid.Column="2"/>
             <Label Text="Fecha"
                    FontSize="Small"

@@ -6,18 +6,20 @@ using Syncfusion.Maui.DataGrid;
 
 namespace DesktopAplicationCV.Views;
 
-public partial class Factura_Compra_detalle : ContentPage
+public partial class Factura_Compra_Detalle : ContentPage
 {
     public int total = 0;
 
-	public Factura_Compra_detalle()
+	public Factura_Compra_Detalle(int id)
 	{
         INavigationService navigationService = new NavigationService();
+        AuxService auxService = new AuxService();
 
         InitializeComponent();
-        BindingContext = new FacturaCompraDetalleViewModel(navigationService);
+        BindingContext = new FacturaCompraDetalleViewModel(navigationService, auxService);
 
         var viewModel = BindingContext as FacturaCompraDetalleViewModel;
+        viewModel.Id_Factura_Compra = id;
 
         if (viewModel != null)
         {
@@ -35,7 +37,7 @@ public partial class Factura_Compra_detalle : ContentPage
         base.OnAppearing();
     }
 
-    private void CalcularValorTotal()
+    /*private void CalcularValorTotal()
     {
         dataGrid.QueryUnboundColumnValue += (sender, e) =>
         {
@@ -47,5 +49,5 @@ public partial class Factura_Compra_detalle : ContentPage
                 total += (datosFactCrompraDetalle.Cantidad * datosFactCrompraDetalle.Precio);
             }
         };
-    }
+    }*/
 }

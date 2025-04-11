@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Services;
+using DesktopAplicationCV.Views;
 using Syncfusion.Maui.DataGrid;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,16 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        [ObservableProperty]
+        private List<MonedaModel> _monedas;
+
+        [ObservableProperty]
+        private List<SocioNegocioModel> _cliente;
+
         private static object _oldFacturaVenta;
         private object NewFacturaVenta;
 
-        private int IdFactVentaCeldaSeleccionada;
+        private static int IdFactVentaCeldaSeleccionada;
         private int FolioFactVentaCeldaSeleccionada;
         private string ClienteFactVentaCeldaSeleccionada;
         private string DirDespachoFactVentaCeldaSeleccionada;
@@ -30,13 +37,18 @@ namespace DesktopAplicationCV.ViewModel
         private DateTime FechaFactVentaCeldaSeleccionada;
 
         private readonly INavigationService _navigationService;
+        private readonly AuxService _auxService;
         private readonly FacturaVentaService _factVentaService;
 
         [ObservableProperty]
         private int selectedIndex;
 
+        private SocioNegocioModel _clienteSeleccionado;
+
         [ObservableProperty]
         private ObservableCollection<FacturaVentaModel> facturaVentaModels;
+
+        private MonedaModel _monedaSeleccionado;
 
         private string _filterText;
 
@@ -46,7 +58,7 @@ namespace DesktopAplicationCV.ViewModel
         private string _monedaFactVentaIngresado;
         private DateTime _fechaFactVentaIngresado;
 
-        private int _editIdFactVenta;
+        //private int _editIdFactVenta;
         private int _editFolioFactVenta;
         private string _editClienteFactVenta;
         private string _editDirDespachoFactVenta;
@@ -151,6 +163,22 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        public MonedaModel MonedaSeleccionado
+        {
+            get => _monedaSeleccionado;
+            set
+            {
+                if (_monedaSeleccionado != value)
+                {
+                    _monedaSeleccionado = value;
+                    MonedaFactVentaIngresado = value.Nombre.Trim();
+                    EditMonedaFactVenta = value.Nombre.Trim();
+                    OnPropertyChanged(nameof(MonedaSeleccionado));
+                    OnPropertyChanged(nameof(MonedaFactVentaIngresado)); // Para actualizar la vista
+                }
+            }
+        }
+
         public DateTime FechaFactVentaIngresado
         {
             get => _fechaFactVentaIngresado;
@@ -164,7 +192,7 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        public int EditIdFactVenta
+        /*public int EditIdFactVenta
         {
             get => _editIdFactVenta;
             set
@@ -175,7 +203,7 @@ namespace DesktopAplicationCV.ViewModel
                     OnPropertyChanged(nameof(EditIdFactVenta));
                 }
             }
-        }
+        }*/
         
         public int EditFolioFactVenta
         {
@@ -242,17 +270,35 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
+        public SocioNegocioModel ClienteSeleccionado
+        {
+            get => _clienteSeleccionado;
+            set
+            {
+                if (_clienteSeleccionado != value)
+                {
+                    _clienteSeleccionado = value;
+                    ClienteFactVentaIngresado = value.Nombre.Trim();
+                    EditClienteFactVenta = value.Nombre.Trim();
+                    OnPropertyChanged(nameof(ClienteSeleccionado));
+                    OnPropertyChanged(nameof(ClienteFactVentaIngresado)); // Para actualizar la vista
+                }
+            }
+        }
+
         #endregion
 
         #region Constructores
 
-        public FacturaVentaViewModel(INavigationService navigationService)
+        public FacturaVentaViewModel(INavigationService navigationService, AuxService auxService)
         {
+            _auxService = auxService;
             _factVentaService = new FacturaVentaService();
             facturaVentaModels = new ObservableCollection<FacturaVentaModel>();
 
             _navigationService = navigationService;
             CargarFactVentas();
+            CargarComboBoxes();
 
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
@@ -292,6 +338,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (e.RowData is FacturaVentaModel facturaVentaModel)
                 {
+                    IdFactVentaCeldaSeleccionada = facturaVentaModel.Id_Factura_Venta;
                     FolioFactVentaCeldaSeleccionada = facturaVentaModel.Folio;
                     ClienteFactVentaCeldaSeleccionada = facturaVentaModel.Cliente;
                     DirDespachoFactVentaCeldaSeleccionada = facturaVentaModel.Direccion_Despacho;
@@ -326,7 +373,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (selectedIndex >= 0)
                 {
-                    EliminarFactVentas(FolioFactVentaCeldaSeleccionada);
+                    EliminarFactVentas(IdFactVentaCeldaSeleccionada);
                     CargarFactVentas();
                 }
                 else
@@ -391,6 +438,7 @@ namespace DesktopAplicationCV.ViewModel
                         OldFacturaVenta = new FacturaVentaModel(IdFactVentaCeldaSeleccionada, FolioFactVentaCeldaSeleccionada, ClienteFactVentaCeldaSeleccionada,
                             DirDespachoFactVentaCeldaSeleccionada, MonedaFactVentaCeldaSeleccionada, FechaFactVentaCeldaSeleccionada)
                         {
+                            Id_Factura_Venta = IdFactVentaCeldaSeleccionada,
                             Folio = FolioFactVentaCeldaSeleccionada,
                             Cliente = ClienteFactVentaCeldaSeleccionada,
                             Direccion_Despacho = DirDespachoFactVentaCeldaSeleccionada,
@@ -417,13 +465,14 @@ namespace DesktopAplicationCV.ViewModel
         }
 
         [RelayCommand]
-        private void Detalles()
+        private async void Detalles()
         {
             try
             {
                 if (selectedIndex >= 0)
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Has seleccionado una Fila Valida", "Ok");
+                    await _navigationService.NavigateToAsync<NavigationViewModel>("Factura_Venta_Detalle", IdFactVentaCeldaSeleccionada);
+                    //Application.Current.MainPage.DisplayAlert("Alerta", "Has seleccionado una Fila Valida", "Ok");
                 }
                 else
                 {
@@ -432,7 +481,7 @@ namespace DesktopAplicationCV.ViewModel
             }
             catch (Exception Ex)
             {
-
+                Console.WriteLine("ERROR: Detalles ViewModelFacturaVenta: " + Ex.Message);
             }
         }
 
@@ -450,6 +499,20 @@ namespace DesktopAplicationCV.ViewModel
             catch (Exception Ex) 
             {
                 Console.WriteLine("Error CargarFactVentas FacturaVentaViewModel: " + Ex.Message);
+            }
+        }
+
+        private async Task CargarComboBoxes()
+        {
+            var tipo = "Cliente";
+            try
+            {
+                Cliente = await _auxService.GetSocioNegociosFilterByIdAsync(tipo);
+                Monedas = await _auxService.GetMonedasAsync();
+            }
+            catch (Exception Ex)
+            {
+                Console.WriteLine("Error CargarComboBoxes FacturaVentaViewModel: " + Ex.Message);
             }
         }
 
@@ -473,13 +536,13 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task EliminarFactVentas(int folio)
+        private async Task EliminarFactVentas(int id)
         {
             try
             {
-                if (await _factVentaService.DeleteFactVentaAsync(folio))
+                if (await _factVentaService.DeleteFactVentaAsync(id))
                 {
-                    var facturaVenta = facturaVentaModels.FirstOrDefault(p => p.Folio == folio);
+                    var facturaVenta = facturaVentaModels.FirstOrDefault(p => p.Id_Factura_Venta == id);
                     if (facturaVenta != null)
                     {
                         facturaVentaModels.Remove(facturaVenta);
@@ -516,7 +579,7 @@ namespace DesktopAplicationCV.ViewModel
                 Console.WriteLine("EditMonedaFactVenta: " + EditMonedaFactVenta);
                 Console.WriteLine("EditFechaFactVenta: " + EditFechaFactVenta);
 
-                var id = EditIdFactVenta;
+                var id = IdFactVentaCeldaSeleccionada;
                 var folio = EditFolioFactVenta;
                 var cliente = EditClienteFactVenta;
                 var dirDespacho = EditDirDespachoFactVenta;
@@ -539,6 +602,8 @@ namespace DesktopAplicationCV.ViewModel
                     facturaVentaModels.Remove(AntiguoFactVentas);
                     //Add new
                     facturaVentaModels.Add((FacturaVentaModel)NewFacturaVenta);
+
+                    Application.Current.MainPage.DisplayAlert("Alerta", "Se han modificado los datos correctamente. ", "Ok");
                 }
                 else
                 {
