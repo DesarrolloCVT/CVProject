@@ -24,6 +24,8 @@ namespace DesktopAplicationCV.ViewModels
         [ObservableProperty]
         private List<MonedaModel> _monedas;
 
+        //public ObservableCollection<MonedaModel> Monedas { get; set; } = new();
+
         [ObservableProperty]
         private List<SubtiposModel> _subtipos;
 
@@ -291,6 +293,8 @@ namespace DesktopAplicationCV.ViewModels
                     MonedaTransaccionIngresadoText = value.Nombre.Trim();
                     OnPropertyChanged(nameof(MonedaSeleccionado));
                     OnPropertyChanged(nameof(MonedaTransaccionIngresadoText)); // Para actualizar la vista
+                    OnPropertyChanged(nameof(EditMonedaTransaccion));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -574,13 +578,6 @@ namespace DesktopAplicationCV.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         [RelayCommand]
         public void GridCargado()
         {
@@ -648,13 +645,27 @@ namespace DesktopAplicationCV.ViewModels
             }
         }
 
+        public async void CargarMonedaPrevia()
+        {
+            try 
+            {
+                Monedas = await _auxService.GetMonedasAsync();
+                MonedaSeleccionado = Monedas.FirstOrDefault(m => m.Nombre.Trim() == "CLP");
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error CargarMonedaPrevia: " + Ex.Message);
+            }
+        }
+        
         [RelayCommand]
         private async void Editar()
-        {
+        {   
             try
             {
                 if (selectedIndex >= 0)
                 {
+                    CargarMonedaPrevia();
                     try
                     {
                         OldTransaccion = new TransaccionesModel(IdTransaccionCeldaSeleccionada, FolioTransaccionCeldaSeleccionada, TipoTransaccionCeldaSeleccionada, SubTipoTransaccionCeldaSeleccionada, MonedaTransaccionCeldaSeleccionada,
@@ -876,6 +887,13 @@ namespace DesktopAplicationCV.ViewModels
             {
                 Console.WriteLine("Error ActualizarTransacciones IngresosViewModel: " + Ex.Message);
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

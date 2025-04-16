@@ -114,6 +114,7 @@
                 </syncfusion:SfDataGrid.Resources>
 
                 <syncfusion:SfDataGrid.Columns>
+                    <syncfusion:DataGridTextColumn MappingName="Id_Tipo" HeaderText="Id Tipo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Codigo" HeaderText="Codigo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Nombre" HeaderText="Nombre" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Tipo_Dato" HeaderText="Tipo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>

@@ -30,5 +30,11 @@ namespace DesktopAplicationCV.Services
         {
             return await DeleteAsync($"{Endpoint}/{id}");
         }
+
+        public async Task<List<FacturaVentaModel>> GetFactVentaFilter()
+        {
+            var Endpoint = $"FacturaVenta/GetConsultaConTotales";
+            return await GetAsync<List<FacturaVentaModel>>(Endpoint) ?? new List<FacturaVentaModel>();
+        }
     }
 }

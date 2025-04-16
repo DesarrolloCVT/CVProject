@@ -15,6 +15,7 @@ namespace DesktopAplicationCV.Models
         private string proveedor;
         private DateTime fecha;
         private string moneda;
+        private long total;
 
         public int Id_Factura_Compra
         {
@@ -45,18 +46,28 @@ namespace DesktopAplicationCV.Models
             get { return moneda; }
             set { this.moneda = value; }
         }
-        public List<FacturaCompraDetalleModel> Detalles { get; set; } = new List<FacturaCompraDetalleModel>();
+
+        public long Total
+        {
+            get { return total; }
+            set { this.total = value; }
+        }
+
+
+        /*public List<FacturaCompraDetalleModel> Detalles { get; set; } = new List<FacturaCompraDetalleModel>();
 
         // Total calculado sumando Precio * Cantidad de los detalles
-        public decimal Total => Detalles.Sum(d => d.Precio * d.Cantidad);
+        public decimal Total => Detalles.Sum(d => d.Precio * d.Cantidad);*/
 
-        public FacturaCompraModel(int id_factura_compra, int folio, string proveedor, DateTime fecha, string moneda)
+
+        public FacturaCompraModel(int id_factura_compra, int folio, string proveedor, DateTime fecha, string moneda, long total)
         {
             this.Id_Factura_Compra = id_factura_compra;
             this.Folio = folio;
             this.Proveedor = proveedor;
             this.Fecha = fecha;
             this.Moneda = moneda;
+            this.Total = total;
         }
     }
 }

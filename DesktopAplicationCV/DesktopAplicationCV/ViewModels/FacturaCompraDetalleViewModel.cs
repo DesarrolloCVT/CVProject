@@ -304,6 +304,8 @@ namespace DesktopAplicationCV.ViewModel
             FacturaCompraDetalleInfoCollection = new ObservableCollection<FacturaCompraDetalleModel>();
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
 
+            
+
             _auxService = auxService;
             _factComprDetalleService = new FacturaCompraDetalleService();
             _navigationService = navigationService;

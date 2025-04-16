@@ -378,7 +378,7 @@ namespace DesktopAplicationCV.ViewModel
             {
                 if (FolioFactCompraIngresado != 0 && !string.IsNullOrEmpty(ProveedorFactCompraIngresado) && !string.IsNullOrEmpty(MonedaFactCompraIngresado))
                 {
-                    AgregarFacturaCompra(new FacturaCompraModel(IdFactCompraCeldaSeleccionada, FolioFactCompraIngresado, ProveedorFactCompraIngresado, FechaFactCompraIngresado, MonedaFactCompraIngresado));
+                    AgregarFacturaCompra(new FacturaCompraModel(IdFactCompraCeldaSeleccionada, FolioFactCompraIngresado, ProveedorFactCompraIngresado, FechaFactCompraIngresado, MonedaFactCompraIngresado, 0));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -400,7 +400,7 @@ namespace DesktopAplicationCV.ViewModel
                 try
                 {
                     OldFacturaCompra = new FacturaCompraModel(IdFactCompraCeldaSeleccionada, FolioCeldaSeleccionada, ProveedorFactCompraCeldaSeleccionada
-                        , FechaFactCompraCeldaSeleccionada, MonedaFactCompraCeldaSeleccionada)
+                        , FechaFactCompraCeldaSeleccionada, MonedaFactCompraCeldaSeleccionada, 0)
                     {
                         Id_Factura_Compra = IdFactCompraCeldaSeleccionada,
                         Folio = FolioCeldaSeleccionada,
@@ -450,7 +450,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                var factCompras = await _facturaCompraService.GetFacturaCompraAsync();
+                var factCompras = await _facturaCompraService.GetFactCompraFilter(); //.GetFacturaCompraAsync();
                 facturaCompra.Clear();
                 foreach (var factura in factCompras)
                 {
@@ -545,7 +545,7 @@ namespace DesktopAplicationCV.ViewModel
                 var fecha = EditFechaFactCompra;
                 var moneda = EditMonedaFactCompra;
 
-                NewFacturaCompra = new FacturaCompraModel(id, folio, proveedor, fecha, moneda)
+                NewFacturaCompra = new FacturaCompraModel(id, folio, proveedor, fecha, moneda, 0)
                 {
                     Id_Factura_Compra = id,
                     Folio = folio,

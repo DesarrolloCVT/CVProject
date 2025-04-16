@@ -138,13 +138,13 @@
                     <syncfusion:DataGridTextColumn MappingName="Proveedor" HeaderText="Proveedor" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Fecha" Format="dd-MM-yyyy" HeaderText="Fecha" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Moneda" HeaderText="Moneda" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
-                    <!--syncfusion:DataGridTextColumn MappingName="Total" HeaderText="Total" Format="C" DisplayBinding="{Binding ValorTotal}" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn-->
+                    <syncfusion:DataGridTextColumn MappingName="Total" HeaderText="Total" Format="C" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
 
-                    <syncfusion:DataGridUnboundColumn 
+                    <!--syncfusion:DataGridUnboundColumn 
                         HeaderText="Total" 
                         MappingName="Total"
                         HeaderStyle="{StaticResource HeaderStyle}" 
-                        CellStyle="{StaticResource CustomTextStyle}"/>
+                        CellStyle="{StaticResource CustomTextStyle}"/-->
                 </syncfusion:SfDataGrid.Columns>
             </syncfusion:SfDataGrid>
         </Grid>

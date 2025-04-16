@@ -15,6 +15,7 @@ namespace DesktopAplicationCV.Models
         private string direccion_despacho;
         private string moneda;
         private DateTime fecha;
+        private long total;
 
         private ICommand buttonCommand;
 
@@ -54,7 +55,13 @@ namespace DesktopAplicationCV.Models
             set { this.fecha = value; }
         }
 
-        public FacturaVentaModel(int id_factura_venta, int folio, string cliente, string direccion_despacho, string moneda, DateTime fecha)
+        public long Total
+        {
+            get { return this.total; }
+            set { this.total = value; }
+        }
+
+        public FacturaVentaModel(int id_factura_venta, int folio, string cliente, string direccion_despacho, string moneda, DateTime fecha, long total)
         {
             this.Id_Factura_Venta = id_factura_venta;
             this.Folio = folio;
@@ -62,6 +69,7 @@ namespace DesktopAplicationCV.Models
             this.Direccion_Despacho = direccion_despacho;
             this.Moneda = moneda;
             this.Fecha = fecha;
+            this.Total = total;
         }
     }
 }

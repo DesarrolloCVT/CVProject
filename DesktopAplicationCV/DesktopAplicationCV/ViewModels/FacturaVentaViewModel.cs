@@ -411,7 +411,7 @@ namespace DesktopAplicationCV.ViewModel
                 && !string.IsNullOrEmpty(MonedaFactVentaIngresado))
                 {
                     AgregarFactVentas(new FacturaVentaModel(IdFactVentaCeldaSeleccionada, FolioFactVentaIngresado, ClienteFactVentaIngresado, DirDespachoFactVentaIngresado
-                        , MonedaFactVentaIngresado, FechaFactVentaIngresado));
+                        , MonedaFactVentaIngresado, FechaFactVentaIngresado,0));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -436,7 +436,7 @@ namespace DesktopAplicationCV.ViewModel
                     try
                     {
                         OldFacturaVenta = new FacturaVentaModel(IdFactVentaCeldaSeleccionada, FolioFactVentaCeldaSeleccionada, ClienteFactVentaCeldaSeleccionada,
-                            DirDespachoFactVentaCeldaSeleccionada, MonedaFactVentaCeldaSeleccionada, FechaFactVentaCeldaSeleccionada)
+                            DirDespachoFactVentaCeldaSeleccionada, MonedaFactVentaCeldaSeleccionada, FechaFactVentaCeldaSeleccionada,0)
                         {
                             Id_Factura_Venta = IdFactVentaCeldaSeleccionada,
                             Folio = FolioFactVentaCeldaSeleccionada,
@@ -489,7 +489,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                var facturaVentas = await _factVentaService.GetFactVentaAsync();
+                var facturaVentas = await _factVentaService.GetFactVentaFilter();
                 facturaVentaModels.Clear();
                 foreach (var factVentas in facturaVentas)
                 {
@@ -586,7 +586,7 @@ namespace DesktopAplicationCV.ViewModel
                 var moneda = EditMonedaFactVenta;
                 var fecha = EditFechaFactVenta;
 
-                NewFacturaVenta = new FacturaVentaModel(id, folio, cliente, dirDespacho, moneda, fecha)
+                NewFacturaVenta = new FacturaVentaModel(id, folio, cliente, dirDespacho, moneda, fecha,0)
                 {
                     Id_Factura_Venta = id,
                     Folio = folio,

@@ -249,7 +249,7 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if (string.IsNullOrEmpty(CodigoProductoIngresado) && !string.IsNullOrEmpty(NombreProductoIngresado))
+                if (!string.IsNullOrEmpty(CodigoProductoIngresado) && !string.IsNullOrEmpty(NombreProductoIngresado))
                 {
                     AgregarProducto(new ProductosModel(IdProductoSeleccionado, CodigoProductoIngresado, NombreProductoIngresado));
                     _navigationService.GoBackAsync();
