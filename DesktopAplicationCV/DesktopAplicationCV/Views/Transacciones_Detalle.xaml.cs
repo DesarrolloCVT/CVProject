@@ -9,7 +9,6 @@ public partial class Transacciones_Detalle : ContentPage
     TransaccionesDetalleViewModel viewModel;
     public Transacciones_Detalle(int IdValido)
 	{
-        Console.WriteLine("Id: " + IdValido);
         INavigationService navigationService = new NavigationService();
         AuxService auxService = new AuxService();
 

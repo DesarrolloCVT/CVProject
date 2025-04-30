@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Banco"
              BackgroundColor="DarkSlateGray"
-             Title="Agregar Nuevo Banco">
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
     <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
@@ -20,7 +20,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Agregar Banco"
+            <Label Text="{x:Static recursos:AppResources.AgrBanco}"
                    Margin="20,0,0,0"
                    FontSize="Medium"
                    TextColor="Silver"
@@ -31,16 +31,14 @@
             <Label Text="Codigo"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
-            <Editor WidthRequest="150"
-                    Text="{Binding CodigoBancoIngresado}"
-                    Placeholder="Codigo"
+            <Editor Text="{Binding CodigoBancoIngresado}"
+                    Placeholder="{x:Static recursos:AppResources.PlaceHolderCodigo}"
                     Grid.Row="1" Grid.Column="2"/>
             <Label Text="Nombre"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
-            <Editor WidthRequest="150"
-                    Text="{Binding NombreBancoIngresado}"
-                    Placeholder="Nombre"
+            <Editor Text="{Binding NombreBancoIngresado}"
+                    Placeholder="{x:Static recursos:AppResources.PlaceHolderNombre}"
                     Grid.Row="2" Grid.Column="2"/>
             <Button Text="Insertar"
                     TextColor="White"

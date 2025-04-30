@@ -1,4 +1,4 @@
-using DesktopAplicationCV.Models;
+﻿using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Services;
 using DesktopAplicationCV.ViewModels;
 
@@ -17,23 +17,21 @@ public partial class Editar_Transacciones : ContentPage
 
         TransaccionesModel transaccionesModel = (TransaccionesModel)obj;
         EditFolio.Text = transaccionesModel?.Folio.ToString().Trim();
-        PkrTipo.SelectedItem = transaccionesModel.Tipo_Transaccion.Trim();
-        PkrSubTipo.SelectedItem = transaccionesModel.Subtipo_Transaccion.Trim();
-        PkrMoneda.SelectedItem = transaccionesModel.Moneda.Trim();
+        /*PkrTipo.SelectedItem = transaccionesModel.Tipo_Transaccion.Trim();
+        PkrSubTipo.SelectedItem = transaccionesModel.Subtipo_Transaccion.Trim();*/
+        //PkrMoneda.SelectedItem = transaccionesModel.Moneda.Trim();
         PkrFecha.Date = transaccionesModel.Fecha;
-        PkrCliente.SelectedItem = transaccionesModel?.Cliente.ToString().Trim();
+        /*PkrCliente.SelectedItem = transaccionesModel?.Cliente.ToString().Trim();
         PkrMetodoPago.SelectedItem = transaccionesModel?.Metodo_Pago.ToString().Trim();
         PkrBanco.SelectedItem = transaccionesModel?.Banco.ToString().Trim();
-        PkrCuenta.SelectedItem = transaccionesModel?.Cuenta.ToString().Trim();
-        /*try
-        {
-            viewModel.CargarMonedaPrevia();
-            //PkrMoneda.SelectedItem = viewModel.EditMonedaTransaccion.Trim();
-            PkrMoneda.SelectedItem = viewModel.MonedaSeleccionado;
-        }
-        catch (Exception ex) 
-        {
-            Console.WriteLine("Error Editar_Transacciones CS: " + ex.Message);
-        }*/
+        PkrCuenta.SelectedItem = transaccionesModel?.Cuenta.ToString().Trim();*/
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is TransaccionesViewModel vm)
+            await vm.CargarMonedasAsync();
     }
 }

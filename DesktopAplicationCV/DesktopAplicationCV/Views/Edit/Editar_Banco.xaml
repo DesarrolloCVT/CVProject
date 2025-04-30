@@ -34,7 +34,7 @@
                 Grid.Row="1" Grid.Column="1"/>
             <Editor 
                 x:Name="EditCodigo"
-                IsReadOnly="True"
+                IsReadOnly="false"
                 WidthRequest="150"
                 Text="{Binding EditCodigoBanco}"
                 Placeholder="Codigo"

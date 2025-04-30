@@ -28,7 +28,6 @@ public partial class Factura_Compra : ContentPage
             };
         }
 
-
         dataGrid.QueryUnboundColumnValue += (sender, e) =>
         {
             if (e.Column.MappingName == "Total")

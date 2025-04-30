@@ -145,7 +145,7 @@
                     <syncfusion:DataGridTextColumn MappingName="Id_Factura_Venta" HeaderText="Id Facturas de Venta" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Folio" HeaderText="Folio" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Codigo_Producto" HeaderText="Codigo de Producto" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Cantidad" HeaderText="Cantidad" Format="C" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Cantidad" HeaderText="Cantidad" Format="N0" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Precio" HeaderText="Precio" Format="C" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>
             </syncfusion:SfDataGrid>

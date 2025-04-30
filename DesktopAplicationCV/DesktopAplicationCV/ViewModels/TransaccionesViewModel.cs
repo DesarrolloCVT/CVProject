@@ -4,6 +4,7 @@ using DesktopAplicationCV.Models;
 using DesktopAplicationCV.Services;
 using DesktopAplicationCV.ViewModel;
 using DesktopAplicationCV.Views;
+using Microsoft.UI.Xaml.Controls;
 using Syncfusion.Maui.DataGrid;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Services.Maps;
 
 namespace DesktopAplicationCV.ViewModels
 {
@@ -21,10 +23,23 @@ namespace DesktopAplicationCV.ViewModels
     {
         #region Variables
 
-        [ObservableProperty]
-        private List<MonedaModel> _monedas;
+        /*[ObservableProperty]
+        private List<MonedaModel> _monedas;*/
 
-        //public ObservableCollection<MonedaModel> Monedas { get; set; } = new();
+        [ObservableProperty]
+        private List<TipoModel> _tipos;
+
+        [ObservableProperty]
+        public ObservableCollection<MonedaModel> monedas = new();
+
+        /*[ObservableProperty]
+        public ObservableCollection<TipoModel> tipos = new();*/
+
+        [ObservableProperty]
+        private MonedaModel monedaSeleccionado;
+
+        /*[ObservableProperty]
+        private TipoModel tipoSeleccionado;*/
 
         [ObservableProperty]
         private List<SubtiposModel> _subtipos;
@@ -34,9 +49,6 @@ namespace DesktopAplicationCV.ViewModels
 
         [ObservableProperty]
         private List<BancoModel> _bancos;
-
-        [ObservableProperty]
-        private List<TipoModel> _tipos;
 
         [ObservableProperty]
         private List<SocioNegocioModel> _cliente;
@@ -49,9 +61,9 @@ namespace DesktopAplicationCV.ViewModels
 
         private static int IdTransaccionCeldaSeleccionada;
         private int FolioTransaccionCeldaSeleccionada;
-        private string TipoTransaccionCeldaSeleccionada;
+        private static string TipoTransaccionCeldaSeleccionada;
         private string SubTipoTransaccionCeldaSeleccionada;
-        private string MonedaTransaccionCeldaSeleccionada;
+        private static string MonedaTransaccionCeldaSeleccionada;
         private DateTime FechaTransaccionCeldaSeleccionada;
         private string ClienteTransaccionCeldaSeleccionada;
         private string MetodoPagoTransaccionCeldaSeleccionada;
@@ -70,16 +82,12 @@ namespace DesktopAplicationCV.ViewModels
         private string _filterText;
         private string _tituloPagina;
 
-
         private TipoModel _tipoSeleccionado;
         private SubtiposModel _subtipoSeleccionado;
-        private MonedaModel _monedaSeleccionado;
         private MetodoPagoModel _metodoDePagoSeleccionado;
         private BancoModel _bancoSeleccionado;
         private SocioNegocioModel _clienteSeleccionado;
         private CuentasModel _cuentasSeleccionado;
-
-
 
         private int _folioTransaccionIngresadoText;
         private string _tipoTransaccionIngresadoText;
@@ -90,7 +98,6 @@ namespace DesktopAplicationCV.ViewModels
         private string _metodoPagoTransaccionIngresadoText;
         private string _bancoTransaccionIngresadoText;
         private string _cuentaTransaccionIngresadoText;
-
 
         private int _editFolioTransaccion;
         private string _editTipoTransaccion;
@@ -117,7 +124,6 @@ namespace DesktopAplicationCV.ViewModels
             get { return Transacciones; }
             set { Transacciones = value; }
         }
-
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
         {
@@ -133,7 +139,6 @@ namespace DesktopAplicationCV.ViewModels
                 }
             }
         }
-
         // Acción para establecer la lógica del filtro
         public Action ApplyFilterAction { get; set; }
 
@@ -282,22 +287,22 @@ namespace DesktopAplicationCV.ViewModels
             }
         }
 
-        public MonedaModel MonedaSeleccionado
+        /*public MonedaModel MonedaSeleccionado
         {
-            get => _monedaSeleccionado;
+            get => monedaSeleccionado;
             set
             {
-                if (_monedaSeleccionado != value)
+                if (monedaSeleccionado != value)
                 {
-                    _monedaSeleccionado = value;
+                    //monedaSeleccionado = value;
                     MonedaTransaccionIngresadoText = value.Nombre.Trim();
-                    OnPropertyChanged(nameof(MonedaSeleccionado));
-                    OnPropertyChanged(nameof(MonedaTransaccionIngresadoText)); // Para actualizar la vista
-                    OnPropertyChanged(nameof(EditMonedaTransaccion));
-                    OnPropertyChanged();
+                    //OnPropertyChanged(nameof(MonedaSeleccionado));
+                    //OnPropertyChanged(nameof(MonedaTransaccionIngresadoText)); // Para actualizar la vista
+                    //OnPropertyChanged(nameof(EditMonedaTransaccion));
+                    //OnPropertyChanged();
                 }
             }
-        }
+        }*/
 
         public string EditMonedaTransaccion
         {
@@ -513,15 +518,68 @@ namespace DesktopAplicationCV.ViewModels
             Transacciones = new ObservableCollection<TransaccionesModel>();
 
             _navigationService = navigationService;
-            CargarGrillaIngresos();
-            CargarComboBoxes();
-
+            _ = CargarGrillaIngresos();
+            _ = CargarComboBoxes();
+            //_ = CargarMonedasAsync();
             CeldaTocadaCommand = new Command<DataGridCellTappedEventArgs>(CeldaTocada);
         }
 
         #endregion
 
         #region Metodos
+
+        public async Task CargarMonedasAsync()
+        {
+            try
+            {
+                var apiService = new ApiService();
+                var monedasDesdeApi = await apiService.GetAsync2<List<MonedaModel>>("monedas");
+                var tiposDesdeApi = await apiService.GetAsync2<List<TipoModel>>("tipo");
+                
+                Monedas.Clear(); // Aseguramos que la colección existe
+                //Tipos.Clear(); Codigo para persistencia de Tipos
+
+                #region Gestionar una opción manual al Picker Moneda
+                //var SeleccioneOpcion = new MonedaModel { Id_Monedas = 1000, Nombre = "--Seleccione Opcion--" };
+                //Monedas.Add(SeleccioneOpcion); Codigo para 
+                #endregion
+
+                foreach (var item in monedasDesdeApi)
+                {
+                    Console.WriteLine("monedasDesdeApi Item: " + item);
+                    item.Nombre = item.Nombre?.Trim(); // Limpia espacios
+                    Monedas.Add(item);
+                }
+
+                Console.WriteLine("Monedas: " + MonedaTransaccionCeldaSeleccionada);
+                MonedaSeleccionado = MonedaTransaccionCeldaSeleccionada != null ? monedasDesdeApi.FirstOrDefault(m => m.Nombre.Trim() == MonedaTransaccionCeldaSeleccionada.Trim()) : monedasDesdeApi.FirstOrDefault(m => m.Nombre.Trim() == "EUR");
+
+                #region Codigo de persistencia para Tipo
+                /*foreach (var item in tiposDesdeApi)
+                {
+                    Console.WriteLine("tiposDesdeApi Item: " + item);
+                    item.Tipo_Dato = item.Tipo_Dato?.Trim(); // Limpia espacios
+                    Tipos.Add(item);
+                }*/
+                //Console.WriteLine("Tipos: " + TipoTransaccionCeldaSeleccionada);
+                /*try{
+                    Console.WriteLine("tiposDesdeApi: " + tiposDesdeApi);
+                    foreach(var item in tiposDesdeApi)
+                    {
+                        Console.WriteLine("item: " + item);
+                    }
+                    TipoSeleccionado = tiposDesdeApi.FirstOrDefault(m => m.Tipo_Dato == "Egreso");//TipoTransaccionCeldaSeleccionada != null ? tiposDesdeApi.FirstOrDefault(a => a.Tipo_Dato.Trim() == TipoTransaccionCeldaSeleccionada.Trim()) : tiposDesdeApi.FirstOrDefault(a => a.Tipo_Dato.Trim() == "Ingreso");
+                }
+                catch(Exception Ex){
+                    Console.WriteLine("Error: " + Ex.Message);
+                }*/
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al cargar monedas: " + ex.Message);
+            }
+        }
 
         [RelayCommand]
         public void Cancelar()
@@ -625,11 +683,11 @@ namespace DesktopAplicationCV.ViewModels
         {
             try
             {
-                if (FolioTransaccionIngresadoText != 0 && !string.IsNullOrEmpty(TipoTransaccionIngresadoText) && !string.IsNullOrEmpty(MonedaTransaccionIngresadoText)
+                if (FolioTransaccionIngresadoText != 0 && !string.IsNullOrEmpty(TipoTransaccionIngresadoText) && !string.IsNullOrEmpty(monedaSeleccionado.Nombre)
                 && !string.IsNullOrEmpty(ClienteTransaccionIngresadoText) && !string.IsNullOrEmpty(MetodoPagoTransaccionIngresadoText)
                 && !string.IsNullOrEmpty(BancoTransaccionIngresadoText) && !string.IsNullOrEmpty(CuentaTransaccionIngresadoText))
                 {
-                    AgregarTransacciones(new TransaccionesModel(IdTransaccionCeldaSeleccionada, FolioTransaccionIngresadoText, TipoTransaccionIngresadoText, SubTipoTransaccionIngresadoText, MonedaTransaccionIngresadoText,
+                    AgregarTransacciones(new TransaccionesModel(0, FolioTransaccionIngresadoText, TipoTransaccionIngresadoText, SubTipoTransaccionIngresadoText, monedaSeleccionado.Nombre,
                         FechaTransaccionIngresadoText, ClienteTransaccionIngresadoText, MetodoPagoTransaccionIngresadoText, BancoTransaccionIngresadoText,
                         CuentaTransaccionIngresadoText));
                     _navigationService.GoBackAsync();
@@ -644,19 +702,6 @@ namespace DesktopAplicationCV.ViewModels
                 Console.WriteLine("Error InsertarTransaccionesDetalle IngresosViewModel: " + Ex.Message);
             }
         }
-
-        public async void CargarMonedaPrevia()
-        {
-            try 
-            {
-                Monedas = await _auxService.GetMonedasAsync();
-                MonedaSeleccionado = Monedas.FirstOrDefault(m => m.Nombre.Trim() == "CLP");
-            }
-            catch(Exception Ex)
-            {
-                Console.WriteLine("Error CargarMonedaPrevia: " + Ex.Message);
-            }
-        }
         
         [RelayCommand]
         private async void Editar()
@@ -664,8 +709,7 @@ namespace DesktopAplicationCV.ViewModels
             try
             {
                 if (selectedIndex >= 0)
-                {
-                    CargarMonedaPrevia();
+                {   
                     try
                     {
                         OldTransaccion = new TransaccionesModel(IdTransaccionCeldaSeleccionada, FolioTransaccionCeldaSeleccionada, TipoTransaccionCeldaSeleccionada, SubTipoTransaccionCeldaSeleccionada, MonedaTransaccionCeldaSeleccionada,
@@ -749,6 +793,7 @@ namespace DesktopAplicationCV.ViewModels
                 Monedas = await _auxService.GetMonedasAsync();
                 Metodopagos = await _auxService.GetMetodoPagoAsync();
                 Cuentas = await _auxService.GetCuentasAsync();
+
             }
             catch (Exception Ex)
             {
@@ -823,7 +868,6 @@ namespace DesktopAplicationCV.ViewModels
             {
                 Console.WriteLine("Error Update TransaccionesViewModel: " + Ex.Message);
             }
-
         }
 
         private async Task ActualizarTransacciones(TransaccionesModel AntiguasTransacciones)
@@ -853,7 +897,6 @@ namespace DesktopAplicationCV.ViewModels
                 /*var date = fecha.ToString("yyyy-MM-dd",CultureInfo.InvariantCulture);
                 var NewDate = Convert.ToDateTime(date);*/
 
-
                 NewTransaccion = new TransaccionesModel(id, folio, tipo, subtipo, moneda, fecha, cliente, metodoPago, banco, cuenta)
                 {
                     Id_Transaccion = id,
@@ -875,7 +918,6 @@ namespace DesktopAplicationCV.ViewModels
 
                     //Add new product
                     Transacciones.Add((TransaccionesModel)NewTransaccion);
-
                     Application.Current.MainPage.DisplayAlert("Alerta", "Datos actualizados correctamente", "Ok");
                 }
                 else

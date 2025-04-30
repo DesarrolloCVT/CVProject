@@ -53,13 +53,6 @@ namespace DesktopAplicationCV.Models
             set { this.total = value; }
         }
 
-
-        /*public List<FacturaCompraDetalleModel> Detalles { get; set; } = new List<FacturaCompraDetalleModel>();
-
-        // Total calculado sumando Precio * Cantidad de los detalles
-        public decimal Total => Detalles.Sum(d => d.Precio * d.Cantidad);*/
-
-
         public FacturaCompraModel(int id_factura_compra, int folio, string proveedor, DateTime fecha, string moneda, long total)
         {
             this.Id_Factura_Compra = id_factura_compra;

@@ -34,6 +34,12 @@ namespace DesktopAplicationCV.ViewModel
 
         private ObservableCollection<TipoModel> Tipos;
 
+        [ObservableProperty]
+        public ObservableCollection<TipoModel> _DDListTipos = new();
+
+        [ObservableProperty]
+        private TipoModel tipoSeleccionado;
+
         private string _filterText;
 
         private int _codigoTipoIngresadoText;
@@ -220,7 +226,6 @@ namespace DesktopAplicationCV.ViewModel
         {
             _navigationService.GoBackAsync();
         }
-
         // Lógica de filtrado como delegado
         public Predicate<object> GetFilter()
         {
@@ -237,7 +242,6 @@ namespace DesktopAplicationCV.ViewModel
                 return false;
             };
         }
-
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
@@ -314,9 +318,9 @@ namespace DesktopAplicationCV.ViewModel
             try
             {
                 if (CodigoTipoIngresado != 0 && !string.IsNullOrEmpty(NombreTipoIngresado)
-                && !string.IsNullOrEmpty(TipoIngresado) && CuentaTipoIngresado != 0)
+                && !string.IsNullOrEmpty(TipoSeleccionado.Nombre) && CuentaTipoIngresado != 0)
                 {
-                    AgregarTipo(new TipoModel(IdTipoCeldaSeleccionada, CodigoTipoIngresado, NombreTipoIngresado, TipoIngresado,
+                    AgregarTipo(new TipoModel(IdTipoCeldaSeleccionada, CodigoTipoIngresado, NombreTipoIngresado, tipoSeleccionado.Nombre,
                         CuentaTipoIngresado));
                     _navigationService.GoBackAsync();
                 }
@@ -368,16 +372,22 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-        private async Task CargarTipos()
+        public async Task CargarTipos()
         {
             try
             {
                 var tipos = await _tipoService.GetTipoAsync();
                 Tipos.Clear();
+                DDListTipos.Clear();
+                //DDListTipos.Add(new TipoModel(0, 0, "--Seleccione--", "", 0));
                 foreach (var tipo in tipos)
                 {
                     Tipos.Add(tipo);
+                    DDListTipos.Add(tipo);
                 }
+                Console.WriteLine("DDListTipos: " + DDListTipos);
+
+                tipoSeleccionado = DDListTipos.FirstOrDefault(m => m.Nombre.Trim() == "Ingreso");
             }
             catch (Exception Ex)
             {

@@ -17,7 +17,7 @@ public partial class Editar_Tipo : ContentPage
         TipoModel tipoModel = (TipoModel)obj;
         EditCodigo.Text = tipoModel.Codigo.ToString().Trim();
         EditNombre.Text = tipoModel.Nombre.Trim();
-        PkrTipo.SelectedItem = tipoModel.Tipo_Dato.Trim();
+        //PkrTipo.SelectedItem = tipoModel.Tipo_Dato.Trim();
         EditCuenta.Text = tipoModel.Cuenta.ToString().Trim();
     }
 }

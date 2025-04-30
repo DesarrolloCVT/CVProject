@@ -19,8 +19,11 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        /*[ObservableProperty]
+        private List<MonedaModel> _monedas;*/
+
         [ObservableProperty]
-        private List<MonedaModel> _monedas;
+        public ObservableCollection<MonedaModel> monedas = new();
 
         [ObservableProperty]
         private List<SocioNegocioModel> _proveedor;
@@ -74,7 +77,6 @@ namespace DesktopAplicationCV.ViewModel
             get { return facturaCompra; }
             set { facturaCompra = value; }
         }
-
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
         {
@@ -90,7 +92,6 @@ namespace DesktopAplicationCV.ViewModel
                 }
             }
         }
-
         // Acción para establecer la lógica del filtro
         public Action ApplyFilterAction { get; set; }
 
@@ -131,7 +132,6 @@ namespace DesktopAplicationCV.ViewModel
                 }
             }
         }
-
 
         public int EditFolioFactCompra
         {
@@ -256,7 +256,6 @@ namespace DesktopAplicationCV.ViewModel
             }
         }
 
-
         #endregion
 
         #region Constructores
@@ -283,7 +282,6 @@ namespace DesktopAplicationCV.ViewModel
         {
             _navigationService.GoBackAsync();
         }
-
         // Lógica de filtrado como delegado
         public Predicate<object> GetFilter()
         {
@@ -300,7 +298,6 @@ namespace DesktopAplicationCV.ViewModel
                 return false;
             };
         }
-
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {

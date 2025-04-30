@@ -33,6 +33,21 @@ namespace DesktopAplicationCV.Services
             return await _httpClient.GetFromJsonAsync<T>(endpoint, _jsonOptions);
         }
 
+        public async Task<T> GetAsync2<T>(string endpoint)
+        {
+            var response = await _httpClient.GetAsync(endpoint);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception($"Error al llamar API: {response.ReasonPhrase}");
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<T>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+        }
+
         protected async Task<T?> GetByIdAsync<T>(string endpoint, int id)
         {
             return await _httpClient.GetFromJsonAsync<T>($"{endpoint}/{id}", _jsonOptions);

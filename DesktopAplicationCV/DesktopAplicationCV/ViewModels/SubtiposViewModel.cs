@@ -159,7 +159,6 @@ namespace DesktopAplicationCV.ViewModels
         {
             _navigationService.GoBackAsync();
         }
-
         // Método que se ejecuta cuando se toca una celda
         private void CeldaTocada(DataGridCellTappedEventArgs e)
         {
@@ -235,7 +234,7 @@ namespace DesktopAplicationCV.ViewModels
             {
                 if (!string.IsNullOrEmpty(IdentificadorSubTipoIngresadoText) && !string.IsNullOrEmpty(NombreSubTipoIngresadoText))
                 {
-                    AgregarSubTipo(new SubtiposModel(IdSubtipoCeldaSeleccionada, IdentificadorSubTipoIngresadoText, NombreSubTipoIngresadoText));
+                    AgregarSubTipo(new SubtiposModel(0, IdentificadorSubTipoIngresadoText, NombreSubTipoIngresadoText));
                     _navigationService.GoBackAsync();
                 }
                 else
@@ -392,7 +391,6 @@ namespace DesktopAplicationCV.ViewModels
                 Console.WriteLine("Error ActualizarMoneda SubTipoViewModel: " + Ex.Message);
             }
         }
-
         // Lógica de filtrado como delegado
         public Predicate<object> GetFilter()
         {

@@ -149,7 +149,7 @@
                 </syncfusion:SfDataGrid.Resources>
 
                 <syncfusion:SfDataGrid.Columns>
-                    <syncfusion:DataGridTextColumn MappingName="Id_Transaccion" HeaderText="Id" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Id_Transaccion" HeaderText="ID" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Folio" HeaderText="Folio" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Tipo_Transaccion" HeaderText="Tipo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Subtipo_Transaccion" HeaderText="Sub Tipo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>

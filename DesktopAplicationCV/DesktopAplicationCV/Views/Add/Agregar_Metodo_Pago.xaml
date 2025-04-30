@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Metodo_Pago"
-             BackgroundColor="DarkSlateGray">
+             BackgroundColor="DarkSlateGray"
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
     
     <ScrollView Margin="0,100,0,0">
         <Grid>
@@ -20,7 +21,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Agregar Metodo de Pago"
+            <Label Text="{x:Static recursos:AppResources.AgrMetodoPago}"
                Margin="20,0,0,0"
                FontSize="Medium"
                TextColor="Silver"
@@ -31,10 +32,9 @@
             <Label Text="Nombre"
                FontSize="Small"
                Grid.Row="2" Grid.Column="1"/>
-            <Editor WidthRequest="150"
-                Text="{Binding NombreMetodoPagoIngresado}"
-                Placeholder="Nombre"
-                Grid.Row="2" Grid.Column="2"/>
+            <Editor Text="{Binding NombreMetodoPagoIngresado}"
+                    Placeholder="{x:Static recursos:AppResources.PlaceHolderNombre}"
+                    Grid.Row="2" Grid.Column="2"/>
            
             <Button Text="Insertar"
                 TextColor="White"

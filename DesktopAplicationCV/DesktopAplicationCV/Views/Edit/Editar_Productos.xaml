@@ -37,7 +37,7 @@
                         Text="{Binding EditCodigoProducto}"
                         Grid.Row="1" Grid.Column="2"
                         x:Name="EditCodigo"
-                        IsReadOnly="True"/>
+                        IsReadOnly="False"/>
                 <Label Text="Producto"
                        FontSize="Small"
                        Grid.Row="2" Grid.Column="1"/>

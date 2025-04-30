@@ -61,11 +61,74 @@ namespace DesktopAplicationCV.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agregar Banco.
+        /// </summary>
+        public static string AgrBanco {
+            get {
+                return ResourceManager.GetString("AgrBanco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agregar Cuenta.
+        /// </summary>
+        public static string AgrCuentas {
+            get {
+                return ResourceManager.GetString("AgrCuentas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agregar.
         /// </summary>
         public static string Agregar {
             get {
                 return ResourceManager.GetString("Agregar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agregar Metodo de Pago.
+        /// </summary>
+        public static string AgrMetodoPago {
+            get {
+                return ResourceManager.GetString("AgrMetodoPago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agregar Moneda.
+        /// </summary>
+        public static string AgrMonedas {
+            get {
+                return ResourceManager.GetString("AgrMonedas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agregar Producto.
+        /// </summary>
+        public static string AgrProductos {
+            get {
+                return ResourceManager.GetString("AgrProductos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agregar SubTipo.
+        /// </summary>
+        public static string AgrSubTipo {
+            get {
+                return ResourceManager.GetString("AgrSubTipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agregar Tipo.
+        /// </summary>
+        public static string AgrTipo {
+            get {
+                return ResourceManager.GetString("AgrTipo", resourceCulture);
             }
         }
         
@@ -291,6 +354,33 @@ namespace DesktopAplicationCV.Resources.Languages {
         public static string PlaceHoldBuscar {
             get {
                 return ResourceManager.GetString("PlaceHoldBuscar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese Codigo.
+        /// </summary>
+        public static string PlaceHolderCodigo {
+            get {
+                return ResourceManager.GetString("PlaceHolderCodigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese direccion de despacho.
+        /// </summary>
+        public static string PlaceHolderDirDespacho {
+            get {
+                return ResourceManager.GetString("PlaceHolderDirDespacho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese Nombre.
+        /// </summary>
+        public static string PlaceHolderNombre {
+            get {
+                return ResourceManager.GetString("PlaceHolderNombre", resourceCulture);
             }
         }
         

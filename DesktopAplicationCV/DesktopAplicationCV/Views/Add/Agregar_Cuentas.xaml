@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Cuentas"
              BackgroundColor="DarkSlateGray"
-             Title="Agregar Nueva Cuenta">
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
     <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
@@ -21,7 +21,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Agregar Cuentas"
+            <Label Text="{x:Static recursos:AppResources.AgrCuentas}"
                    Margin="20,0,0,0"
                    FontSize="Medium"
                    TextColor="Silver"
@@ -38,7 +38,7 @@
             <Label Text="Nombre"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
-            <Editor Placeholder="Nombre"
+            <Editor Placeholder="{x:Static recursos:AppResources.PlaceHolderNombre}"
                     Text="{Binding NombreCuentaIngresado}"
                     Grid.Row="2" Grid.Column="2"/>
             <Label Text="Tipo"

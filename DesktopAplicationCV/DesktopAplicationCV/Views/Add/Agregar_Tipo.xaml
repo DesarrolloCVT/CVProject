@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Tipo"
              BackgroundColor="DarkSlateGray"
-             Title="Agregar Tipo">
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
     <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
@@ -27,7 +27,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Agregar Tipo"
+            <Label Text="{x:Static recursos:AppResources.AgrTipo}"
                    Margin="20,0,0,0"
                    FontSize="Medium"
                    TextColor="Silver"
@@ -44,20 +44,25 @@
             <Label Text="Nombre"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
-            <Editor Placeholder="Nombre"
+            <Editor Placeholder="{x:Static recursos:AppResources.PlaceHolderNombre}"
                     Text="{Binding NombreTipoIngresado}"
                     Grid.Row="2" Grid.Column="2"/>
             <Label Text="Tipo"
                    FontSize="Small"
                    Grid.Row="3" Grid.Column="1"
                    FontAttributes="Bold"/>
-            <Picker x:Name="PkrTipo"
+            <!--Picker x:Name="PkrTipo"
                     SelectedItem="{Binding TipoIngresado}"
                     Grid.Row="3" Grid.Column="2">
                 <Picker.Items>
                     <x:String>Ingreso</x:String>
                     <x:String>Egreso</x:String>
                 </Picker.Items>
+            </Picker-->
+            <Picker ItemsSource="{Binding DDListTipos}"
+                    ItemDisplayBinding="{Binding Nombre}"
+                    SelectedItem="{Binding tipoSeleccionado, Mode=TwoWay}"
+                    Grid.Row="3" Grid.Column="2">
             </Picker>
             <Label Text="Cuenta"
                    FontSize="Small"

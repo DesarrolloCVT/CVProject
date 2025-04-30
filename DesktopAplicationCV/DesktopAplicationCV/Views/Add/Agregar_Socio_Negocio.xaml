@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BackgroundColor="DarkSlateGray"
-             x:Class="DesktopAplicationCV.Views.Agregar_Socio_Negocio">
+             x:Class="DesktopAplicationCV.Views.Agregar_Socio_Negocio"
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
     <ScrollView Margin="0,100,0,0">
         <Grid>
             <Grid.RowDefinitions>
@@ -32,11 +33,10 @@
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"
                    FontAttributes="Bold"/>
-            <Editor x:Name="edtCodigo"
-                    Text="{Binding CodigoSocioIngresado}"
-                    Keyboard="Numeric"
-                    Placeholder="Codigo"
-                    Grid.Row="1" Grid.Column="2"/>
+            <Editor 
+                Placeholder="Codigo"
+                Text="{Binding CodigoSocioIngresado}"
+                Grid.Row="1" Grid.Column="2"/>
 
             
             <Label Text="Nombre"
@@ -45,7 +45,7 @@
                    Grid.Row="2" Grid.Column="1"
                    FontAttributes="Bold"/>
             <Editor Text="{Binding NombreSocioIngresado}"
-                    Placeholder="Nombre"
+                    Placeholder="{x:Static recursos:AppResources.PlaceHolderNombre}"
                     Grid.Row="2" Grid.Column="2"/>
 
             

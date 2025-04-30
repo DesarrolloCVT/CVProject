@@ -17,8 +17,8 @@ public partial class Editar_Factura_Compra : ContentPage
 
         FacturaCompraModel facturaCompraModel = (FacturaCompraModel)obj;
         EditFolio.Text = facturaCompraModel.Folio.ToString().Trim();
-        PkrProveedor.SelectedItem = facturaCompraModel.Proveedor.Trim();
+        //PkrProveedor.SelectedItem = facturaCompraModel.Proveedor.Trim();
         PkrFecha.Date = facturaCompraModel.Fecha;
-        PkrMoneda.SelectedItem = facturaCompraModel.Moneda.Trim();
+        //PkrMoneda.SelectedItem = facturaCompraModel.Moneda.Trim();
     }
 }

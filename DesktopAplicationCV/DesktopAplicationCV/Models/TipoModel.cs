@@ -10,6 +10,7 @@ namespace DesktopAplicationCV.Models
         private string tipo_dato;
         private int cuenta;
 
+        
         public int Id_Tipo
         {
             get { return this.id_tipo; }

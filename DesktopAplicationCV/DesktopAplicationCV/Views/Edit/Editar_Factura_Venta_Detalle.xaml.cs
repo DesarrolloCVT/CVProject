@@ -17,7 +17,7 @@ public partial class Editar_Factura_Venta_Detalle : ContentPage
 
         FacturaVentaDetalleModel facturaVentaDetalleModel = (FacturaVentaDetalleModel)obj;
         EditFolio.Text = facturaVentaDetalleModel.Folio.ToString().Trim();
-        PkrProducto.SelectedItem = facturaVentaDetalleModel.Codigo_Producto.Trim();
+        //PkrProducto.SelectedItem = facturaVentaDetalleModel.Codigo_Producto.Trim();
         EditCantidad.Text = facturaVentaDetalleModel.Cantidad.ToString().Trim();
         EditPrecio.Text = facturaVentaDetalleModel.Precio.ToString().Trim();
     }

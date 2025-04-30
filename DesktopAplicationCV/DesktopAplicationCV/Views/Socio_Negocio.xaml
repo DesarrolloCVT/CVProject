@@ -118,7 +118,7 @@
                     <syncfusion:DataGridTextColumn MappingName="Codigo" HeaderText="Codigo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Nombre" HeaderText="Nombre" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Tipo" HeaderText="Tipo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Saldo" HeaderText="Saldo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Saldo" HeaderText="Saldo" Format="C" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>
             </syncfusion:SfDataGrid>
         </Grid>

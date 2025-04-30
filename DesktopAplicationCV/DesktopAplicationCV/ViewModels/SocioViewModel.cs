@@ -18,6 +18,9 @@ namespace DesktopAplicationCV.ViewModel
         [ObservableProperty]
         private List<TipoModel> _tipos;
 
+        /*[ObservableProperty]
+        public ObservableCollection<TipoModel> tipos = new();*/
+
         private static int IdSocioSeleccionado;
 
         private static object _oldSocio;
@@ -65,7 +68,6 @@ namespace DesktopAplicationCV.ViewModel
             get { return Socios; }
             set { Socios = value; }
         }
-
         // Propiedad para enlazar el texto del filtro desde la vista
         public string FilterText
         {
@@ -213,7 +215,6 @@ namespace DesktopAplicationCV.ViewModel
                 }
             }
         }
-
         // Acción para establecer la lógica del filtro
         public Action ApplyFilterAction { get; set; }
 

@@ -192,6 +192,12 @@
   <data name="Password" xml:space="preserve">
     <value>Password:</value>
   </data>
+  <data name="PlaceHolderCodigo" xml:space="preserve">
+    <value>Ingrese Codigo</value>
+  </data>
+  <data name="PlaceHolderNombre" xml:space="preserve">
+    <value>Ingrese Nombre</value>
+  </data>
   <data name="PlaceHoldBuscar" xml:space="preserve">
     <value>Busqueda</value>
   </data>
@@ -221,5 +227,29 @@
   </data>
   <data name="Volver" xml:space="preserve">
     <value>Volver</value>
+  </data>
+  <data name="PlaceHolderDirDespacho" xml:space="preserve">
+    <value>Ingrese direccion de despacho</value>
+  </data>
+  <data name="AgrSubTipo" xml:space="preserve">
+    <value>Agregar SubTipo</value>
+  </data>
+  <data name="AgrTipo" xml:space="preserve">
+    <value>Agregar Tipo</value>
+  </data>
+  <data name="AgrBanco" xml:space="preserve">
+    <value>Agregar Banco</value>
+  </data>
+  <data name="AgrProductos" xml:space="preserve">
+    <value>Agregar Producto</value>
+  </data>
+  <data name="AgrMetodoPago" xml:space="preserve">
+    <value>Agregar Metodo de Pago</value>
+  </data>
+  <data name="AgrMonedas" xml:space="preserve">
+    <value>Agregar Moneda</value>
+  </data>
+  <data name="AgrCuentas" xml:space="preserve">
+    <value>Agregar Cuenta</value>
   </data>
 </root>

@@ -20,8 +20,11 @@ namespace DesktopAplicationCV.ViewModel
     {
         #region Variables
 
+        /*[ObservableProperty]
+        private List<MonedaModel> _monedas;*/
+
         [ObservableProperty]
-        private List<MonedaModel> _monedas;
+        public ObservableCollection<MonedaModel> monedas = new();
 
         [ObservableProperty]
         private List<SocioNegocioModel> _cliente;

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Factura_Ventas"
              BackgroundColor="DarkSlateGray"
-             Title="Agregar Factura de Ventas">
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
     
     <ScrollView Margin="0,100,0,0">
         <Grid>
@@ -51,7 +51,7 @@
             <Label Text="Direccion de Despacho"
                    FontSize="Small"
                    Grid.Row="3" Grid.Column="1"/>
-            <Editor Placeholder="Direccion de Despacho"
+            <Editor Placeholder="{x:Static recursos:AppResources.PlaceHolderDirDespacho}"
                     Text="{Binding DirDespachoFactVentaIngresado}"
                     Grid.Row="3" Grid.Column="2"/>
             <Label Text="Moneda"

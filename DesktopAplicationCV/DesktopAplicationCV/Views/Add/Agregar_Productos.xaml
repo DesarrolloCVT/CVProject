@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DesktopAplicationCV.Views.Agregar_Productos"
              BackgroundColor="DarkSlateGray"
-             xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel">
+             xmlns:ViewModel="clr-namespace:DesktopAplicationCV.ViewModel"
+             xmlns:recursos="clr-namespace:DesktopAplicationCV.Resources.Languages">
 
     <ScrollView Margin="0,100,0,0">
         <Grid>
@@ -21,7 +22,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Agregar Productos"
+            <Label Text="{x:Static recursos:AppResources.AgrProductos}"
                    Margin="20,0,0,0"
                    FontSize="Medium"
                    TextColor="Silver"
@@ -32,13 +33,13 @@
             <Label Text="Codigo"
                    FontSize="Small"
                    Grid.Row="1" Grid.Column="1"/>
-            <Editor Placeholder="Codigo"
+            <Editor Placeholder="{x:Static recursos:AppResources.PlaceHolderCodigo}"
                     Text="{Binding CodigoProductoIngresado}"
                     Grid.Row="1" Grid.Column="2"/>
             <Label Text="Producto"
                    FontSize="Small"
                    Grid.Row="2" Grid.Column="1"/>
-            <Editor Placeholder="Producto"
+            <Editor Placeholder="{x:Static recursos:AppResources.PlaceHolderNombre}"
                     Text="{Binding NombreProductoIngresado}"
                     Grid.Row="2" Grid.Column="2"/>
             <Button Text="Ingresar"

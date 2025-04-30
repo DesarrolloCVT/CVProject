@@ -60,7 +60,7 @@
                 <Picker.Behaviors>
                     <toolkit:EventToCommandBehavior
                         EventName="Focused"
-                        Command="{Binding CargarSubTiposCommand}" />
+                        Command="{Binding CargarDependenciasCommand}" />
                 </Picker.Behaviors>
             </Picker>
 
@@ -87,12 +87,12 @@
                 Text="{Binding EditMonedaTransaccion}"
                 Placeholder="Moneda"
                 Grid.Row="4" Grid.Column="2"/-->
+            
             <Picker ItemsSource="{Binding Monedas}"
                     ItemDisplayBinding="{Binding Nombre}"
                     SelectedItem="{Binding MonedaSeleccionado, Mode=TwoWay}"
                     x:Name="PkrMoneda"
                     Grid.Row="4" Grid.Column="2"/>
-
             <!--FECHA-->
             <Label 
                 Text="Fecha"
@@ -157,7 +157,6 @@
                     SelectedItem="{Binding BancoSeleccionado, Mode=TwoWay}"
                     x:Name="PkrBanco"
                     Grid.Row="8" Grid.Column="2"/>
-
             <!--CUENTA-->
             <Label 
                 Text="Cuenta"

@@ -144,7 +144,7 @@
                     <syncfusion:DataGridTextColumn MappingName="Id_Banco" HeaderText="Id Banco" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Codigo_Banco" HeaderText="Codigo del Banco" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                     <syncfusion:DataGridTextColumn MappingName="Numero" HeaderText="Numero" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
-                    <syncfusion:DataGridTextColumn MappingName="Saldo" HeaderText="Saldo" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
+                    <syncfusion:DataGridTextColumn MappingName="Saldo" HeaderText="Saldo" Format="N0" HeaderStyle="{StaticResource HeaderStyle}" CellStyle="{StaticResource CustomTextStyle}"></syncfusion:DataGridTextColumn>
                 </syncfusion:SfDataGrid.Columns>
             </syncfusion:SfDataGrid>
         </Grid>

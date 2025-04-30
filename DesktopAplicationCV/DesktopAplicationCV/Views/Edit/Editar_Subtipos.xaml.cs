@@ -15,7 +15,7 @@ public partial class Editar_Subtipos : ContentPage
         var viewModel = BindingContext as SubtiposViewModel;
 
         SubtiposModel subTipoModel = (SubtiposModel)obj;
-        PkrIdentificador.SelectedItem = subTipoModel.Identificador.Trim();
+        //PkrIdentificador.SelectedItem = subTipoModel.Identificador.Trim();
         EditNombre.Text = subTipoModel.Nombre.Trim();
     }
 }

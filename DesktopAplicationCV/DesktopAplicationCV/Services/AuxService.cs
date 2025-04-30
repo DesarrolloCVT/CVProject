@@ -1,6 +1,7 @@
 ﻿using DesktopAplicationCV.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -34,16 +35,16 @@ namespace DesktopAplicationCV.Services
             return await GetAsync<List<MonedaModel>>(Endpoint) ?? new List<MonedaModel>();
         }*/
 
-        public async Task<List<MonedaModel>> GetMonedasAsync()
+        public async Task<ObservableCollection<MonedaModel>> GetMonedasAsync()
         {
             var response = await _httpClient.GetAsync("Monedas");
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<MonedaModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<MonedaModel>();
+                return JsonSerializer.Deserialize<ObservableCollection<MonedaModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new ObservableCollection<MonedaModel>();
             }
 
-            return new List<MonedaModel>();
+            return new ObservableCollection<MonedaModel>();
         }
 
         /*public async Task<List<SubtiposModel>> GetSubtiposAsync()
@@ -117,7 +118,7 @@ namespace DesktopAplicationCV.Services
 
             return new List<CuentasModel>();
         }
-
+        
         public async Task<List<TipoModel>> GetTiposAsync()
         {
             var response = await _httpClient.GetAsync("Tipo");
@@ -130,6 +131,21 @@ namespace DesktopAplicationCV.Services
 
             return new List<TipoModel>();
         }
+
+        /*  Evento GetTiposAsync
+        public async Task<ObservableCollection<TipoModel>> GetTiposAsync()
+        {
+            var response = await _httpClient.GetAsync("Tipo");
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<ObservableCollection<TipoModel>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new ObservableCollection<TipoModel>();
+
+            }
+
+            return new ObservableCollection<TipoModel>();
+        }
+        */
 
         public async Task<List<SubtiposModel>> GetSubtiposFilterByIdAsync(string identificador)
         {

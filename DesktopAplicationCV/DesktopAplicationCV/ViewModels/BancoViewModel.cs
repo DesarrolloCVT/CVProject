@@ -251,14 +251,16 @@ namespace DesktopAplicationCV.ViewModel
         {
             try
             {
-                if (CodigoBancoIngresado != 0 && !string.IsNullOrEmpty(NombreBancoIngresado))
+                if (!CodigoBancoIngresado.Equals(0) && !string.IsNullOrEmpty(NombreBancoIngresado))
                 {
-                    AgregarBanco(new BancoModel(0, CodigoBancoIngresado, NombreBancoIngresado));
-                    _navigationService.GoBackAsync();
+                    await AgregarBanco(new BancoModel(0, CodigoBancoIngresado, NombreBancoIngresado));
+                    await _navigationService.GoBackAsync();
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Alerta", "Se ha producido un error durante la insercion", "Ok");
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                    await Application.Current.MainPage.DisplayAlert("Error", "Se ha producido un problema durante la insercion, verifique los datos ingresados. ", "Ok");
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 }
             }
             catch (Exception Ex)

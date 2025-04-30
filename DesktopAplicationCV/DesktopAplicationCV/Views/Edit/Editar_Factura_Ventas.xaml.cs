@@ -17,9 +17,9 @@ public partial class Editar_Factura_Ventas : ContentPage
 
         FacturaVentaModel facturaVentaModel = (FacturaVentaModel)obj;
         EditFolio.Text = facturaVentaModel.Folio.ToString().Trim();
-        PkrCliente.SelectedItem = facturaVentaModel.Cliente.Trim();
+        //PkrCliente.SelectedItem = facturaVentaModel.Cliente.Trim();
         EditDirDespacho.Text = facturaVentaModel.Direccion_Despacho.Trim();
-        PkrMoneda.SelectedItem = facturaVentaModel.Moneda.Trim();
+        //PkrMoneda.SelectedItem = facturaVentaModel.Moneda.Trim();
         PkrFecha.Date = facturaVentaModel.Fecha;
     }
 }
